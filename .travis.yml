@@ -1,13 +1,12 @@
 dist: trusty
 
 cache:
-    directories:
-      - ./frontend/node_modules
+  directories:
+    - ./frontend/node_modules
 
 before_script:
-
-    - npm install --prefix ./frontend
+  - npm install --prefix ./frontend
 
 script:
-    - npm run test --prefix ./frontend
+  - npm run test --prefix ./frontend
 
