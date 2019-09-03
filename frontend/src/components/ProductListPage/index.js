@@ -1,17 +1,18 @@
 import React from 'react'
 
+
 export const ProductListPage = () => {
     let prod;
-    fetch('/products/0023')
+    fetch('/category/guitars')
         .then(function(response) {
             return response.json();
         })
         .then(function(myJson) {
             prod = myJson;
         });
+
+        console.log(prod)
     return (
-        <div>Page List
-            <img src="/static/img/" alt=""/>
-        </div>
+        <div>Page List</div>
     )
 };
