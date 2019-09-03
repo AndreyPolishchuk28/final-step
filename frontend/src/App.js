@@ -21,8 +21,6 @@ function App() {
                         <Route path='/product-list/:category' component={ProductListPage}/>
                         <Route path='/product/:id' exact component={ProductDetailsPage}/>
                     </Switch>
-                    <div className='container mt-5'>Dima</div>
-                    <i className="fas fa-search"></i>
                     <Footer/>
                 </div>
           </Router>
