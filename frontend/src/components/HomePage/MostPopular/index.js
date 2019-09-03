@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const MostPopular = (props) => {
+export const MostPopular = props => {
   return (
     <div className='most-popular-wrapper'>
       <p>{props.title}</p>
