@@ -1,11 +1,10 @@
-import React from 'react';
+import React from "react";
 
-export const MostPopular = (props) => {
+export const MostPopular = props => {
   return (
-    <div className='most-popular-wrapper'>
+    <div className="most-popular-wrapper">
       <p>{props.title}</p>
-      <img className='most-popular' src={props.url}></img>
+      <img className="most-popular" src={props.url}></img>
     </div>
-    
-  )
-}
+  );
+};
