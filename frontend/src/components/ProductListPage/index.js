@@ -1,18 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 
-export const ProductListPage = () => {
-    let prod;
-    fetch('/category/guitars')
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(myJson) {
-            prod = myJson;
-        });
+export const ProductListPage = (props) => {
 
-        console.log(prod)
+    const [products, setProducts] = useState([])
+    
+    const getProductsByCategory = async() => { 
+        const response = await fetch(`/category/${props.match.params.category}`);
+        const responseJSON = await response.json();
+        setProducts(responseJSON.products)
+    };
+
+    console.log(products)    
+    
+    useEffect(()=>{
+        getProductsByCategory()
+}, [props.match.params.category])
+
+
+
     return (
-        <div>Page List</div>
+        <div>
+            <div>Page List</div>
+            {products.map(item => <img src={`/static/img/${item.photo[0]}`}/>)}  
+        </div>
     )
 };
