@@ -15,10 +15,10 @@ export const MyAccountPage = (props) => {
         })
 
     return (
-        <div>
+        <div className="m-5">
             <h2>{props.full_name}</h2>
             <h2>{props.email}</h2>
-            <div className="d-flex">{orders}</div>
+            <div className="">{orders}</div>
         </div>
     )
 };
@@ -76,7 +76,7 @@ MyAccountPage.defaultProps = {
         {
             order_no: "00000101",
             creation_date: "2018-09-06T13:36Z",
-            order_total: 16.50,
+            order_total: 16.54,
             currency: "USD",
             billing_address : {
                 city: "Boston",
@@ -119,7 +119,7 @@ MyAccountPage.defaultProps = {
         {
             order_no: "00000101",
             creation_date: "2018-09-06T13:36Z",
-            order_total: 16.50,
+            order_total: 16.34,
             currency: "USD",
             billing_address : {
                 city: "Boston",
