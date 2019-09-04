@@ -8,9 +8,9 @@ import './styles.scss'
 export const Footer = () => {
     const date = new Date()
     const year = date.getFullYear()
-    console.log(year)
+    
     return (
-        <section class="footer-section">
+        <section className="footer-section">
             <div className="container">
                 <div className="footer-logo text-center">
                     <Link to="/" ><img src={logoLight} alt="logo"/></Link>

@@ -30,12 +30,23 @@ app.get('/category/:id', async (req, res) => {
 });
 
 app.get('/products/:id', async (req, res) => {
-    let prod;
-    prod = await app.products.findOne({'id': req.params.id});
+    let prod = await app.products.findOne({'id': req.params.id});
     res.status(200).send(prod)
 });
 
+app.post('/product_search', async (req, res) => {
+    let prodArray = [];
+    let searchLength = req.body.q.length;
+    await app.products.find({}).forEach((item) => {
+        if (item.name.slice(0, searchLength).toLowerCase() === req.body.q.toLowerCase()) {
+            prodArray.push(item)
+        }
+    });
+    res.send(JSON.stringify(prodArray))
+});
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index.html')));
 
 app.listen(API_PORT, () => console.log(`Server listening on port ${API_PORT}`));
+
+console.log("ok");
