@@ -35,7 +35,13 @@ app.get('/products/:id', async (req, res) => {
     res.status(200).send(prod)
 });
 
+app.post('/product_search', async (req, res) => {
+    res.send("post")
+});
+
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index.html')));
 
 app.listen(API_PORT, () => console.log(`Server listening on port ${API_PORT}`));
+
+console.log("ok");
