@@ -1,5 +1,5 @@
 import React from 'react'
-import style from './style.css'
+import './style.css'
 import {Link} from "react-router-dom";
 
 const HandlerBtn = () =>{
