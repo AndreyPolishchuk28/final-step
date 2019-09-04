@@ -149,26 +149,13 @@ a:hover {
   }
 
   .main-menu-height {
-    height: 1px;
+    height: 24px;
     opacity: 1;
-    animation: slide 3s;
-  }
-}
-@keyframes slide {
-  from {
-    height: 100px;
-  }
-  to {
-    height: 0;
   }
 }
 @media (max-width: 767px) {
   .header-search-form {
     margin-bottom: 15px;
-  }
-
-  .main-menu {
-    width: 500px;
   }
 
   ul a {
@@ -177,14 +164,6 @@ a:hover {
 
   .menu-btn {
     display: inline-block;
-  }
-}
-@keyframes mySlide {
-  from {
-    top: 0;
-  }
-  to {
-    top: 100px;
   }
 }
 @media only screen and (max-width: 991px) and (min-width: 768px) {

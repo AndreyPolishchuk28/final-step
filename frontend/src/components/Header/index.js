@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import './style.css'
 import {Link} from "react-router-dom";
+import {Search} from "./Search";
 
 export const Header = () => {
     const [open, setOpen] = useState(true);
@@ -13,7 +14,6 @@ export const Header = () => {
         menu.classList.toggle('main-menu-height')
     }
 
-
     return (
         <div>
             <div className='header-top'>
@@ -22,15 +22,7 @@ export const Header = () => {
                         <div className='col-xl-3 col-lg-3 text-center text-left'>
                             <Link to='/'><span className='site-logo'>MUSIC-SHOP</span></Link>
                         </div>
-                        <div className='col-xl-6 col-lg-5'>
-                            <form className='header-search-form'>
-                                <input type='text' placeholder='Music shop search ...'/>
-                                <button>
-                                    <i className="fas fa-search"></i>
-                                </button>
-                            </form>
-                        </div>
-
+                        <Search/>
                         <div className='col-xl-3 col-lg-4 text-center'>
                             <div className='user-panel'>
                                 <div className='up-item'>
