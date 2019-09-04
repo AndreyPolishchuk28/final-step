@@ -100,7 +100,7 @@
 
 .main-navbar{
   background: #282828;
-  padding: 17px 0;
+  padding: 10px 0;
 }
 
 ul{
@@ -122,8 +122,8 @@ a:hover{
   color: #fff;
   margin: 5px 5px 6px;
   background-color: #565656;
-  float: right;
   border-radius: 4px;
+
 }
 
 .slicknav-menutxt{
@@ -134,12 +134,10 @@ a:hover{
   padding: 4px;
 }
 
-.main-menu{
-  display: none;
+.main-menu-height{
+  height: 0;
+  opacity: 0;
 }
-
-
-
 
 
 @media (min-width: 768px){
@@ -151,8 +149,9 @@ a:hover{
     margin-bottom: 15px;
   }
 
-  .main-menu{
-    display: block;
+  .main-menu-height{
+    height: 24px;
+    opacity: 1;
   }
 }
 
@@ -161,15 +160,12 @@ a:hover{
     margin-bottom: 15px;
   }
 
-  .main-menu{
-    display: block;
-  }
   ul a{
     display: block;
   }
 
   .menu-btn{
-    display: block;
+    display: inline-block;
   }
 }
 
