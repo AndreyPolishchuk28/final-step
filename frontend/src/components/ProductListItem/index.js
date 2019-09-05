@@ -2,7 +2,6 @@ import React from 'react'
 
 export const ProductListItem = (props) => {
     const product = props.product
-    console.log(props)
     
     return (
         <div className="product-item">
