@@ -9,7 +9,7 @@ export const ProductListItem = (props) => {
                 <img src={`/static/img/${product.photo[0]}`}/>
                 <div className="pi-links">
                     <a href ="#" className="add-card">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i className="fas fa-shopping-cart"></i>
                         <span>Add to card</span>
                     </a>
             </div>

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import {ProductListItem} from '../ProductListItem'
+import {ProductListItem} from './ProductListItem'
 import './style.scss'
-import { Row, Col, Button } from 'antd';
-
+import {Row, Col} from 'antd';
+let currentCategory;
 
 export const ProductListPage = (props) => {
 
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
     const [currentShownItems, setCurrentShownItems] = useState(0);
     const [stepShownItems, setStepShownItems] = useState(9);
+    const [showMoreBtnStatus, setShowMoreBtnStatus] = useState(true);
 
-    const getProductsByCategory = async() => { 
+    const getProducts = async() => {
         const response = await fetch("/get_products",{
             method:'POST',
             headers: {
@@ -23,16 +24,29 @@ export const ProductListPage = (props) => {
             }) 
         });
         const responseJSON = await response.json();
-        setProducts([...products, ...responseJSON])
+        if (!responseJSON.length) setShowMoreBtnStatus(false);
+        if (currentCategory === props.match.params.category) {
+            setProducts([...products, ...responseJSON]);
+        } else {
+            setProducts(responseJSON)
+        }
+        currentCategory = props.match.params.category
     };
 
-    const showMoreProducts = (e) => {
+    const showMoreProducts = () => {
         setCurrentShownItems(currentShownItems + stepShownItems)
-    }
+    };
 
-    useEffect(()=>{
-        getProductsByCategory()
-}, [props.match.params.category, currentShownItems])
+    useEffect(() => {
+        setProducts([]);
+        setShowMoreBtnStatus(true);
+        setCurrentShownItems(0);
+        getProducts()
+    }, [props.match.params.category]);
+
+    useEffect(() => {
+        getProducts()
+    }, [currentShownItems]);
 
     return (
         <div className="pagelist-wrapper">
@@ -46,14 +60,15 @@ export const ProductListPage = (props) => {
             <div className="pagelist-content">
             <Row gutter={24}>
                     {products.map(item =>
-                    <Col xs={24} sm={24} md={12} lg={8} xl={8} key={item._id}>
-                        <ProductListItem product={item} />
-                    </Col>
-                )}
+                        <Col xs={24} sm={24} md={12} lg={8} xl={8} key={item._id}>
+                            <ProductListItem product={item} />
+                        </Col>
+                    )}
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="pagelist-bottom">
-                    
-                    <button className="button-outline" onClick={showMoreProducts}>Show More</button>
-
+                    {showMoreBtnStatus ?
+                        <button className="button-outline" onClick={showMoreProducts}>Show More</button>
+                        : null
+                    }
                 </Col>
             </Row>
 
