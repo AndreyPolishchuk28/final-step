@@ -1,14 +1,18 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
 const SliderItem = props => {
   return (
   
 
-          <div >
+    <Link to={`/products/${props.id}`}>
             <div >
-              <h1>{props.name}</h1>
-              <p>{props.price}$</p>
-              <button type="primary" shape="round">Buy</button>
+              <p className='guitar-name'>{props.name}</p>
+              <p className='guitar-price'>{props.price}$</p>
+            <button type="primary" shape="round">
+              <p>New Price</p>
+              <p>{Math.round(props.price /1.3)}$</p>
+              </button>
               
             </div>
             <section>
@@ -16,11 +20,11 @@ const SliderItem = props => {
                 src={props.url}
                 alt="img"
               />
-              <span>
-                Posted by <strong>Vasyl</strong>
-              </span>
+              <p>
+                Posted by <strong>DAN-IT Monster-Students</strong>
+              </p>
             </section>
-          </div>
+          </Link>
         
     
   )
