@@ -11,7 +11,7 @@ export const ProductListPage = (props) => {
     const [stepShownItems, setStepShownItems] = useState(9);
 
     const getProductsByCategory = async() => { 
-        const response = await fetch("/getProducts",{
+        const response = await fetch("/get_poroducts",{
             method:'POST',
             headers: {
                 'Content-Type': 'application/json'
