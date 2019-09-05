@@ -14,6 +14,11 @@ client.connect(err => {
     app.users = client.db("final_project").collection("users");
     app.baskets = client.db("final_project").collection("baskets");
     app.orders = client.db("final_project").collection("orders");
+    app.products.updateMany({}, {
+        $set: {
+            "category": "guitars"
+        }
+    })
 });
 
 app.use(bodyParser.json());
@@ -51,8 +56,8 @@ app.post('/product_search', async (req, res) => {
 
 app.post('/get_products', async (req, res) => {
     let prodArray = [];
-    let {category, start, end} = req.body;
-    await app.products.find({"category": category}).skip(start).limit(end).forEach((item) => {
+    let {category, skip, limit} = req.body;
+    await app.products.find({"category": category}).skip(skip).limit(limit).forEach((item) => {
         prodArray.push(item)
     });
     res.send(JSON.stringify(prodArray))
