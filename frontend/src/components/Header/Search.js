@@ -9,12 +9,12 @@ export const Search =() =>{
             headers: {
                 'Content-Type': 'application/json'
             },
-            body:{
+            body:JSON.stringify({
                 q: `${event.target.value}`
-            }
+            })
         });
         const responseJSON = await response.json();
-
+        console.log(responseJSON);
     }
 
     return(
