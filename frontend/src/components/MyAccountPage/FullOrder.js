@@ -1,4 +1,7 @@
 import React from 'react'
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+
+import './scss/style.scss'
 
 export const FullOrder = (props) => {
 
@@ -16,27 +19,23 @@ export const FullOrder = (props) => {
                             return <p className="card-text" key={"ord" + index}>{item}</p>
                         })
                         return (
-                            <div className="card m-2 p-fixed" key={index}>
-                                <div className="card-body d-flex flex-column flex-wrap">
-                                    {allOrders}
-                                </div>
+                            <div className="full-order-info__products__items" key={index}>
+                                {allOrders}
                             </div>) 
                         })
 
-                    console.log(address);
-                    console.log(products);
                     return (
-                        <div className="card m-2 p-fixed">
-                            <div className="card-body">
+                        <div className="full-order-info">
+                            <div className="full-order-info__text">
                                 <p className="card-title">{data.order_no}</p>
                                 <p className="card-text">{data.creation_date}</p>
                                 <p className="card-text">{data.order_total}</p>
                                 <p className="card-text">{data.currency}</p> 
                                 <p className="card-text">{address}</p>       
                                 <p className="card-text">{data.customer_info.customer_no}</p>    
-                                <p className="card-text">{data.customer_info.email}</p>
-                                <div className="d-flex">{products}</div>     
+                                <p className="card-text">{data.customer_info.email}</p>  
                             </div>
+                            <div className="full-order-info__products">{products}</div>   
                         </div>
                         )
                         
