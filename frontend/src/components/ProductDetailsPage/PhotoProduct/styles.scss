@@ -1,0 +1,51 @@
+.ant-carousel {
+	text-align: center;
+	height: 400px;
+	overflow: hidden;
+}
+
+.ant-carousel {
+	& .slick-slide h3 {
+		color: #fff;
+	}
+}
+
+.slick-slider {
+	padding-top: 30px;
+}
+
+.slick-dots-bottom {
+	top: 365px;
+}
+
+img {
+	width: 100%;
+}
+
+.product-details__container--photo {
+	& .ant-carousel {
+		& .slick-dots {
+			& button {
+				width: 30px;
+				height: 30px;
+				border-radius: 30px;
+				background-color: black;
+			}
+		}
+	}
+}
+
+.product-details__container--photo {
+	& .ant-carousel {
+		& .slick-dots {
+			& .slick-active {
+				button {
+					width: 30px;
+					height: 30px;
+					border-radius: 30px;
+					background-color: black;
+				}
+			}
+		}
+	}
+}
