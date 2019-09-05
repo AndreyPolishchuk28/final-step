@@ -8,25 +8,31 @@ function callback(key) {
 	console.log(key);
 }
 
-const InfoProduct = () => {
+const InfoProduct = ({product}) => {
+	console.log(product);
 	return (
 		<div>
 			<div>
-				<h1>Name of product</h1>
+				<h2>{product.name}</h2>
 			</div>
 			<div>
-				<h3>Hwo is make</h3>
+				<h3>{product.producer}</h3>
 			</div>
 			<div>
-				<h2>Price</h2>
+				<h2>$ {product.price}</h2>
 			</div>
 			<Tabs className="info-product__tabs" defaultActiveKey="1" onChange={callback}>
-				<TabPane tab="Tab 1" key="1">
-					Content of Tab Pane 1filter: brightness(137%);filter: brightness(137%);filter:
-					brightness(137%);filter: brightness(137%);filter: brightness(137%);filter: brightness(137%);
+				<TabPane tab="Category" key="1">
+					<h3>{product.category}</h3>
 				</TabPane>
-				<TabPane tab="Tab 2" key="2">
-					Content of Tab Pane 2
+				<TabPane tab="Color" key="2">
+					<h3>{product.color}</h3>
+				</TabPane>
+				<TabPane tab="Number of frets" key="3">
+					<h3>{product.number_of_frets}</h3>
+				</TabPane>
+				<TabPane tab="Scale length" key="4">
+					<h3>{product.scale_length}</h3>
 				</TabPane>
 			</Tabs>
 			<div className="info-product">

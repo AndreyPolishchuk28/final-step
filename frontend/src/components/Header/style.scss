@@ -100,16 +100,13 @@
 
 .main-navbar{
   background: #282828;
-  padding: 10px 0;
-}
-
-ul{
-  margin-bottom: 0;
+  padding: 16px 0;
 }
 
 .category-item{
   color: #fff;
   margin-right: 30px;
+  padding: 30px;
 }
 
 a:hover{
@@ -123,7 +120,10 @@ a:hover{
   margin: 5px 5px 6px;
   background-color: #565656;
   border-radius: 4px;
+}
 
+.menu-btn:hover{
+  color: #fff;
 }
 
 .slicknav-menutxt{
@@ -137,6 +137,34 @@ a:hover{
 .main-menu-height{
   height: 0;
   opacity: 0;
+}
+
+.main-menu{
+  margin-bottom: 0;
+  position: relative;
+}
+
+.sub-menu{
+  position: absolute;
+  list-style: none;
+  width: 220px;
+  left: 44px;
+  top: -12px;
+  padding: 20px 0;
+  visibility: hidden;
+  opacity: 0;
+  margin-top: 50px;
+  background: #fff;
+  z-index: 99;
+}
+
+.sub-menu-over{
+  visibility: visible;
+  opacity: 1;
+}
+
+.main-menu a{
+  padding: 20px;
 }
 
 
@@ -174,4 +202,5 @@ a:hover{
     text-align: center;
   }
 }
+
 
