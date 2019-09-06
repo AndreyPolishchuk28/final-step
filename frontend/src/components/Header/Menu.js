@@ -39,7 +39,6 @@ export const Menu = () =>{
                     {category}
                 </ul>
             </div>
-
         </nav>
     )
 }

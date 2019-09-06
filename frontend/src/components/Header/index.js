@@ -30,7 +30,6 @@ export const Header = () => {
                                         <span className='basket-quantity'>0</span>
                                     </div>
                                         <Link to='/card'><span className='shopping-cart'>Shopping Cart</span></Link>
-
                                 </div>
                             </div>
                         </div>

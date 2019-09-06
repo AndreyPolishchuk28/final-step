@@ -1,7 +1,11 @@
 import React from 'react'
+import {ModalWindow} from "./ModalWindow";
 
 export const LoginPage = () => {
     return (
-        <div></div>
+        <div>
+            <ModalWindow/>
+
+        </div>
     )
 };

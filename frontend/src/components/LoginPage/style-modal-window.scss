@@ -1,0 +1,126 @@
+.modal-background{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0,0,0,.5);
+  overflow: hidden;
+  z-index: 1;
+}
+
+.login-menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+  z-index: 1;
+  width: 500px;
+  font-size: 14px;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: #030303;
+  border-radius: 4px;
+}
+
+.login-menu-header{
+  position: relative;
+  bottom: 6px;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.login-menu-subtitle{
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.57;
+  color: #33333a;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.login-close-btn{
+  align-items: center;
+  align-self: flex-end;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(0,0,0,.8);
+  margin: 15px 15px 0;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 700;
+  opacity: 1;
+  border-color: #000;
+  display: flex;
+  justify-content: center;
+}
+
+.login-menu-form{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.field-wrapper{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.login-input-title{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 14px;
+  margin: 7px 0;
+}
+
+.login-email-input{
+  width: 396px;
+  height: 36px;
+  margin: 5px 0 13px;
+  padding-left: 10px;
+  border: 1px solid #eaeaea;
+  border-radius: 4px;
+  outline: none;
+}
+
+.login-submit-btn{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 270px;
+  height: 48px;
+  border-radius: 25px;
+  background-color: #33333a;
+  border: 1px solid #33333a;
+  cursor: pointer;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 16px;
+  outline: none;
+}
+
+.registration-wrapper{
+  width: 100%;
+  background-color: #33333a;
+  height: 83px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.register-btn{
+  background-color: #fff;
+  color: #000;
+}
+
