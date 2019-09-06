@@ -1,8 +1,26 @@
 import React from "react";
 import './style-modal-window.css'
 
-
 export const ModalWindow = () =>{
+
+        const LoginAuth = async () =>{
+            const email = document.getElementById('email');
+            const password = document.getElementById('password');
+
+            const response = await fetch ('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: `${email.value}`,
+                    password: `${password.value}`
+                })
+            })
+            const responseJSON = await response.json()
+        }
+
+
     return(
         <div className='modal-background'>
             <div className='login-menu'>
@@ -13,14 +31,14 @@ export const ModalWindow = () =>{
                                 <div className='field-wrapper'>
                                     <label className='login-input-title'>
                                         E-mail
-                                        <input name='email' type='text' placeholder='Your email...' className='login-email-input'/>
+                                        <input key='001' id='email' name='email' type='text' placeholder='Your email...' className='login-email-input'/>
                                     </label>
                                     <label className='login-input-title'>
                                         Password
-                                        <input name='password' type='password' placeholder='Your password...' className='login-email-input'/>
+                                        <input key='002' id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
                                     </label>
                                 </div>
-                                <button name='loginSubmit' type='submit' className='login-submit-btn'>LOG IN</button>
+                                <button onClick={LoginAuth} name='loginSubmit' type='submit' className='login-submit-btn'>LOG IN</button>
                             </form>
                 <div className='registration-wrapper'>
                     <div className='register-btn login-submit-btn'>REGISTER HERE</div>
@@ -28,7 +46,4 @@ export const ModalWindow = () =>{
             </div>
         </div>
         )
-
-
-
 }
