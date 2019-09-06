@@ -1,79 +1,22 @@
 import React, {useState} from 'react'
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Orders} from './Orders'
+import {AccInfoChange} from './AccInfoChange'
+import {AccInfo} from './AccInfo'
+
+import './scss/style.scss'
 
 export const MyAccountPage = (props) => {
-
-    const [ pageState, setPageState] = useState(true)
-
-    const [ userInfo, setUserInfo] = useState({
-        ...props
-    })
-
-    //УДАЛИТЬ КОГДА БУДЕТ СВЯЗЬ С ДБ
-    const [ firstName, setFirstName] = useState(userInfo.first_name)
-    const [ lastName, setLastName] = useState(userInfo.last_name)
-
-    
-    console.log(userInfo);
-
-    const changeHandlerName = (event) => {
-        setFirstName(event.target.value)
-    }
-
-    const changeHandlerSurname = (event) => {
-        setLastName(event.target.value)
-    }
-
-    const submithandler = () => {
-        setUserInfo({
-            ...props,
-            first_name: firstName,
-            last_name: lastName
-        })
-        changePage()
-    }
-
-
-    const changePage = () => {
-        if(pageState) {
-            setPageState(false)
-        }
-        if(!pageState) {
-            setPageState(true)
-        } 
-    }
-
-    const info = () => {
-        if(!pageState) {
-            return (
-                <div className="d-flex flex-column">   
-                    <input type="text" onChange={changeHandlerName} value={firstName}/>
-                    <input type="text" onChange={changeHandlerSurname} value={lastName}/>
-                    <h2>{userInfo.first_name + " " + userInfo.last_name}</h2>
-                    <button onClick={changePage}>Decline changes</button>
-                    <button onClick={submithandler}>Submit</button>
-                </div>
-            )
-        }  
-        return (
-            <div>   
-                <button onClick={changePage}>Change profile info</button>
-                <h2>{userInfo.first_name}</h2>
-                <h2>{userInfo.last_name}</h2>
-                <h2>{userInfo.full_name}</h2>
-                <h2>{userInfo.email}</h2>
-                <Orders/>
-            </div>
-        )
-    }
-
-
-
     return (
-        <div className="m-5">
-            <div>{info()}</div>
-        </div>
-    )
+        <Router>
+            <Switch>
+                <Route exact path='/account' component={AccInfo}/>
+                <Route path='/account/info/change' component={AccInfoChange}/>
+                <Route exact path='/account/orders' component={Orders}/>
+                <Route exact path='/account/orders/fullone' component={Orders}/>
+            </Switch>
+        </Router>
+        )
 };
 
 MyAccountPage.defaultProps = {

@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
+
 const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 const API_PORT = 9000;
@@ -10,6 +12,13 @@ const app = express();
 client.connect(err => {
     app.products = client.db("final_project").collection("products");
     app.users = client.db("final_project").collection("users");
+    app.baskets = client.db("final_project").collection("baskets");
+    app.orders = client.db("final_project").collection("orders");
+    app.products.updateMany({}, {
+        $set: {
+            "category": "guitars"
+        }
+    })
 });
 
 app.use(bodyParser.json());
@@ -43,6 +52,20 @@ app.post('/product_search', async (req, res) => {
         }
     });
     res.send(JSON.stringify(prodArray))
+});
+
+app.post('/get_products', async (req, res) => {
+    let prodArray = [];
+    let {category, skip, limit} = req.body;
+    await app.products.find({"category": category}).skip(skip).limit(limit).forEach((item) => {
+        prodArray.push(item)
+    });
+    res.send(JSON.stringify(prodArray))
+});
+
+app.post('/customer', async (req, res) => {
+    let user = await app.users.findOne(ObjectId(req.body.id));
+    res.send(JSON.stringify(user))
 });
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index.html')));

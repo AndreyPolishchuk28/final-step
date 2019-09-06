@@ -1,42 +1,66 @@
 import React, { useState } from 'react'
 import {FullOrder} from './FullOrder'
+import {Link} from 'react-router-dom';
+
+import {Col, Row, Button} from 'antd'
+import './scss/style.scss'
 
 export const Orders = (props) => {
 
+    const [ pageState, setPageState] = useState(true)
 
-        const [orderData, setOrderData] = useState(props.orders[0])
+    const changePage = () => {
+        setPageState(!pageState)
+    }
 
-        const getOrderData = (event) => {
-            const id = event.currentTarget.children[0].children[0].innerText
+    const [orderData, setOrderData] = useState(props.orders[0])
+
+    const getOrderData = (event) => {
+        const id = event.currentTarget.children[0].children[0].innerText
             
-            props.orders.forEach( item => {
-                if(item.order_no === id){  
-                    console.log(item);
-                    setOrderData(item)
-                  }
-            }
-            )
-        }
-
-        const orders = props.orders.map((item, index) => {
-            return (
-                <div className="card m-2" key={index} onClick={getOrderData}>
-                    <div className="card-body">
-                        <p className="card-title">{item.order_no}</p>
-                        <p className="card-text">{item.creation_date}</p>
-                        <p className="card-text">{item.order_total}</p>
-                        <p className="card-text">{item.currency}</p>     
-                    </div>
-                </div>
-            )
+        props.orders.forEach( item => {
+             if(item.order_no === id){  
+                console.log(item);
+                setOrderData(item)
+                }
         })
+        changePage()
+    }
 
+    const orders = props.orders.map((item, index) => {
         return (
-            <div>
-                <div className="d-flex">{orders}</div>
-                 <FullOrder data = {orderData}/> 
+            <div className="card m-2" key={index} onClick={getOrderData}>
+                <div className="card-body">
+                    <p className="card-title">{item.order_no}</p>
+                    <p className="card-text">{item.creation_date}</p>
+                    <p className="card-text">{item.order_total}</p>
+                    <p className="card-text">{item.currency}</p>     
+                </div>
             </div>
+        )
+    })
+
+    const showPage = () => {
+        if(!pageState) {
+            return (
+                    <div className="full-roder-wrapper">
+                        <button className={"button-history"} size="large" type="default"  onClick={changePage}><i class="fas fa-clipboard-list"></i>Go to history</button>
+                        <FullOrder data = {orderData}/>
+                    </div>
+                
+                )
+            }
+        return (
+                        <div className="d-flex">
+                            <Link exact to="/account">
+                                <button className={"button-history"} size="large" type="default"  onClick={changePage}><i class="far fa-id-card"></i>Go to account</button>
+                            </Link>
+                        {orders}
+                        </div>
             )
+    }
+
+    return showPage()
 };
 
 Orders.defaultProps ={
