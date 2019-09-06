@@ -142,6 +142,7 @@ a:hover {
 .main-menu {
   margin-bottom: 0;
   position: relative;
+  z-index: 2;
 }
 
 .sub-menu {
