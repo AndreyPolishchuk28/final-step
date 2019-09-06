@@ -22,15 +22,14 @@ export const Header = () => {
                             <div className='user-panel'>
                                 <div className='up-item'>
                                     <i className="far fa-user"></i>
-                                    <Link to='login'><span className='login'>Login</span></Link>
+                                    <Link to='/login'><span className='login'>Login</span></Link>
                                 </div>
                                 <div className='up-item'>
                                     <div className='shopping-card'>
                                         <i className="fas fa-shopping-bag"></i>
                                         <span className='basket-quantity'>0</span>
                                     </div>
-                                        <Link to='card'><span className='shopping-cart'>Shopping Cart</span></Link>
-
+                                        <Link to='/card'><span className='shopping-cart'>Shopping Cart</span></Link>
                                 </div>
                             </div>
                         </div>
