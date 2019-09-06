@@ -1,6 +1,7 @@
 import React  from "react";
 import './style.css'
 import {Link} from "react-router-dom";
+import index from "styled-components/dist/styled-components-macro.esm";
 
 const item = ['Guitars', 'Keyboards', 'Drums', 'Microphones', 'Earphones'];
 
