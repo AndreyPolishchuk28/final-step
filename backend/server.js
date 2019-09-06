@@ -3,9 +3,14 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
+const session = require('express-session');
+const passport = require('passport');
+const localStrategy = require('passport-local').Strategy;
+const MongoDBStore = require('connect-mongodb-session')(session);
 
 const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
+const sessionsStore = new MongoDBStore({uri: uri, collection: 'mySessions'});
 const API_PORT = 9000;
 const app = express();
 
@@ -14,16 +19,50 @@ client.connect(err => {
     app.users = client.db("final_project").collection("users");
     app.baskets = client.db("final_project").collection("baskets");
     app.orders = client.db("final_project").collection("orders");
-    app.products.updateMany({}, {
-        $set: {
-            "category": "guitars"
-        }
-    })
 });
 
 app.use(bodyParser.json());
 
 app.use(express.static(path.join(__dirname, "static/build")));
+
+
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+
+app.use(session({
+    secret: 'This is a secret',
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    },
+    store: sessionsStore,
+    resave: true,
+    saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use('login', new localStrategy({
+        passReqToCallback : true
+    },
+    function(req, username, password, done) {
+        app.users.findOne({ 'email' :  username },
+            function(err, user) {
+                if (err)
+                    return done(err);
+                if (!user){
+                    console.log('User Not Found with username '+username);
+                    return done(null, false,
+                        req.flash('message', 'User Not found.'));
+                }
+                if (user.password !== password){
+                    console.log('Invalid Password');
+                    return done(null, false,
+                        req.flash('message', 'Invalid Password'));
+                }
+                return done(null, user);
+            }
+        );
+    }));
 
 app.get('/category/:id', async (req, res) => {
     let reqBody = {
@@ -63,6 +102,12 @@ app.post('/get_products', async (req, res) => {
     res.send(JSON.stringify(prodArray))
 });
 
+app.post('/login', passport.authenticate('login', {
+    successRedirect: '/',
+    failureRedirect: '/',
+    failureFlash : true
+}));
+
 app.post('/customer', async (req, res) => {
     let user = await app.users.findOne(ObjectId(req.body.id));
     res.send(JSON.stringify(user))
@@ -72,4 +117,11 @@ app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index
 
 app.listen(API_PORT, () => console.log(`Server listening on port ${API_PORT}`));
 
-console.log("ok");
+function authenticationMiddleware () {
+    return function (req, res, next) {
+        if (req.isAuthenticated()) {
+            return next()
+        }
+        res.redirect('/')
+    }
+}
