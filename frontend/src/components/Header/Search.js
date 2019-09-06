@@ -29,7 +29,7 @@ export const Search =() =>{
             setProducts([])
             }
     }
-    console.log(products);
+
     return(
         <div className='col-xl-6 col-lg-5'>
             <form className='header-search-form'>
