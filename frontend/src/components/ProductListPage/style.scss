@@ -11,8 +11,30 @@
 .page-top-text {
     padding-left: 30px;
 }
+
+.category-header, .price-sorting {
+    display: inline-block;
+}
+
+.price-sorting {
+    display: flex;
+    float: right;
+    padding: 0px 30px;
+    &__header{
+        color: #111111;
+        text-transform: uppercase;
+
+    }
+    &__button {
+        margin-left: 20px;
+    }
+    & p {
+        display: inline-block;
+    }
+}
+
 .pagelist-content {
-    margin: 0px 30px;
+    margin: 30px 30px;
 }
 
 .pi-picture {
@@ -52,10 +74,9 @@
     width: 100%;
     display: block;
     position: absolute;
-    bottom: 5px;
+    bottom: 100px;
     box-sizing: border-box;
-    padding: 15px;
-
+    padding: 10px 35px;
     text-align: right;
 }
 .pi-links .add-card {
@@ -98,4 +119,15 @@
     border-radius: 35px;
     padding: 10px 37px;
     color: black;
+}
+
+.price-sorting__button{
+    cursor: pointer;
+    &:hover {
+        color: black;
+    }
+}
+
+@media only screen and (min-width : 320px) and (max-width : 480px) {
+    .price-sorting {margin-top: 30px;}
 }
