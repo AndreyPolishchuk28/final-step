@@ -27,7 +27,7 @@ export const ModalWindow = () =>{
                 <div className='login-close-btn'>x</div>
                     <h2 className='login-menu-header'>Login</h2>
                         <p className='login-menu-subtitle'>Please enter your account details</p>
-                            <form className='login-menu-form'>
+                            <div className='login-menu-form'>
                                 <div className='field-wrapper'>
                                     <label className='login-input-title'>
                                         E-mail
@@ -38,8 +38,8 @@ export const ModalWindow = () =>{
                                         <input key='002' id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
                                     </label>
                                 </div>
-                                <button onClick={LoginAuth} name='loginSubmit' type='submit' className='login-submit-btn'>LOG IN</button>
-                            </form>
+                                <button onClick={LoginAuth} name='loginSubmit' className='login-submit-btn'>LOG IN</button>
+                            </div>
                 <div className='registration-wrapper'>
                     <div className='register-btn login-submit-btn'>REGISTER HERE</div>
                 </div>
