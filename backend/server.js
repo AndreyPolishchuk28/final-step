@@ -32,12 +32,12 @@ app.get('/category/:id', async (req, res) => {
             reqBody.products.push(item)
         }
     });
-    res.status(200).send(reqBody)
+    res.send(reqBody)
 });
 
 app.get('/products/:id', async (req, res) => {
     let prod = await app.products.findOne({'id': req.params.id});
-    res.status(200).send(prod)
+    res.send(prod)
 });
 
 app.post('/product_search', async (req, res) => {
@@ -62,13 +62,21 @@ app.post('/get_products', async (req, res) => {
 
 app.post('/login', async (req, res) => {
     const user = await app.users.findOne({"email": req.body.username});
-    const sessionKey = user._id + Date.now();
-    if (user.password === req.body.password) {
-        await app.sessions.insertOne({sessionKey: sessionKey, user: user});
-        res.cookie('sessionKey', sessionKey, {
-            maxAge: 1000 * 60 * 60 * 24 * 30,
-            httpOnly: false, // The cookie only accessible by the web server
-        }).status(200).send('Logged');
+    let sessionKey;
+    if (user) {
+        sessionKey = user._id + Date.now();
+        if (user.password === req.body.password) {
+            await app.sessions.insertOne({sessionKey: sessionKey, userId: user._id});
+            res.cookie('sessionKey', sessionKey, {maxAge: 2592000000});
+            if (user.basket) {
+                res.cookie('basket', user.basket, {maxAge: 2592000000});
+            }
+            res.send('Logged')
+        }else {
+            res.send('Invalid password')
+        }
+    } else {
+        res.send('User is not found')
     }
 });
 
@@ -79,7 +87,7 @@ app.get('/logout', async (req, res) => {
 
 app.get('/get_login_status', async (req, res) => {
     if (req.cookies.sessionKey && await app.sessions.findOne({sessionKey: req.cookies.sessionKey})) {
-        res.status(200).send(true)
+        res.send(true)
     } else  {
         res.send(false)
     }
@@ -88,6 +96,35 @@ app.get('/get_login_status', async (req, res) => {
 app.post('/customer', async (req, res) => {
     const user = await app.users.findOne(ObjectId(req.body.id));
     res.send(JSON.stringify(user))
+});
+
+app.post('/add_to_basket', async (req, res) => {
+    if (req.cookies.basket) {
+        let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
+        if(currentBasket.products.some((item) => item.id === req.body.id)) {
+            currentBasket.products.forEach((item) => {
+                if (item.id === req.body.id) {item.quantity = +item.quantity + +req.body.quantity}
+            })
+        } else {
+            currentBasket.products.push(req.body)
+        }
+        await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
+            $set: {
+                products: currentBasket.products
+            }
+        });
+        res.send('product is added');
+    } else {
+        let basket = await app.baskets.insertOne({
+            products: [req.body]
+        });
+        res.cookie('basket', basket.insertedId).send('created new basket');
+        if (req.cookies.sessionKey && await app.sessions.findOne({"sessionKey": req.cookies.sessionKey})) {
+            await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
+                $set: {basket: basket.insertedId}
+            })
+        }
+    }
 });
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index.html')));
