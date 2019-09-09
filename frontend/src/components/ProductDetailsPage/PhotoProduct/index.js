@@ -3,13 +3,13 @@ import { Carousel } from 'antd';
 import './styles.scss';
 
 const PhotoProduct = ({ product }) => {
-	console.log(product);
 	let photo = product.photo;
-	console.log(photo);
 	let caruselItems = photo.map((item) => {
 		return (
-			<div className="photo-product__container">
-				<img src={`/static/img/${item}`} />
+			<div key={item}>
+				<div className="carusel-wrapp">
+					<img src={`/static/img/${item}`} />
+				</div>
 			</div>
 		);
 	});
