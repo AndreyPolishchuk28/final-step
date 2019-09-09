@@ -5,7 +5,7 @@ import './styles.scss';
 import { Row, Col } from 'antd';
 
 export const ProductDetailsPage = (props) => {
-	const [ product, setProduct ] = useState();
+	const [product, setProduct] = useState();
 
 	const getProduct = async () => {
 		const response = await fetch(`/products/${props.match.params.id}`);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.scss';
 import { Tabs, Icon } from 'antd';
 
@@ -9,7 +9,33 @@ function callback(key) {
 }
 
 const InfoProduct = ({ product }) => {
-	console.log(product._id)
+	let productId = product._id;
+
+	const [ count, setCount ] = useState(1);
+	console.log(count);
+
+	const addToBasketRes = async () => {
+		 await fetch('/add_to_basket', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				id: productId,
+				quantity: count
+			})
+		});
+	};
+
+	let increment = () => {
+		setCount(count + 1);
+	};
+
+	let decrement = () => {
+		if (count > 1)
+		setCount(count - 1);
+	};
+
 	return (
 		<div>
 			<div>
@@ -37,9 +63,17 @@ const InfoProduct = ({ product }) => {
 			</Tabs>
 			<div className="info-product">
 				<div>
-					<button className="info-product__button">Add product</button>
+					<button onClick={addToBasketRes} className="info-product__button">
+						Add product
+					</button>
 					<span className="qty-text">QTY</span>
-					<input type="number" className="info-product__qty" />
+					<button onClick={increment} className="info-product__addQty">
+						+
+					</button>
+					<input value={count} type="text" className="info-product__qty" readOnly />
+					<button onClick={decrement} className="info-product__addQty">
+						-
+					</button>
 				</div>
 
 				<div>

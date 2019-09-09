@@ -38,7 +38,6 @@
   font-weight: 600;
   line-height: 1.57;
   color: #33333a;
-  margin-top: 20px;
   margin-bottom: 15px;
 }
 
@@ -62,7 +61,7 @@
 }
 
 .login-menu-form {
-  width: 90%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -122,6 +121,18 @@
 .register-btn {
   background-color: #fff;
   color: #000;
+}
+
+.register {
+  border: none;
+  background-color: inherit;
+  margin-top: 30px;
+}
+
+.registration-btn {
+  background-color: #33333a;
+  color: #fff;
+  margin: 40px;
 }
 
 /*# sourceMappingURL=style-modal-window.css.map */
