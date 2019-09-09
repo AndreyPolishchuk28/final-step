@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import {Orders} from './Orders'
 import {AccInfoChange} from './AccInfoChange'
@@ -6,7 +6,7 @@ import {AccInfo} from './AccInfo'
 
 import './scss/style.scss'
 
-export const MyAccountPage = (props) => {
+export const MyAccountPage = () => {
     return (
         <Router>
             <Switch>
@@ -18,10 +18,3 @@ export const MyAccountPage = (props) => {
         </Router>
         )
 };
-
-MyAccountPage.defaultProps = {
-    first_name: "Ivan",
-    full_name: "Ivan Bohatov",
-    last_name: "Bohatov",
-    email: "ibohatov@mail.com",
-}

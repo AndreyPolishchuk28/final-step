@@ -1,9 +1,32 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Button, Input, Col, Row} from 'antd'
 import {Link} from 'react-router-dom';
 import './scss/style.scss'
 
 export const AccInfo = (props) => { 
+
+    const [userInfo, setUserInfo] = useState();
+
+    const getUserInfo = async () => {
+        const response = await fetch("/customer",{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: "5d6e358a1c9d440000d263f6"
+            })
+        })
+
+        const responseJSON = await response.json();
+        setUserInfo(responseJSON);
+        console.log(userInfo);
+    }
+
+    useEffect(() => {
+        getUserInfo();
+    }, [])
+
     return (
         <div className={"info-container"}>   
             <Link exact to="/account/orders">

@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {Button, Input, Col, Row} from 'antd'
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './scss/style.scss'
 
 export const AccInfoChange = (props) => {
