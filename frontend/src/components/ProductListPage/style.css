@@ -12,8 +12,28 @@
   padding-left: 30px;
 }
 
+.category-header, .price-sorting {
+  display: inline-block;
+}
+
+.price-sorting {
+  display: flex;
+  float: right;
+  padding: 0px 30px;
+}
+.price-sorting__header {
+  color: #111111;
+  text-transform: uppercase;
+}
+.price-sorting__button {
+  margin-left: 20px;
+}
+.price-sorting p {
+  display: inline-block;
+}
+
 .pagelist-content {
-  margin: 0px 30px;
+  margin: 30px 30px;
 }
 
 .pi-picture {
@@ -50,9 +70,9 @@
   width: 100%;
   display: block;
   position: absolute;
-  bottom: 5px;
+  bottom: 100px;
   box-sizing: border-box;
-  padding: 15px;
+  padding: 10px 35px;
   text-align: right;
 }
 
@@ -98,6 +118,19 @@
   border-radius: 35px;
   padding: 10px 37px;
   color: black;
+}
+
+.price-sorting__button {
+  cursor: pointer;
+}
+.price-sorting__button:hover {
+  color: black;
+}
+
+@media only screen and (min-width: 320px) and (max-width: 480px) {
+  .price-sorting {
+    margin-top: 30px;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
