@@ -98,6 +98,13 @@ app.get('/customer', checkAuthMiddleware(), async (req, res) => {
     res.send(JSON.stringify(user))
 });
 
+app.post('/change_customer_info', checkAuthMiddleware(), async (req, res) => {
+    await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
+        $set: {...req.body}
+    });
+    res.send('User info changed')
+});
+
 app.post('/add_to_basket', async (req, res) => {
     if (req.cookies.basket) {
         let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
