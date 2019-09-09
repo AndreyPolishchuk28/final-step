@@ -87,14 +87,14 @@ app.get('/logout', async (req, res) => {
 
 app.get('/get_login_status', async (req, res) => {
     if (req.cookies.sessionKey && await app.sessions.findOne({sessionKey: req.cookies.sessionKey})) {
-        res.send(true)
+        res.send(JSON.stringify({loginStatus: true}))
     } else  {
-        res.send(false)
+        res.send(JSON.stringify({loginStatus: false}))
     }
 });
 
-app.post('/customer', async (req, res) => {
-    const user = await app.users.findOne(ObjectId(req.body.id));
+app.get('/customer', checkAuthMiddleware(), async (req, res) => {
+    const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
     res.send(JSON.stringify(user))
 });
 
@@ -144,6 +144,15 @@ app.post('/change_quantity', async (req, res) => {
         $set: {products: currentBasket.products}
     });
     res.send('quantity changed')
+});
+
+app.get('/quantity_products', async (req, res) => {
+    if (req.cookies.basket) {
+        let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
+        res.send(JSON.stringify({QuantityProducts: currentBasket.products.length}))
+    } else {
+        res.send(JSON.stringify({QuantityProducts: 0}))
+    }
 });
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index.html')));
