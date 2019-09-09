@@ -8,8 +8,8 @@ function callback(key) {
 	console.log(key);
 }
 
-const InfoProduct = ({product}) => {
-	console.log(product);
+const InfoProduct = ({ product }) => {
+	console.log(product._id)
 	return (
 		<div>
 			<div>
@@ -39,7 +39,7 @@ const InfoProduct = ({product}) => {
 				<div>
 					<button className="info-product__button">Add product</button>
 					<span className="qty-text">QTY</span>
-					<input value="0" type="text" className="info-product__qty" readonly />
+					<input type="number" className="info-product__qty" />
 				</div>
 
 				<div>
