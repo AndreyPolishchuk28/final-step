@@ -2,13 +2,13 @@ import React from "react";
 import '../LoginPage/style-modal-window.css'
 
 export const Registration = () =>{
-    const name = document.getElementById('name');
-    const lastName = document.getElementById('lastName');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
-
     const registrationUser = async () =>{
+        const name = document.getElementById('name');
+        const lastName = document.getElementById('lastName');
+        const email = document.getElementById('email');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+
         const response = await fetch('/new_user', {
             method: 'POST',
             headers: {
