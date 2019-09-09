@@ -1,54 +1,55 @@
 import React, {useState} from 'react'
 import {Button, Input, Col, Row} from 'antd'
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import './scss/style.scss'
 
 export const AccInfoChange = (props) => {
-    const [ userInfo, setUserInfo] = useState({
-        ...props
-    })
 
-    //УДАЛИТЬ КОГДА БУДЕТ СВЯЗЬ С ДБ
-    const [ firstLast, setFirstLast] = useState({
-        "name": userInfo.first_name,
-        "surname": userInfo.last_name
+    const [ userChange, setUserChange] = useState({
+        ...props.userInfo
     })
+    
 
     const changeHandler = (event) => {
-        setFirstLast({
-            ...firstLast,
+        setUserChange({
+            ...userChange,
             [event.target.name]: event.target.value
         })
     }
 
-    const submitHandler = () => {
-        setUserInfo({
-            ...props,
-            first_name: firstLast.name,
-            last_name: firstLast.surname
-        })
+    const submitHandler = async () => {
+        const data = await {
+            first_name: userChange.first_name,
+            last_name: userChange.last_name,
+            email: props.userInfo.email
+        }
+
+        await fetch("/change_customer_info",{
+            method:'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+            })
+        
+        props.setUserInfo(data)
     }
   
     return (
         <Row  gutter={6}>
-            <Col align="center">
-                <Input type="text" onChange={changeHandler} defaultValue={firstLast.name} name="name"/>
-                <Input type="text" onChange={changeHandler} defaultValue={firstLast.surname} name="surname"/>
-                <h2>{firstLast.name + " " + firstLast.surname}</h2>
-                <Link exact to="/account">
-                    <Button type="Deafault">Decline changes</Button>
-                </Link>
-                <Link exact to="/account">
-                    <Button type="primary" onClick={submitHandler}>Submit</Button>
-                </Link>
-            </Col>
+            {  props.userInfo ?
+                <Col align="center">
+                    <Link exact to="/account/info/change/pass">
+                        <Button type="Deafault">change password</Button>
+                    </Link>
+                    <Input type="text" onChange={changeHandler} defaultValue={props.userInfo.first_name} name="first_name"/>
+                    <Input type="text" onChange={changeHandler} defaultValue={props.userInfo.last_name } name="last_name"/>
+                    <Link exact to="/account">
+                        <Button type="Deafault">Decline changes</Button>
+                        <Button type="primary" onClick={submitHandler}>Submit</Button>
+                    </Link>
+                </Col>
+                : null }
         </Row>
     )
 };
-
-AccInfoChange.defaultProps = {
-    first_name: "Ivan",
-    full_name: "Ivan Bohatov",
-    last_name: "Bohatov",
-    email: "ibohatov@mail.com",
-}
