@@ -93,9 +93,32 @@ app.get('/get_login_status', async (req, res) => {
     }
 });
 
+app.post('/new_user', async (req, res) => {
+    if (await app.users.findOne({"email": req.body.email})) {
+        res.send(JSON.stringify({registered: false}))
+    } else {
+        let user = {...req.body, orders: [], basket: ''};
+        if (req.cookies.basket) {
+            user.basket = req.cookies.basket
+        }
+        const insertedUser = await app.users.insertOne(user);
+        const sessionKey = insertedUser.insertedId + Date.now();
+        await app.sessions.insertOne({sessionKey: sessionKey, userId: insertedUser.insertedId});
+        res.cookie('sessionKey', sessionKey, {maxAge: 2592000000});
+        res.send(JSON.stringify({registered: true}))
+    }
+});
+
 app.get('/customer', checkAuthMiddleware(), async (req, res) => {
     const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
     res.send(JSON.stringify(user))
+});
+
+app.post('/change_customer_info', checkAuthMiddleware(), async (req, res) => {
+    await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
+        $set: {...req.body}
+    });
+    res.send('User info changed')
 });
 
 app.post('/add_to_basket', async (req, res) => {
@@ -116,12 +139,13 @@ app.post('/add_to_basket', async (req, res) => {
         let basket = await app.baskets.insertOne({
             products: [req.body]
         });
-        res.cookie('basket', basket.insertedId).send('created new basket');
+        res.cookie('basket', basket.insertedId);
         if (req.cookies.sessionKey && await app.sessions.findOne({"sessionKey": req.cookies.sessionKey})) {
             await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
                 $set: {basket: basket.insertedId}
             })
         }
+        res.send('created new basket');
     }
 });
 
