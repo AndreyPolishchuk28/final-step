@@ -109,11 +109,9 @@ app.post('/add_to_basket', async (req, res) => {
             currentBasket.products.push(req.body)
         }
         await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
-            $set: {
-                products: currentBasket.products
-            }
+            $set: {products: currentBasket.products}
         });
-        res.send('product is added');
+        res.send('product added');
     } else {
         let basket = await app.baskets.insertOne({
             products: [req.body]
@@ -125,6 +123,27 @@ app.post('/add_to_basket', async (req, res) => {
             })
         }
     }
+});
+
+app.get('/remove_from_basket/:id', async (req, res) => {
+    let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
+    const itemIndex = currentBasket.products.findIndex((item) => item.id === req.params.id);
+    currentBasket.products.splice(itemIndex, 1);
+    await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
+        $set: {products: currentBasket.products}
+    });
+    res.send('product removed')
+});
+
+app.post('/change_quantity', async (req, res) => {
+    let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
+    currentBasket.products.forEach((item) => {
+        if (item.id === req.body.id) {item.quantity = req.body.quantity}
+    });
+    await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
+        $set: {products: currentBasket.products}
+    });
+    res.send('quantity changed')
 });
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index.html')));
