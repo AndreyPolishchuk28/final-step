@@ -1,14 +1,22 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import './style.css'
 import {Link} from "react-router-dom";
 import {Search} from "./Search";
 import {Menu} from "./Menu";
-
 export const Header = () => {
-    // const [open, setOpen] = useState(true);
-    // const HandlerBtn = () =>{
-    //     setOpen(!open);
-    // };
+    const [loginStatus, setLoginStatus] = useState(false);
+    const checkLogin = async () =>{
+        const response =  await fetch('/get_login_status');
+        const responseJSON = await response.json();
+        setLoginStatus(responseJSON.loginStatus)
+    };
+    useEffect( () =>{
+        checkLogin()
+    }, []);
+    const logOut = async () =>{
+        await fetch('/logout');
+        checkLogin()
+    };
     return (
         <div>
             <div className='header-top'>
@@ -22,14 +30,21 @@ export const Header = () => {
                             <div className='user-panel'>
                                 <div className='up-item'>
                                     <i className="far fa-user"></i>
-                                    <Link to='/login'><span className='login'>Login</span></Link>
+                                    {loginStatus ?
+                                        <div>
+                                            <Link to='/account'><span>Account</span></Link>
+                                            <button onClick={logOut}>Logout</button>
+                                        </div>
+                                        :
+                                        <Link to='/login'><span className='login'>Login</span></Link>
+                                    }
                                 </div>
                                 <div className='up-item'>
                                     <div className='shopping-card'>
                                         <i className="fas fa-shopping-bag"></i>
                                         <span className='basket-quantity'>0</span>
                                     </div>
-                                        <Link to='/card'><span className='shopping-cart'>Shopping Cart</span></Link>
+                                    <Link to='/card'><span className='shopping-cart'>Shopping Cart</span></Link>
                                 </div>
                             </div>
                         </div>
