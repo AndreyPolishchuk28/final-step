@@ -25,7 +25,9 @@ export const ModalWindow = () =>{
     return(
         <div className='modal-background'>
             <div className='login-menu'>
+                <Link to='/'>
                 <div className='login-close-btn'>x</div>
+                </Link>
                     <h2 className='login-menu-header'>Login</h2>
                         <p className='login-menu-subtitle'>Please enter your account details</p>
                             <div className='login-menu-form'>
