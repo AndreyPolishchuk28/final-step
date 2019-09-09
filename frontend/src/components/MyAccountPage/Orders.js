@@ -16,14 +16,9 @@ export const Orders = (props) => {
 
     const getOrderData = (event) => {
         const id = event.currentTarget.children[0].children[0].innerText
-            
-        props.orders.forEach( item => {
-             if(item.order_no === id){  
-                console.log(item);
-                setOrderData(item)
-                }
-        })
-        changePage()
+
+        props.history.push(`/account/orders/${id}`)
+
     }
 
     const orders = props.orders.map((item, index) => {
@@ -54,9 +49,6 @@ export const Orders = (props) => {
                             <div className="orders-wrapper__items">
                                 {orders}
                             </div>
-                            <Link exact to="/account">
-                                <button className={"button-history"} size="large" type="default"  onClick={changePage}><i class="far fa-id-card"></i>Go to account</button>
-                            </Link>
                         </div>
             )
     }

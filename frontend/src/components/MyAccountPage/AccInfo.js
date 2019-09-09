@@ -7,9 +7,6 @@ export const AccInfo = (props) => {
 
     return (
         <div className={"info-container"}>   
-            <Link exact to="/account/orders">
-                <button className={"button-history"} size="large" type="default"><i class="fas fa-clipboard-list"></i>Show order history</button>
-            </Link>
             {props.userInfo ?
                 <div className={"info-container__items"}>
                 <h2>Name: {props.userInfo.first_name}</h2>

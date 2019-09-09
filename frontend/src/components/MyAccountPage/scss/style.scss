@@ -1,3 +1,14 @@
+
+.main-wrapper{
+    display: flex;
+}
+
+.acc-navigation{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
 .info-container{
     display: flex;
     flex-direction: column;
@@ -29,6 +40,9 @@
         font-size: 30px;
         left: 10px;
         top: 10px;
+    }
+    &:focus{
+        outline: none;
     }
 } 
 
