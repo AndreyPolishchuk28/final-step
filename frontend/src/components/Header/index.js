@@ -5,6 +5,8 @@ import {Search} from "./Search";
 import {Menu} from "./Menu";
 export const Header = () => {
     const [loginStatus, setLoginStatus] = useState(false);
+    const [quantity, setQuantity] = useState(0);
+
     const checkLogin = async () =>{
         const response =  await fetch('/get_login_status');
         const responseJSON = await response.json();
@@ -17,6 +19,17 @@ export const Header = () => {
         await fetch('/logout');
         checkLogin()
     };
+
+    const getQuantity = async() =>{
+        const response = await fetch('/quantity_products');
+        const responseJSON = await response.json()
+        setQuantity(responseJSON.QuantityProducts)
+    };
+
+    useEffect(() =>{
+        getQuantity()
+    }, []);
+
     return (
         <div>
             <div className='header-top'>
@@ -42,7 +55,7 @@ export const Header = () => {
                                 <div className='up-item'>
                                     <div className='shopping-card'>
                                         <i className="fas fa-shopping-bag"></i>
-                                        <span className='basket-quantity'>0</span>
+                                        <span onMouseOver={getQuantity} className='basket-quantity'>{quantity}</span>
                                     </div>
                                     <Link to='/card'><span className='shopping-cart'>Shopping Cart</span></Link>
                                 </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import './style-modal-window.css'
+import {Link} from "react-router-dom";
 
 export const ModalWindow = () =>{
 
@@ -40,9 +41,13 @@ export const ModalWindow = () =>{
                                 </div>
                                 <button onClick={LoginAuth} name='loginSubmit' className='login-submit-btn'>LOG IN</button>
                             </div>
-                <div className='registration-wrapper'>
-                    <div className='register-btn login-submit-btn'>REGISTER HERE</div>
-                </div>
+
+                    <div className='registration-wrapper'>
+                        <Link to='/registration'>
+                            <div className='register-btn login-submit-btn'>REGISTER HERE</div>
+                        </Link>
+                    </div>
+
             </div>
         </div>
         )
