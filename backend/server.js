@@ -54,6 +54,7 @@ app.post('/product_search', async (req, res) => {
 app.post('/get_products', async (req, res) => {
     let prodArray = [];
     const {category, skip, limit} = req.body;
+
     await app.products.find({"category": category}).skip(skip).limit(limit).forEach((item) => {
         prodArray.push(item)
     });
@@ -71,18 +72,18 @@ app.post('/login', async (req, res) => {
             if (user.basket) {
                 res.cookie('basket', user.basket, {maxAge: 2592000000});
             }
-            res.send('Logged')
+            res.send(JSON.stringify({message: 'Logged'}))
         }else {
-            res.send('Invalid password')
+            res.send(JSON.stringify({message: 'Invalid password'}))
         }
     } else {
-        res.send('User is not found')
+        res.send(JSON.stringify({message:'User is not found'}))
     }
 });
 
 app.get('/logout', async (req, res) => {
     await app.sessions.removeOne({"sessionKey": req.cookies.sessionKey});
-    res.clearCookie('sessionKey').send('Logouted');
+    res.clearCookie('sessionKey').clearCookie('basket').send('Logouted');
 });
 
 app.get('/get_login_status', async (req, res) => {
@@ -118,7 +119,7 @@ app.post('/change_customer_info', checkAuthMiddleware(), async (req, res) => {
     await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
         $set: {...req.body}
     });
-    res.send('User info changed')
+    res.send(JSON.stringify({message: 'User info changed'}))
 });
 
 app.post('/add_to_basket', async (req, res) => {
@@ -134,7 +135,7 @@ app.post('/add_to_basket', async (req, res) => {
         await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
             $set: {products: currentBasket.products}
         });
-        res.send('product added');
+        res.send(JSON.stringify({messege: 'product added'}));
     } else {
         let basket = await app.baskets.insertOne({
             products: [req.body]
@@ -145,7 +146,7 @@ app.post('/add_to_basket', async (req, res) => {
                 $set: {basket: basket.insertedId}
             })
         }
-        res.send('created new basket');
+        res.send(JSON.stringify({message:'created new basket'}));
     }
 });
 
@@ -156,7 +157,7 @@ app.get('/remove_from_basket/:id', async (req, res) => {
     await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
         $set: {products: currentBasket.products}
     });
-    res.send('product removed')
+    res.send(JSON.stringify({messege: 'product removed'}))
 });
 
 app.post('/change_quantity', async (req, res) => {
@@ -167,7 +168,12 @@ app.post('/change_quantity', async (req, res) => {
     await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
         $set: {products: currentBasket.products}
     });
-    res.send('quantity changed')
+    res.send(JSON.stringify({messege: 'quantity changed'}))
+});
+
+app.get('/get_basket', async (req, res) => {
+    let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
+    res.send(JSON.stringify(currentBasket))
 });
 
 app.get('/quantity_products', async (req, res) => {
@@ -189,6 +195,6 @@ function checkAuthMiddleware() {
         if (findResult) {
             return next()
         }
-        console.log('Prohibited')
+        res.send(JSON.stringify({messege: 'Prohibited'}))
     }
 }
