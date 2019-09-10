@@ -5,6 +5,8 @@ import {Search} from "./Search";
 import {Menu} from "./Menu";
 import {connect} from 'react-redux'
 
+
+
 const mapStateToProps = state =>{
     return{
         ...state
@@ -18,7 +20,7 @@ export const Header = connect (mapStateToProps)(props => {
     const checkLogin = async () =>{
         const response =  await fetch('/get_login_status');
         const responseJSON = await response.json();
-        setLoginStatus(responseJSON.loginStatus)
+        setLoginStatus(responseJSON.loginStatus);
     };
 
     const logOut = async () =>{
