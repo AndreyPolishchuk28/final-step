@@ -1,10 +1,16 @@
 import React from "react";
 import './style-modal-window.css'
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from 'react-redux'
 
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
 
-export const ModalWindow = () =>{
-        const LoginAuth = async () =>{
+export const ModalWindow = withRouter( connect(mapStateToProps)((props) =>{
+    const LoginAuth = async () =>{
             const email = document.getElementById('email');
             const password = document.getElementById('password');
 
@@ -16,9 +22,10 @@ export const ModalWindow = () =>{
                 body: JSON.stringify({
                     username: `${email.value}`,
                     password: `${password.value}`
-                })
+                }),
             });
-                const responseJSON = await response.json()
+                const responseJSON = await response.json();
+                props.history.push('/')
                 };
 
     return(
@@ -52,4 +59,4 @@ export const ModalWindow = () =>{
             </div>
         </div>
         )
-}
+}));
