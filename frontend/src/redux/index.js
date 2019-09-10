@@ -3,16 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 
 let startState = {};
 
-    document.cookie.split('; ').forEach((item) => {
-        if (item.split('=')[0] === 'basket') {
-            fetch('/get_basket')
-                .then(res => res.json())
-                .then(data => {
-                        data;
-                    },
-                )
-        }
-    });
+
 
 //const saga = createSagaMiddleware();
 
