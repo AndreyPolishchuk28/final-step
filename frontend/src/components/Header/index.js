@@ -3,7 +3,15 @@ import './style.css'
 import {Link} from "react-router-dom";
 import {Search} from "./Search";
 import {Menu} from "./Menu";
-export const Header = () => {
+import {connect} from 'react-redux'
+
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
+
+export const Header = connect (mapStateToProps)(props => {
     const [loginStatus, setLoginStatus] = useState(false);
     const [quantity, setQuantity] = useState(0);
 
@@ -12,9 +20,7 @@ export const Header = () => {
         const responseJSON = await response.json();
         setLoginStatus(responseJSON.loginStatus)
     };
-    useEffect( () =>{
-        checkLogin()
-    }, []);
+
     const logOut = async () =>{
         await fetch('/logout');
         checkLogin()
@@ -25,6 +31,10 @@ export const Header = () => {
         const responseJSON = await response.json()
         setQuantity(responseJSON.QuantityProducts)
     };
+
+    useEffect( () =>{
+        checkLogin()
+    }, []);
 
     useEffect(() =>{
         getQuantity()
@@ -67,4 +77,4 @@ export const Header = () => {
             <Menu/>
         </div>
     )
-};
+});
