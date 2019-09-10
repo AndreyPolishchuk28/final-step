@@ -22,6 +22,8 @@ function reducer(state = startState, action){
             return {...state, loginStatus: payload.loginStatus};
         case 'CLEAR_BASKET':
             return {...state, basketId: '', products: []};
+        case 'ADD_TO_BASKET':
+            return {...state, products: payload.products};
         case 'CHANGE_QUANTITY':
             return {...state, products: payload.products};
         case 'REMOVE_PRODUCT':
