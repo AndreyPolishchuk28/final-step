@@ -12,24 +12,19 @@ const mapStateToProps = state =>{
 };
 
 export const Header = connect (mapStateToProps)(props => {
-    const [loginStatus, setLoginStatus] = useState(false);
-    const [quantity, setQuantity] = useState(0);
 
     const checkLogin = async () =>{
         const response =  await fetch('/get_login_status');
         const responseJSON = await response.json();
-        setLoginStatus(responseJSON.loginStatus)
+        props.dispatch({
+            type: 'CHANGE_STATUS',
+            payload: {loginStatus: responseJSON.loginStatus}
+        })
     };
 
     const logOut = async () =>{
         await fetch('/logout');
         checkLogin()
-    };
-
-    const getQuantity = async() =>{
-        const response = await fetch('/quantity_products');
-        const responseJSON = await response.json()
-        setQuantity(responseJSON.QuantityProducts)
     };
 
     const getStartBasket = () => {
@@ -47,7 +42,6 @@ export const Header = connect (mapStateToProps)(props => {
 
     useEffect(() =>{
         checkLogin();
-        getQuantity();
         getStartBasket();
     }, []);
 
@@ -64,7 +58,7 @@ export const Header = connect (mapStateToProps)(props => {
                             <div className='user-panel'>
                                 <div className='up-item'>
                                     <i className="far fa-user"></i>
-                                    {loginStatus ?
+                                    {props.loginStatus ?
                                         <div>
                                             <Link to='/account'><span>Account</span></Link>
                                             <button onClick={logOut}>Logout</button>
@@ -76,7 +70,7 @@ export const Header = connect (mapStateToProps)(props => {
                                 <div className='up-item'>
                                     <div className='shopping-card'>
                                         <i className="fas fa-shopping-bag"></i>
-                                        <span onMouseOver={getQuantity} className='basket-quantity'>{quantity}</span>
+                                        <span className='basket-quantity'>{props.products ? props.products.length:0}</span>
                                     </div>
                                     <Link to='/card'><span className='shopping-cart'>Shopping Cart</span></Link>
                                 </div>

@@ -1,9 +1,9 @@
 .info-product__button {
   background-color: #f51167;
   border-radius: 5px;
-  width: 145px;
-  height: 50px;
-  font-size: 18px;
+  width: 120px;
+  height: 40px;
+  font-size: 16px;
   color: aliceblue;
   border: 0;
   transition: 0.5s;
@@ -16,13 +16,13 @@
 }
 
 .info-product__tabs {
-  height: 180px;
+  height: 200px;
 }
 
 .info-product__video,
 .info-product__music {
   margin: 0 2px;
-  font-size: 30px;
+  font-size: 26px;
 }
 .info-product__video:hover,
 .info-product__music:hover {
@@ -30,12 +30,11 @@
 }
 
 .info-product__qty {
-  margin-left: 10px;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   text-align: center;
   vertical-align: middle;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
   border: 1px solid grey;
   border-radius: 5px;
@@ -51,11 +50,32 @@
 }
 
 .qty-text {
-  font-size: 33px;
+  font-size: 28px;
   vertical-align: middle;
   font-weight: bold;
   margin-left: 10px;
   text-transform: uppercase;
+}
+
+.info-product__addQty {
+  width: 40px;
+  height: 40px;
+  background-color: #f51167;
+  color: white;
+  border-radius: 50%;
+  border: 0;
+  margin: 0 3px;
+  outline: none;
+  font-size: 25px;
+}
+.info-product__addQty:hover {
+  background-color: #f10acd;
+}
+
+.ant-tabs-nav-wrap .ant-tabs-nav .ant-tabs-tab-active {
+  color: #f51167;
+  font-weight: 700;
+  border-bottom-color: #f51167;
 }
 
 /*# sourceMappingURL=styles.css.map */

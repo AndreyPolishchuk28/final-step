@@ -1,30 +1,29 @@
 import React, { useState } from 'react';
+import {connect} from 'react-redux';
 import './styles.scss';
 import { Tabs, Icon } from 'antd';
+import {addToBasket} from "../../../redux/actions";
 
 const { TabPane } = Tabs;
 
-function callback(key) {
-	console.log(key);
-}
+function callback(key){}
 
-const InfoProduct = ({ product }) => {
-	let productId = product._id;
+const mapStateToProps = (state) => {
+	return {...state}
+};
+
+const InfoProduct = connect(mapStateToProps)(props => {
+	const product = props.product;
+	const productId = product._id;
 
 	const [ count, setCount ] = useState(1);
 	console.log(count);
 
 	const addToBasketRes = async () => {
-		 await fetch('/add_to_basket', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				id: productId,
-				quantity: count
-			})
-		});
+		addToBasket(props.dispatch,{
+			id: productId,
+			quantity: count
+		})
 	};
 
 	let increment = () => {
@@ -83,6 +82,6 @@ const InfoProduct = ({ product }) => {
 			</div>
 		</div>
 	);
-};
+});
 
 export default InfoProduct;
