@@ -1,11 +1,8 @@
 import React, {useState} from 'react'
-import {Button, Input, Col, Row} from 'antd'
 import {Link} from 'react-router-dom';
 import './scss/style.scss'
 
 export const ChangePassword = (props) => {
-
-    console.log(props);
 
     const [ passChange, setPassChange] = useState({
         currentPass: "",
@@ -25,7 +22,10 @@ export const ChangePassword = (props) => {
             alert("passwords doesn't match")
         } else if (passChange.currentPass !== props.userInfo.password){
             alert('current password is incorrect')
-        } else {
+        } else if(passChange.pass.length < 8){
+            alert('password must contain atleast 8 charecters')
+        }
+        else {
             const data = await {
                 password: passChange.pass
             }
@@ -45,16 +45,14 @@ export const ChangePassword = (props) => {
     }
   
     return (
-        <Row  gutter={6}>
-            <Col align="center">
-                <Input type="text" onChange={changeHandler} name="currentPass"/>
-                <Input type="text" onChange={changeHandler} name="pass"/>
-                <Input type="text" onChange={changeHandler} name="repeatPass"/>
-                <Link exact to="/account/info/change">
-                    <Button type="Deafault">Decline changes</Button>
-                </Link>
-                <Button type="primary" onClick={submitHandler}>Submit password</Button>
-            </Col>
-        </Row>
+        <div className="container-change">
+            <Link to="/account/info/change">
+                <i class="fas fa-times close-btn"></i>
+            </Link>
+            <input className="input-change"  type="text" onChange={changeHandler} placeholder="Type current password" name="currentPass"/>
+            <input className="input-change"  type="text" onChange={changeHandler} placeholder="Password for change" name="pass"/>
+            <input className="input-change"  type="text" onChange={changeHandler} placeholder="Reapet password for change" name="repeatPass"/>
+            <button className="submit-btn" onClick={submitHandler}>Submit password</button>
+        </div>
     )
 };

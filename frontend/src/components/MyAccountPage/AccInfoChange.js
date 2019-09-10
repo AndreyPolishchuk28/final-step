@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Button, Input, Col, Row} from 'antd'
+import {Button} from 'antd'
 import {Link} from 'react-router-dom';
 import './scss/style.scss'
 
@@ -9,7 +9,6 @@ export const AccInfoChange = (props) => {
         ...props.userInfo
     })
     
-
     const changeHandler = (event) => {
         setUserChange({
             ...userChange,
@@ -18,38 +17,43 @@ export const AccInfoChange = (props) => {
     }
 
     const submitHandler = async () => {
-        const data = await {
-            first_name: userChange.first_name,
-            last_name: userChange.last_name,
-            email: props.userInfo.email
-        }
+        if(userChange.first_name < 1){
+            alert('First name must contain atleast 1 charecter')
+        } else if(userChange.last_name < 1){
+            alert('Last name must contain atleast 1 charecter')
+        } else{
+            const data = await {
+                first_name: userChange.first_name,
+                last_name: userChange.last_name,
+                email: props.userInfo.email
+            }
 
-        await fetch("/change_customer_info",{
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-            })
-        
-        props.setUserInfo(data)
+            await fetch("/change_customer_info",{
+                method:'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                })
+            
+            props.setUserInfo(data)
+
+            props.history.push('/account')
+        }
     }
   
-    return (
-        <Row  gutter={6}>
-            {  props.userInfo ?
-                <Col align="center">
-                    <Link exact to="/account/info/change/pass">
+    return ( props.userInfo ?
+                <div className="container-change">
+                    <Link to="/account">
+                        <i class="fas fa-times close-btn"></i>
+                    </Link>
+                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.userInfo.first_name} placeholder="First name" name="first_name"/>
+                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.userInfo.last_name } placeholder="Last name" name="last_name"/>
+                    <Link to="/account/info/change/pass">
                         <Button type="Deafault">change password</Button>
                     </Link>
-                    <Input type="text" onChange={changeHandler} defaultValue={props.userInfo.first_name} name="first_name"/>
-                    <Input type="text" onChange={changeHandler} defaultValue={props.userInfo.last_name } name="last_name"/>
-                    <Link exact to="/account">
-                        <Button type="Deafault">Decline changes</Button>
-                        <Button type="primary" onClick={submitHandler}>Submit</Button>
-                    </Link>
-                </Col>
-                : null }
-        </Row>
+                    <button className="submit-btn" onClick={submitHandler}>Submit</button>
+                </div>
+                : null 
     )
 };
