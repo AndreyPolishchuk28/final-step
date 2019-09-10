@@ -1,9 +1,15 @@
 import React from "react";
 import './style-modal-window.css'
 import {Link, withRouter} from "react-router-dom";
+import {connect} from 'react-redux'
 
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
 
-export const ModalWindow = withRouter( (props) =>{
+export const ModalWindow = withRouter( connect(mapStateToProps)((props) =>{
     const LoginAuth = async () =>{
             const email = document.getElementById('email');
             const password = document.getElementById('password');
@@ -53,4 +59,4 @@ export const ModalWindow = withRouter( (props) =>{
             </div>
         </div>
         )
-})
+}));
