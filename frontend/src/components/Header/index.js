@@ -3,31 +3,46 @@ import './style.css'
 import {Link} from "react-router-dom";
 import {Search} from "./Search";
 import {Menu} from "./Menu";
-export const Header = () => {
-    const [loginStatus, setLoginStatus] = useState(false);
-    const [quantity, setQuantity] = useState(0);
+import {connect} from 'react-redux'
+
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
+
+export const Header = connect (mapStateToProps)(props => {
 
     const checkLogin = async () =>{
         const response =  await fetch('/get_login_status');
         const responseJSON = await response.json();
-        setLoginStatus(responseJSON.loginStatus)
+        props.dispatch({
+            type: 'CHANGE_STATUS',
+            payload: {loginStatus: responseJSON.loginStatus}
+        })
     };
-    useEffect( () =>{
-        checkLogin()
-    }, []);
+
     const logOut = async () =>{
         await fetch('/logout');
         checkLogin()
     };
 
-    const getQuantity = async() =>{
-        const response = await fetch('/quantity_products');
-        const responseJSON = await response.json()
-        setQuantity(responseJSON.QuantityProducts)
+    const getStartBasket = () => {
+        document.cookie.split('; ').forEach(async (item) => {
+            if (item.split('=')[0] === 'basket') {
+                const response = await fetch('/get_basket');
+                const data = await response.json();
+                props.dispatch({
+                                type: 'start_basket',
+                                payload: {basketId: data._id, products: data.products}
+                            });
+            }
+        });
     };
 
     useEffect(() =>{
-        getQuantity()
+        checkLogin();
+        getStartBasket();
     }, []);
 
     return (
@@ -43,7 +58,7 @@ export const Header = () => {
                             <div className='user-panel'>
                                 <div className='up-item'>
                                     <i className="far fa-user"></i>
-                                    {loginStatus ?
+                                    {props.loginStatus ?
                                         <div>
                                             <Link to='/account'><span>Account</span></Link>
                                             <button onClick={logOut}>Logout</button>
@@ -55,7 +70,7 @@ export const Header = () => {
                                 <div className='up-item'>
                                     <div className='shopping-card'>
                                         <i className="fas fa-shopping-bag"></i>
-                                        <span onMouseOver={getQuantity} className='basket-quantity'>{quantity}</span>
+                                        <span className='basket-quantity'>{props.products ? props.products.length:0}</span>
                                     </div>
                                     <Link to='/card'><span className='shopping-cart'>Shopping Cart</span></Link>
                                 </div>
@@ -67,4 +82,4 @@ export const Header = () => {
             <Menu/>
         </div>
     )
-};
+});

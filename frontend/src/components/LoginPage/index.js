@@ -5,7 +5,6 @@ export const LoginPage = () => {
     return (
         <div>
             <ModalWindow/>
-
         </div>
     )
 };

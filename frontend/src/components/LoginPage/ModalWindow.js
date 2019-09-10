@@ -1,10 +1,16 @@
 import React from "react";
 import './style-modal-window.css'
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
+import {connect} from 'react-redux'
 
-export const ModalWindow = () =>{
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
 
-        const LoginAuth = async () =>{
+export const ModalWindow = withRouter( connect(mapStateToProps)((props) =>{
+    const LoginAuth = async () =>{
             const email = document.getElementById('email');
             const password = document.getElementById('password');
 
@@ -16,16 +22,26 @@ export const ModalWindow = () =>{
                 body: JSON.stringify({
                     username: `${email.value}`,
                     password: `${password.value}`
-                })
-            })
-            const responseJSON = await response.json()
-        }
-
+                }),
+            });
+                const responseJSON = await response.json();
+                props.dispatch({
+                    type: 'CHANGE_STATUS',
+                    payload: {loginStatus: responseJSON.loginStatus}
+                });
+                if (responseJSON.loginStatus) {
+                    props.history.push('/')
+                } else {
+                    alert(responseJSON.message)
+                }
+    };
 
     return(
         <div className='modal-background'>
             <div className='login-menu'>
-                <div className='login-close-btn'>x</div>
+                <Link to='/'>
+                    <div className='login-close-btn'>x</div>
+                </Link>
                     <h2 className='login-menu-header'>Login</h2>
                         <p className='login-menu-subtitle'>Please enter your account details</p>
                             <div className='login-menu-form'>
@@ -39,7 +55,7 @@ export const ModalWindow = () =>{
                                         <input key='002' id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
                                     </label>
                                 </div>
-                                <button onClick={LoginAuth} name='loginSubmit' className='login-submit-btn'>LOG IN</button>
+                                    <button onClick={LoginAuth} name='loginSubmit' className='login-submit-btn'>LOG IN</button>
                             </div>
 
                     <div className='registration-wrapper'>
@@ -51,4 +67,4 @@ export const ModalWindow = () =>{
             </div>
         </div>
         )
-}
+}));
