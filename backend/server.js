@@ -135,7 +135,7 @@ app.post('/add_to_basket', async (req, res) => {
         await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
             $set: {products: currentBasket.products}
         });
-        res.send(JSON.stringify({messege: 'product added'}));
+        res.send(JSON.stringify(await app.baskets.findOne(ObjectId(req.cookies.basket))));
     } else {
         let basket = await app.baskets.insertOne({
             products: [req.body]
@@ -146,7 +146,7 @@ app.post('/add_to_basket', async (req, res) => {
                 $set: {basket: basket.insertedId}
             })
         }
-        res.send(JSON.stringify({message:'created new basket'}));
+        res.send(JSON.stringify(await app.baskets.findOne(ObjectId(basket.insertedId))));
     }
 });
 

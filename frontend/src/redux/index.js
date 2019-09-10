@@ -20,6 +20,8 @@ function reducer(state = startState, action){
     switch(type){
         case 'start_basket':
             return payload;
+        case 'ADD_TO_BASKET':
+            return payload;
         default :
             return state
     }
