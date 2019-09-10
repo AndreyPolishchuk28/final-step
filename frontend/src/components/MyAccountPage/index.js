@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, NavLink} from 'react-router-dom';
 import {Orders} from './Orders'
 import {FullOrder} from './FullOrder'
 import {AccInfoChange} from './AccInfoChange'
@@ -13,7 +13,6 @@ export const MyAccountPage = () => {
     const [userInfo, setUserInfo] = useState();
 
     const getUserInfo = async () => {
-        console.log("feyxh");
         const response = await fetch("/customer")
 
         const responseJSON = await response.json();
@@ -30,20 +29,24 @@ export const MyAccountPage = () => {
         <Router>
             <section className="main-wrapper">
                 <nav className="acc-navigation">
-                    <Link exact to="/account">
-                        <button className={"button-history"} size="large" type="default"><i class="far fa-id-card"></i>Account info</button>
-                    </Link>
-                    <Link exact to="/account/orders">
-                        <button className={"button-history"} size="large" type="default"><i class="fas fa-clipboard-list"></i>Order history</button>
-                    </Link>
+                    <NavLink exact to="/account">
+                        <button className={"navigation-btn navigation-btn-top"} size="large" type="default"><i class="far fa-id-card"></i><span>Account info</span></button>
+                    </NavLink>
+                    <NavLink exact to="/account/orders">
+                        <button className={"navigation-btn navigation-btn-bot"} size="large" type="default"><i class="fas fa-clipboard-list"></i><span>Order history</span></button>
+                    </NavLink>
                 </nav>
-                <Switch>
-                    <Route exact path='/account' render={(props) => <AccInfo {...props} userInfo={userInfo}/>} />
-                    <Route exact path='/account/info/change'  render={(props) => <AccInfoChange {...props} userInfo={userInfo} setUserInfo={setUserInfo}/>} />
-                    <Route path='/account/info/change/pass'  render={(props) => <ChangePassword {...props} userInfo={userInfo} setUserInfo={setUserInfo}/>} />
-                    <Route exact path='/account/orders' component={Orders}/>
-                    <Route path='/account/orders/:id' component={FullOrder}/>
-                </Switch>
+                <div className="page-viewer">
+                    <div className="top-l-corner"></div>
+                    <div className="bot-r-corner"></div>
+                    <Switch>
+                        <Route exact path='/account' render={(props) => <AccInfo {...props} userInfo={userInfo}/>} />
+                        <Route exact path='/account/info/change'  render={(props) => <AccInfoChange {...props} userInfo={userInfo} setUserInfo={setUserInfo}/>} />
+                        <Route path='/account/info/change/pass'  render={(props) => <ChangePassword {...props} userInfo={userInfo} setUserInfo={setUserInfo}/>} />
+                        <Route exact path='/account/orders' component={Orders}/>
+                        <Route path='/account/orders/:id' component={FullOrder}/>
+                    </Switch>
+                </div>
             </section>
         </Router>
         )

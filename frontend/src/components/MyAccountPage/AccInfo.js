@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import {Button, Input, Col, Row} from 'antd'
+import React from 'react'
+import {Button} from 'antd'
 import {Link} from 'react-router-dom';
 import './scss/style.scss'
 
