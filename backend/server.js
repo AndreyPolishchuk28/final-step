@@ -72,12 +72,12 @@ app.post('/login', async (req, res) => {
             if (user.basket) {
                 res.cookie('basket', user.basket, {maxAge: 2592000000});
             }
-            res.send(JSON.stringify({message: 'Logged'}))
+            res.send(JSON.stringify({loginStatus: true}))
         }else {
-            res.send(JSON.stringify({message: 'Invalid password'}))
+            res.send(JSON.stringify({loginStatus: false, message: 'Invalid password'}))
         }
     } else {
-        res.send(JSON.stringify({message:'User is not found'}))
+        res.send(JSON.stringify({loginStatus: false, message:'User is not found'}))
     }
 });
 
@@ -157,7 +157,7 @@ app.get('/remove_from_basket/:id', async (req, res) => {
     await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
         $set: {products: currentBasket.products}
     });
-    res.send(JSON.stringify({messege: 'product removed'}))
+    res.send(JSON.stringify(await app.baskets.findOne(ObjectId(req.cookies.basket))));
 });
 
 app.post('/change_quantity', async (req, res) => {
@@ -168,7 +168,7 @@ app.post('/change_quantity', async (req, res) => {
     await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
         $set: {products: currentBasket.products}
     });
-    res.send(JSON.stringify({messege: 'quantity changed'}))
+    res.send(JSON.stringify(await app.baskets.findOne(ObjectId(req.cookies.basket))));
 });
 
 app.get('/get_basket', async (req, res) => {
