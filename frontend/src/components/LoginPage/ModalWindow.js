@@ -25,8 +25,16 @@ export const ModalWindow = withRouter( connect(mapStateToProps)((props) =>{
                 }),
             });
                 const responseJSON = await response.json();
-                props.history.push('/')
-                };
+                props.dispatch({
+                    type: 'CHANGE_STATUS',
+                    payload: {loginStatus: responseJSON.loginStatus}
+                });
+                if (responseJSON.loginStatus) {
+                    props.history.push('/')
+                } else {
+                    alert(responseJSON.message)
+                }
+    };
 
     return(
         <div className='modal-background'>
