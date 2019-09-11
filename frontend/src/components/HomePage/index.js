@@ -6,97 +6,60 @@ import { MostPopular } from "./MostPopular";
 import SliderItem from "./SliderItem";
 import "../../App.css";
 
-export const HomePage = props => {
-  const [photo, setPhoto] = useState([]);
-  let photosArr = ["0006", "0004", "0012", "0020"];
 
-  const sliderInfo = async () => {
-    let bbb = [];
-    for (let i = 0; i < photosArr.length; i++) {
-      const response = await fetch(`/products/${photosArr[i]}`);
+export const HomePage = () => {
+  const [sliderItem, setSliderItem] = useState([]);
+  const [mostPopularItem, setMostPopularItem] = useState([]);
+  let photosArr = ["0002", "0003", "0011", "0018", "0026"];
+  let mostPopularArr = ["0006", "0007", "0008", "0016", "0026", "0021"];
+
+
+  const info = async (array, setArray) => {
+    let photoFetch = [];
+    for (let i = 0; i < array.length; i++) {
+      const response = await fetch(`/products/${array[i]}`);
       const responseJSON = await response.json();
-      bbb.push(responseJSON.photo[0]);
+      photoFetch.push(responseJSON);
     }
-    setPhoto(bbb);
+    setArray(photoFetch);
   };
 
   useEffect(() => {
-    sliderInfo();
+    info(photosArr, setSliderItem);
+    info(mostPopularArr, setMostPopularItem);
   }, []);
+
+  
 
   return (
     <div>
       <SliderContainer>
         <Slider autoplay={800}>
-          <div>
-            <SliderItem
-              name="Fender"
-              price="1859"
-              // url={`/static/img/${photo[0]}`}
-              url="https://medias.audiofanzine.com/images/normal/schecter-reaper-7-multiscale-2402191.png"
-              id="0006"
-            />
-          </div>
-          <div>
-            <SliderItem
-              name="Gibson"
-              price="4150"
-              // url={`/static/img/${photo[1]}`}
-              url="https://dk1xgl0d43mu1.cloudfront.net/user_files/esp/product_images/000/009/842/xlarge.png?1389979422"
-              id="0004"
-            />
-          </div>
-          <div>
-            <SliderItem
-              name="Hamer"
-              price="890"
-              // url={`/static/img/${photo[2]}`}
-              url="https://www.schecterguitars.com/images/store/product/CHRIS%20HOWORTH%202018%20GRAPHIC%20TILT.png"
-              id="0012"
-            />
-          </div>
-          <div>
-            <SliderItem
-              name="Jackson"
-              price="2470"
-              // url={`/static/img/${photo[3]}`}
-              url="https://www.deanguitars.com/images/productimages/vsthbks/vsthbks.png"
-              id="0020"
-            />
-          </div>
+          {
+            sliderItem.map((item) => {
+              return <div key={item.id}>
+                <SliderItem
+                  name={item.name}
+                  price={item.price}
+                  url={`/static/img/${item.photo[1]}`}
+                  id={item.id}
+                />
+              </div>
+            })
+          }          
         </Slider>
       </SliderContainer>
       <MostPopularContainer>
-        <MostPopular
-          title="Gibson"
-          url="https://medias.audiofanzine.com/images/normal/schecter-reaper-7-multiscale-2402191.png"
-          id="0006"
+        {
+          mostPopularItem.map((item)=>{
+            return <MostPopular key={item.id}
+          title={item.name}
+          url={`/static/img/${item.photo[0]}`}
+          id={item.id}
         />
-        <MostPopular
-          title="Gibson"
-          url="https://medias.audiofanzine.com/images/normal/schecter-nick-johnston-traditional-2392118.png"
-          id="0004"
-        />
-        <MostPopular
-          title="Gibson"
-          url="https://www.schecterguitars.com/images/store/product/CHRIS%20HOWORTH%202018%20GRAPHIC%20TILT.png"
-          id="00012"
-        />
-        <MostPopular
-          title="Gibson"
-          url="https://www.deanguitars.com/images/productimages/vsthbks/vsthbks.png"
-          id="00020"
-        />
-        <MostPopular
-          title="Gibson"
-          url="https://dk1xgl0d43mu1.cloudfront.net/user_files/esp/product_images/000/009/842/xlarge.png?1389979422"
-          id="0016"
-        />
-        <MostPopular
-          title="Gibson"
-          url="https://www.schecterguitars.com/images/store/product/V-1%20PLATINUM%20TILT.png"
-          id="0002"
-        />
+
+          })
+        }
       </MostPopularContainer>
     </div>
   );
