@@ -9,6 +9,13 @@ const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryW
 const client = new MongoClient(uri, { useNewUrlParser: true });
 const API_PORT = 9000;
 const app = express();
+const categories = [
+    {name: 'guitars', producers: ['ibanez', 'hamer', 'gibson', 'jackson', 'ESP']},
+    {name: 'keyboards', producers: []},
+    {name: 'drums', producers: []},
+    {name: 'microphones', producers: []},
+    {name: 'earphones', producers: []},
+];
 
 client.connect(err => {
     app.products = client.db("final_project").collection("products");
@@ -32,12 +39,16 @@ app.get('/category/:id', async (req, res) => {
             reqBody.products.push(item)
         }
     });
-    res.send(reqBody)
+    res.send(JSON.stringify(reqBody))
 });
 
 app.get('/products/:id', async (req, res) => {
     let prod = await app.products.findOne({'id': req.params.id});
-    res.send(prod)
+    res.send(JSON.stringify(prod))
+});
+
+app.get('/categories', (req, res) => {
+    res.send(JSON.stringify(categories))
 });
 
 app.post('/product_search', async (req, res) => {
@@ -53,11 +64,16 @@ app.post('/product_search', async (req, res) => {
 
 app.post('/get_products', async (req, res) => {
     let prodArray = [];
-    const {category, skip, limit} = req.body;
-
-    await app.products.find({"category": category}).skip(skip).limit(limit).forEach((item) => {
-        prodArray.push(item)
-    });
+    const {category, producer, skip, limit} = req.body;
+    if (producer.length) {
+        await app.products.find({"category": category, "producer":{ $in: [...producer]}}).skip(skip).limit(limit).forEach((item) => {
+            prodArray.push(item)
+        });
+    } else {
+        await app.products.find({"category": category}).skip(skip).limit(limit).forEach((item) => {
+            prodArray.push(item)
+        });
+    }
     res.send(JSON.stringify(prodArray))
 });
 

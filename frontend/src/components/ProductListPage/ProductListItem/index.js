@@ -1,7 +1,23 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-export const ProductListItem = (props) => {
+import {addToBasket} from "../../../redux/actions";
+import {connect} from 'react-redux';
+
+const mapStateToProps = (state) => {
+    return{...state}
+}
+
+export const ProductListItem = connect(mapStateToProps)( props => {
     const product = props.product
+    const productId = product._id
+
+    const addToBasketRes = async () => {
+		addToBasket(props.dispatch,{
+			id: productId,
+        	quantity: 1
+        
+		})
+    };
     
     return (
         <div className="product-item">
@@ -15,12 +31,12 @@ export const ProductListItem = (props) => {
             </div>
             </Link>
             <div className="pi-links">
-                <a href ="#" className="add-card">
+                <button href ="#"  onClick={addToBasketRes} className="add-card">
                     <i className="fas fa-shopping-cart"></i>
                     <span>Add to card</span>
-                </a>
+                </button>
             </div>
         </div>
         
     )
-} 
+})

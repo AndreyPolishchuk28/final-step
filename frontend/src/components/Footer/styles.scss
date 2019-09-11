@@ -20,7 +20,9 @@
 .footer-logo {
     padding-bottom: 60px;
 }
-
+.footer-logo .site-logo {
+    color: white;
+}
 .footer-header {
     font-size: 18px;
     font-weight: 700;
@@ -62,6 +64,7 @@
 .contact-info {
     & p {
         color: #8f8f8f;
+        margin-bottom: 15px;
     }
     & span{    
         float: left;
