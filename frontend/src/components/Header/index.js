@@ -24,6 +24,9 @@ export const Header = connect (mapStateToProps)(props => {
 
     const logOut = async () =>{
         await fetch('/logout');
+        props.dispatch({
+            type: 'CLEAR_BASKET'
+        });
         checkLogin()
     };
 
