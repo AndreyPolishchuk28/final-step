@@ -24,6 +24,9 @@ export const Header = connect (mapStateToProps)(props => {
 
     const logOut = async () =>{
         await fetch('/logout');
+        props.dispatch({
+            type: 'CLEAR_BASKET'
+        });
         checkLogin()
     };
 
@@ -53,18 +56,23 @@ export const Header = connect (mapStateToProps)(props => {
                         <div className='col-xl-3 col-lg-3 text-center text-left'>
                             <Link to='/'><span className='site-logo'>MUSIC-SHOP</span></Link>
                         </div>
+                        <div className='col-xl-5 col-lg-5'>
                         <Search/>
-                        <div className='col-xl-3 col-lg-4 text-center'>
+                        </div>
+                        <div className='col-xl-4 col-lg-4 text-center'>
                             <div className='user-panel'>
                                 <div className='up-item'>
-                                    <i className="far fa-user"></i>
                                     {props.loginStatus ?
                                         <div>
-                                            <Link to='/account'><span>Account</span></Link>
-                                            <button onClick={logOut}>Logout</button>
+                                            <i className="far fa-user"></i>
+                                            <Link to='/account'><span className='account'>Account</span></Link>
+                                            <button className='btn-logout' onClick={logOut}>Logout</button>
                                         </div>
                                         :
+                                        <div>
+                                        <i className="far fa-user"></i>
                                         <Link to='/login'><span className='login'>Login</span></Link>
+                                        </div>
                                     }
                                 </div>
                                 <div className='up-item'>

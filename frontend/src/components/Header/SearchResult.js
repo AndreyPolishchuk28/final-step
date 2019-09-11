@@ -1,12 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import {Row, Col} from "antd";
 import './style-search-result.css'
+import {Link} from "react-router-dom";
 
 export const SearchResult = (props) =>{
+    const clearField = () =>{
+        props.setValue("");
+        props.setProducts([])
+    };
+
     let productCards;
     if (props.products){
         productCards = props.products.map(item =>{
             return(
+                <Link to={`/product/${item.id}`} onClick={clearField}>
                 <div className='wrapper'>
                     <Row gutter={16}>
                         <Col span={4}>
@@ -21,7 +28,9 @@ export const SearchResult = (props) =>{
                         </Col>
                     </Row>
                 </div>
+                </Link>
             )
+
         });
     }
     return(

@@ -53,8 +53,12 @@
   background-color: transparent;
 }
 
+.user-panel{
+  margin: 8px 0;
+}
+
 .user-panel .up-item:first-child {
-  margin-right: 29px;
+  margin-right: 25px;
 }
 
 .user-panel .up-item {
@@ -98,11 +102,6 @@
   margin-left: -7px;
 }
 
-.main-navbar{
-  background: #282828;
-  padding: 16px 0;
-}
-
 .category-item{
   color: #fff;
   margin-right: 30px;
@@ -141,7 +140,6 @@ a:hover{
 .main-menu{
   margin-bottom: 0;
   position: relative;
-  //z-index: 2;
 }
 
 .sub-menu{
@@ -164,8 +162,51 @@ a:hover{
 }
 
 .main-menu a{
-  padding: 20px;
+ padding: 20px;
 }
+
+#sidebar.active{
+  left: 0;
+}
+
+#sidebar ul li{
+  width: 90%;
+  margin-left: 10%;
+  color: white;
+  list-style: none;
+  padding: 25px 10px 10px 10px;
+}
+
+
+#sidebar .toggle-btn:hover{
+  background: #282828;
+}
+
+#sidebar .toggle-btn:hover span{
+  background: #fafafa;
+}
+
+#sidebar .toggle-btn span{
+  display: block;
+  width: 25px;
+  height: 4px;
+  background-color: #666;
+  margin: 4px 0;
+}
+
+#sidebar .toggle-btn span:hover{
+  color:black;
+}
+
+.account{
+  margin: 0 5px;
+  color: #282828;
+}
+
+.btn-logout{
+  color: #282828;
+}
+
 
 
 @media (min-width: 768px){
@@ -181,11 +222,26 @@ a:hover{
     height: 24px;
     opacity: 1;
   }
+
+  .main-navbar{
+    background: #282828;
+    padding: 16px 0;
+  }
+
+  .toggle-btn{
+    display: none;
+  }
+
 }
 
 @media (max-width: 767px) {
   .header-search-form {
     margin-bottom: 15px;
+  }
+
+  .container{
+    padding-left: 0;
+    padding-right: 0;
   }
 
   ul a{
@@ -195,12 +251,44 @@ a:hover{
   .menu-btn{
     display: inline-block;
   }
+
+  #sidebar{
+    position: fixed;
+    width: 250px;
+    background: #282828;
+    z-index: 1;
+    left: -250px;
+    transition: 600ms;
+    border-radius: 5px;
+  }
+
+  #sidebar .toggle-btn{
+    position: absolute;
+    left: 270px;
+    top: 20px;
+    background: #E0E5EA;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  ul a:hover{
+    background: #F5F5DC;
+  }
 }
+  .main-menu a:hover .category-item{
+    color: black;
+  }
+
 
 @media only screen and (max-width: 991px) and (min-width: 768px){
   .main-menu {
     text-align: center;
   }
 }
+
+
+
+
 
 

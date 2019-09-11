@@ -1,17 +1,19 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {SearchResult} from "./SearchResult";
 let flag = false;
 
 export const Search =() =>{
     const [products, setProducts] = useState();
-
+    const [value, setValue] = useState();
 
     const SearchProduct = async (event) =>{
+        setValue(event.target.value);
         if (event.target.value){
             flag = true
-        }else {
+        }else{
             flag = false
         }
+
             const response = await fetch('/product_search', {
                 method: 'POST',
                 headers: {
@@ -24,21 +26,21 @@ export const Search =() =>{
             const responseJSON = await response.json();
             if (flag){
                 setProducts(responseJSON)
+            }else {
+                setProducts([])
             }
-            else{
-            setProducts([])
-            }
-    }
 
+
+    };
     return(
-        <div className='col-xl-6 col-lg-5'>
+        <div className=''>
             <form className='header-search-form'>
-                <input onChange={SearchProduct} type='text' placeholder='Music shop search ...'/>
+                <input id='search' onChange={SearchProduct} value={value} type='text' placeholder='Music shop search ...'/>
                 <button>
                     <i className="fas fa-search"></i>
                 </button>
             </form>
-            <SearchResult products={products}/>
+            <SearchResult products={products} setValue={setValue} setProducts={setProducts}/>
         </div>
     )
 };
