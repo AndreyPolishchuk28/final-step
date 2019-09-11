@@ -8,7 +8,12 @@ export const Search =() =>{
 
     const SearchProduct = async (event) =>{
         setValue(event.target.value);
-        if(value){
+        if (event.target.value){
+            flag = true
+        }else{
+            flag = false
+        }
+
             const response = await fetch('/product_search', {
                 method: 'POST',
                 headers: {
@@ -19,14 +24,16 @@ export const Search =() =>{
                 })
             });
             const responseJSON = await response.json();
-            setProducts(responseJSON)
-        } else {
-            setProducts([])
-        }
-    };
+            if (flag){
+                setProducts(responseJSON)
+            }else {
+                setProducts([])
+            }
 
+
+    };
     return(
-        <div className='col-xl-6 col-lg-5'>
+        <div className=''>
             <form className='header-search-form'>
                 <input id='search' onChange={SearchProduct} value={value} type='text' placeholder='Music shop search ...'/>
                 <button>

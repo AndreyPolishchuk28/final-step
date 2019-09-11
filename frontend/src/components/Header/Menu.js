@@ -3,39 +3,41 @@ import './style.css'
 import {Link} from "react-router-dom";
 
 const item = ['Guitars', 'Keyboards', 'Drums', 'Microphones', 'Earphones'];
+const producer = ['Ibanez', 'Jackson', 'ESP', 'Hamer', 'Gibson'];
 
 export const Menu = () =>{
     let category = item.map(element =>
         <Link to={`/product-list/${element.toLowerCase()}`}><span className='category-item'>{element}</span></Link>
     );
 
-    function slideMenu() {
-        let menu = document.querySelector('.main-menu');
-        menu.classList.toggle('main-menu-height')
-    }
-    function subMenu() {
-       document.querySelector('.sub-menu').classList.add('sub-menu-over')
-    }
-    function subMenuOut() {
-        document.querySelector('.sub-menu').classList.remove('sub-menu-over')
+    // function subMenu() {
+    //    document.querySelector('.sub-menu').classList.add('sub-menu-over')
+    // }
+    // function subMenuOut() {
+    //     document.querySelector('.sub-menu').classList.remove('sub-menu-over')
+    // }
+
+    const openMenu = () =>{
+        document.getElementById('sidebar').classList.toggle('active');
     }
 
     return(
         <nav className='main-navbar'>
-            <div className='container'>
-                <a onClick={slideMenu} className='menu-btn' href='#'>
-                    <span className='slicknav-menutxt'>MENU</span>
-                    <i className="fas fa-bars bars-icon"></i>
-                </a>
+            <div className='container' id='sidebar'>
+                <div className='toggle-btn' onClick={openMenu}>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
                 <ul className='main-menu '>
-                    {/*<Link to='/product-list/guitars'><span onMouseOver={subMenu} onMouseOut={subMenuOut} className='category-item'>Guitars</span></Link>*/}
-                    {/*<ul onMouseOver={subMenu} onMouseOut={subMenuOut} className='sub-menu'>*/}
-                    {/*    <li>Jackson</li>*/}
-                    {/*    <li>Ibanez</li>*/}
-                    {/*    <li>ESP</li>*/}
-                    {/*    <li>Hamer</li>*/}
-                    {/*    <li>Gibson</li>*/}
-                    {/*</ul>*/}
+                    <ul className='sub-menu'>
+                        <li>Jackson</li>
+                        <li>Ibanez</li>
+                        <li>ESP</li>
+                        <li>Hamer</li>
+                        <li>Gibson</li>
+                    </ul>
                     {category}
                 </ul>
             </div>
