@@ -1,11 +1,12 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { Row, Col} from 'antd';
 
-import logoLight from './static/logo-light.png'
 import cards from './static/cards.png'
 import './styles.scss'
 
 export const Footer = () => {
+    
     const date = new Date()
     const year = date.getFullYear()
     
@@ -13,7 +14,7 @@ export const Footer = () => {
         <section className="footer-section">
             <div className="container">
                 <div className="footer-logo text-center">
-                    <Link to="/" ><img src={logoLight} alt="logo"/></Link>
+                <Link to='/'><span className='site-logo'>MUSIC-SHOP</span></Link>
                 </div>
                 <div className="row">
                     <div className="col-lg-3 col-sm-6">
@@ -73,6 +74,6 @@ export const Footer = () => {
             </p>
 
             </div>
-	    </section>        
+	    </section>
     )
 };

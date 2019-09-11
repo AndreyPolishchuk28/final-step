@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import {ProductListItem} from './ProductListItem'
-
 import './style.scss'
-import {Row, Col} from 'antd';
+import {Row, Col, Checkbox, Button, InputNumber } from 'antd';
+
 let currentCategory;
 let sortingCheapHandler = false;
 let sortingExpensiveHandler = false;
 
-export const ProductListPage = (props) => {
+export const ProductListPage =  (props) => {
+    
+    const product = props.product;
     const [products, setProducts] = useState([]);
     const [currentShownItems, setCurrentShownItems] = useState(0);
     const [stepShownItems, setStepShownItems] = useState(9);
     const [showMoreBtnStatus, setShowMoreBtnStatus] = useState(true);
     const [sortFromCheap, setSortFromCheap] = useState([products])
-    const [sortFromExpensive, setSortFromExpensive] = useState([products])
+    // const [sortFromExpensive, setSortFromExpensive] = useState([products])
     const [sortStatus, setSortStatus] = useState(true)
+    const [sortProducers, setSortProducers] = useState([products])
 
     const getProducts = async() => {
         const response = await fetch("/get_products",{
@@ -24,6 +27,7 @@ export const ProductListPage = (props) => {
             },
             body: JSON.stringify({
                 category: props.match.params.category,
+                producer: checkedArr,
                 skip: currentShownItems,
                 limit: stepShownItems
             }) 
@@ -37,6 +41,7 @@ export const ProductListPage = (props) => {
         }
         currentCategory = props.match.params.category
     };
+
 
     const showMoreProducts = () => {
         setCurrentShownItems(currentShownItems + stepShownItems)
@@ -57,9 +62,30 @@ export const ProductListPage = (props) => {
         setSortFromCheap(sortedFromExpensiveArr)
     }
 
+    // const displayProductsHandler = (value) => {
+    //     console.log('changed', value);
+    //     setStepShownItems(value)
+    // }
+
+    let checkedArr = []
+    const checkboxHandler = (e) => {
+        let checked = e.target.name
+        let index = checkedArr.indexOf(e.target.name)
+        if (e.target.checked === true){
+            checkedArr.push(checked)
+        } else {
+            checkedArr.splice(index, 1)
+        }
+    }
+
+    const sortByProducer = (e) => {
+        console.log(checkedArr)
+    }
+
     useEffect(() => {
         setProducts([]);
         setShowMoreBtnStatus(true);
+        // displayProductsHandler();
         setCurrentShownItems(0);
         getProducts();
 
@@ -96,7 +122,7 @@ export const ProductListPage = (props) => {
                 <Col xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:18, push:6}}>
                     {products.map(item =>
                         <Col xs={24} sm={24} md={12} lg={8} xl={8} key={item._id}>
-                                <ProductListItem product={item} />
+                                <ProductListItem product={item}/>
                         </Col>
                     )}
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} className="pagelist-bottom">
@@ -106,11 +132,18 @@ export const ProductListPage = (props) => {
                 </Col>
                 </Col>
                 <Col xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:6, pull:18}}>
-                    <h4>Sidebar</h4>
+                    {/* <h4>number of displayed products</h4>
+                    <InputNumber min={3} max={30} defaultValue={9} onChange={displayProductsHandler} /> */}
+
+                    <h4>Producer</h4>
+                    <Checkbox name="Jackson" onChange={checkboxHandler}>Jackson</Checkbox>
+                    <Checkbox name="Ibanez" onChange={checkboxHandler}>Ibanez</Checkbox>
+                    <Checkbox name="Hamer"onChange={checkboxHandler}>Hamer</Checkbox>
+                    <Button onClick={sortByProducer}>Sort by producer</Button>
                 </Col>
             </Row>
 
             </div>
         </div>
     )
-};
+}
