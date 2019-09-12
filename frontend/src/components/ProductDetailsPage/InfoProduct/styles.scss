@@ -1,18 +1,19 @@
 .info-product__button {
-	background-color: #f51167;
-	border-radius: 5px;
+	background-color: blueviolet;
+	border-radius: 6px;
 	width: 120px;
 	height: 40px;
-	font-size: 16px;
+	font-size: 18px;
 	color: aliceblue;
 	border: 0;
-	transition: .5s;
 }
 
 .info-product__button:hover {
-	color: aliceblue;
-	border: 0;
-	filter: brightness(150%);
+	color: blueviolet;
+	background: #ffffff;
+	border: 2px solid blueviolet;
+	border-radius: 6px;
+	display: inline-block;
 }
 
 .info-product__tabs {
@@ -24,7 +25,7 @@
 	margin: 0 2px;
 	font-size: 26px;
 	&:hover {
-		color: #f51167;
+		color: blueviolet;
 	}
 }
 
@@ -57,26 +58,42 @@
 }
 
 .info-product__addQty {
-	width: 40px;
-	height: 40px;
-	background-color: #f51167;
+	width: 30px;
+	height: 30px;
+	background-color: blueviolet;
 	color: white;
 	border-radius: 50%;
 	border: 0;
-	margin: 0 3px;
+	margin: 0 5px;
 	outline: none;
-	font-size: 25px;
+	font-size: 20px;
 	&:hover {
-		background-color: #f10acd;
+		color: blueviolet;
+		background: #ffffff;
+		border: 2px solid blueviolet;
+		border-radius: 50%;
+		display: inline-block;
+		font-size: 18px;
 	}
 }
 
 .ant-tabs-nav-wrap {
 	.ant-tabs-nav {
 		.ant-tabs-tab-active {
-			color: #f51167;
-			font-weight: 700;
-			border-bottom-color: #f51167;
+			color: blueviolet;
 		}
-  }
+	}
+}
+
+.ant-tabs-top .ant-tabs-ink-bar-animated {
+	background-color: blueviolet;
+	&:hover {
+		background-color: blueviolet;
+	}
+}
+
+.ant-tabs-nav .ant-tabs-tab {
+	&:hover {
+		color: blueviolet;
+	}
 }
