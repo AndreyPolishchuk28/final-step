@@ -2,12 +2,17 @@ import React from "react";
 import '../LoginPage/style-modal-window.css'
 
 export const Registration = () =>{
+    const validation = () =>{
+
+    }
+
+
     const registrationUser = async () =>{
-        const name = document.getElementById('name');
-        const lastName = document.getElementById('lastName');
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirmPassword');
+        const name = document.getElementById('name').value;
+        const lastName = document.getElementById('lastName').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
 
         const response = await fetch('/new_user', {
             method: 'POST',
@@ -15,10 +20,10 @@ export const Registration = () =>{
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                first_name: `${name.value}`,
-                last_name: `${lastName.value}`,
-                email: `${email.value}`,
-                password: `${password.value}`,
+                first_name: name,
+                last_name: lastName,
+                email: email,
+                password: password,
             })
         });
         const responseJSON = await response.json();

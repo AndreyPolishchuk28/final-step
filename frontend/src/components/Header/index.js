@@ -12,7 +12,6 @@ const mapStateToProps = state =>{
 };
 
 export const Header = connect (mapStateToProps)(props => {
-
     const checkLogin = async () =>{
         const response =  await fetch('/get_login_status');
         const responseJSON = await response.json();
@@ -66,7 +65,7 @@ export const Header = connect (mapStateToProps)(props => {
                                         <div>
                                             <i className="far fa-user"></i>
                                             <Link to='/account'><span className='account'>Account</span></Link>
-                                            <button className='btn-logout' onClick={logOut}>Logout</button>
+                                            <span className='btn-logout' onClick={logOut}>Logout</span>
                                         </div>
                                         :
                                         <div>
