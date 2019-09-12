@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import './styles.scss';
 import { Tabs, Icon } from 'antd';
-import {addToBasket} from "../../../redux/actions";
+import { addToBasket } from '../../../redux/actions';
 
 const { TabPane } = Tabs;
 
-function callback(key){}
+function callback(key) {}
 
 const mapStateToProps = (state) => {
-	return {...state}
+	console.log(state);
+	return { ...state };
 };
 
-const InfoProduct = connect(mapStateToProps)(props => {
+const InfoProduct = connect(mapStateToProps)((props) => {
 	const product = props.product;
 	const productId = product._id;
 
@@ -20,10 +21,10 @@ const InfoProduct = connect(mapStateToProps)(props => {
 	console.log(count);
 
 	const addToBasketRes = async () => {
-		addToBasket(props.dispatch,{
+		addToBasket(props.dispatch, {
 			id: productId,
 			quantity: count
-		})
+		});
 	};
 
 	let increment = () => {
@@ -31,8 +32,7 @@ const InfoProduct = connect(mapStateToProps)(props => {
 	};
 
 	let decrement = () => {
-		if (count > 1)
-		setCount(count - 1);
+		if (count > 1) setCount(count - 1);
 	};
 
 	return (
@@ -66,18 +66,14 @@ const InfoProduct = connect(mapStateToProps)(props => {
 						Add product
 					</button>
 					<span className="qty-text">QTY</span>
-					<button onClick={increment} className="info-product__addQty">
-						+
-					</button>
-					<input value={count} type="text" className="info-product__qty" readOnly />
 					<button onClick={decrement} className="info-product__addQty">
 						-
 					</button>
-				</div>
+					<input value={count} type="text" className="info-product__qty" readOnly />
 
-				<div>
-					<Icon className="info-product__video" type="video-camera" theme="filled" />
-					<Icon className="info-product__music" type="play-circle" theme="filled" />
+					<button onClick={increment} className="info-product__addQty">
+						+
+					</button>
 				</div>
 			</div>
 		</div>
