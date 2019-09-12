@@ -5,13 +5,13 @@ const SliderItem = props => {
   return (
   
 
-    <Link to={`/products/${props.id}`}>
+    <Link to={`/product/${props.id}`}>
             <div >
               <p className='guitar-name'>{props.name}</p>
-              <p className='guitar-price'>{props.price}$</p>
+              <p className='guitar-price'>$ {props.price}</p>
             <button type="primary" shape="round">
-              <p>New Price</p>
-              <p>{Math.round(props.price /1.3)}$</p>
+              {/* <p>New Price</p> */}
+              <p>$ {Math.round(props.price /1.3)}</p>
               </button>
               
             </div>
@@ -20,7 +20,7 @@ const SliderItem = props => {
                 src={props.url}
                 alt="img"
               />
-              <p>
+              <p className='copyRight'>
                 Posted by <strong>DAN-IT Monster-Students</strong>
               </p>
             </section>
