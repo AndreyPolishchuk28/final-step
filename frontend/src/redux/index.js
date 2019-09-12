@@ -12,6 +12,7 @@ let startState = {
 const CHANGE_STATUS = "CHANGE_STATUS";
 const GET_BASKET = "GET_BASKET";
 const ADD_TO_BASKET = "ADD_TO_BASKET";
+const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
 const CLEAR_BASKET = "CLEAR_BASKET";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_PRODUCT = "REMOVE_PRODUCT";
@@ -39,18 +40,18 @@ export const removeProduct = (id) => {
 };
 
 // sagas
-function* addToBasketSaga(product) {
+function* addToBasketSaga() {
     while (true) {
-        yield take(ADD_TO_BASKET);
+        const {payload} = yield take(ADD_TO_BASKET);
         const req = yield fetch('/add_to_basket', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(product)
+            body: JSON.stringify(payload)
         });
         const res = yield req.json();
-        yield put({type: ADD_TO_BASKET, payload: {basketId: res._id, products: res.products}})
+        yield put({type: UPDATE_PRODUCTS, payload: {basketId: res._id, products: res.products}})
     }
 }
 
@@ -89,7 +90,7 @@ function reducer(state = startState, action){
             return {...state, loginStatus: payload.loginStatus};
         case CLEAR_BASKET:
             return {...state, basketId: '', products: []};
-        case ADD_TO_BASKET:
+        case UPDATE_PRODUCTS:
             return {...state, products: payload.products};
         case CHANGE_QUANTITY:
             return {...state, products: payload.products};
