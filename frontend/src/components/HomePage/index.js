@@ -7,7 +7,7 @@ import SliderItem from "./SliderItem";
 import "../../App.css";
 import { Row, Col } from "antd";
 import { connect } from "react-redux";
-import {mainColor} from "../../redux";
+const mainColor =  "blueviolet";
 
 const mapStateToProps = state => {
   return {
