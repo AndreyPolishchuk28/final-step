@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware} from 'redux'
 import createSagaMiddleware from 'redux-saga';
-import {take, put, all, select} from "redux-saga/effects";
+import {take, put} from "redux-saga/effects";
 
 let startState = {
     basketId: "",
