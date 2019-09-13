@@ -8,7 +8,7 @@ import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
 import {CardHeader} from './CardHeader';
 
-export const CardPage = () => {
+export const CardPage = (props) => {
 
 
 

@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
 export const BasketContainer = connect(mapStateToProps)(props => {
     console.log(props)
     const [state, setState] = useState({});
+        console.log(state)
 
 
 
