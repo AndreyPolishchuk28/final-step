@@ -35,26 +35,9 @@ app.get('/main_info', async (req, res) => {
     res.send(JSON.stringify(reqBody));
 });
 
-app.get('/category/:id', async (req, res) => {
-    let reqBody = {
-        name: req.params.id,
-        products: []
-    };
-    await app.products.find({}).forEach((item) => {
-        if (item.category.toLowerCase() === req.params.id.toLowerCase()) {
-            reqBody.products.push(item)
-        }
-    });
-    res.send(JSON.stringify(reqBody))
-});
-
 app.get('/products/:id', async (req, res) => {
     let prod = await app.products.findOne({'id': req.params.id});
     res.send(JSON.stringify(prod))
-});
-
-app.get('/categories', (req, res) => {
-    res.send(JSON.stringify(categories))
 });
 
 app.post('/product_search', async (req, res) => {
@@ -194,16 +177,11 @@ app.post('/change_quantity', async (req, res) => {
 });
 
 app.get('/get_basket', async (req, res) => {
-    let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
-    res.send(JSON.stringify(currentBasket))
-});
-
-app.get('/quantity_products', async (req, res) => {
     if (req.cookies.basket) {
         let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
-        res.send(JSON.stringify({QuantityProducts: currentBasket.products.length}))
+        res.send(JSON.stringify(currentBasket))
     } else {
-        res.send(JSON.stringify({QuantityProducts: 0}))
+        res.send()
     }
 });
 
