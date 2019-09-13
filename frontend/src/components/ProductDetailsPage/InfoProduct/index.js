@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './styles.scss';
+import { Tabs, message } from 'antd';
+import { addToBasket } from '../../../redux';
 import { Tabs, Icon } from 'antd';
 
 const { TabPane } = Tabs;
@@ -8,7 +10,6 @@ const { TabPane } = Tabs;
 function callback(key) {}
 
 const mapStateToProps = (state) => {
-	console.log(state);
 	return { ...state };
 };
 
@@ -17,13 +18,13 @@ const InfoProduct = connect(mapStateToProps, )((props) => {
 	const productId = product._id;
 
 	const [ count, setCount ] = useState(1);
-	console.log(count);
 
 	const addToBasketRes = async () => {
 		props.addToBasket({
 			id: productId,
 			quantity: count
 		});
+		success();
 	};
 
 	let increment = () => {
@@ -33,6 +34,10 @@ const InfoProduct = connect(mapStateToProps, )((props) => {
 	let decrement = () => {
 		if (count > 1) setCount(count - 1);
 	};
+
+	const success = () => {
+		message.success('Product was added to basket!');
+	  };
 
 	return (
 		<div>
