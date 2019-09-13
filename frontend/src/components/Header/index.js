@@ -29,24 +29,6 @@ export const Header = connect (mapStateToProps)(props => {
         checkLogin()
     };
 
-    const getStartBasket = () => {
-        document.cookie.split('; ').forEach(async (item) => {
-            if (item.split('=')[0] === 'basket') {
-                const response = await fetch('/get_basket');
-                const data = await response.json();
-                props.dispatch({
-                                type: 'start_basket',
-                                payload: {basketId: data._id, products: data.products}
-                            });
-            }
-        });
-    };
-
-    useEffect(() =>{
-        checkLogin();
-        getStartBasket();
-    }, []);
-
     return (
         <div>
             <div className='header-top'>
