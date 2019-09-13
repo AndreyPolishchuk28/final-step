@@ -18,6 +18,6 @@ export const CheckoutPage = () => {
     }, [])
 
     return (
-        <div></div>
+        <div> </div>
     )
 };
