@@ -9,13 +9,6 @@ const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryW
 const client = new MongoClient(uri, { useNewUrlParser: true });
 const API_PORT = 9000;
 const app = express();
-const categories = [
-    {name: 'guitars', producers: ['ibanez', 'hamer', 'gibson', 'jackson', 'ESP']},
-    {name: 'keyboards', producers: []},
-    {name: 'drums', producers: []},
-    {name: 'microphones', producers: []},
-    {name: 'earphones', producers: []},
-];
 
 client.connect(err => {
     app.products = client.db("final_project").collection("products");
@@ -23,11 +16,24 @@ client.connect(err => {
     app.baskets = client.db("final_project").collection("baskets");
     app.orders = client.db("final_project").collection("orders");
     app.sessions = client.db("final_project").collection("mySessions");
+    app.catalog = client.db("final_project").collection("catalog");
 });
 
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "static/build")));
+
+app.get('/main_info', async (req, res) => {
+    let categoriesData = await app.catalog.findOne({"name": "categories"});
+    let sliderPhotosData = await app.catalog.findOne({"name": "sliderPhotos"});
+    let mostPopularPhotosData = await app.catalog.findOne({"name": "mostPopularPhotos"});
+    let reqBody = {
+        categories: categoriesData.categories,
+        sliderPhotos: sliderPhotosData.sliderPhotos,
+        mostPopularPhotos: mostPopularPhotosData.mostPopularPhotos
+    };
+    res.send(JSON.stringify(reqBody));
+});
 
 app.get('/category/:id', async (req, res) => {
     let reqBody = {
@@ -99,7 +105,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/logout', async (req, res) => {
     await app.sessions.removeOne({"sessionKey": req.cookies.sessionKey});
-    res.clearCookie('sessionKey').clearCookie('basket').send('Logouted');
+    res.clearCookie('sessionKey').clearCookie('basket').send();
 });
 
 app.get('/get_login_status', async (req, res) => {

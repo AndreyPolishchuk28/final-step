@@ -7,7 +7,7 @@ import SliderItem from "./SliderItem";
 import "../../App.css";
 import { Row, Col } from "antd";
 import { connect } from "react-redux";
-import { sliderPhotos, mostPopularPhotos, mainColor } from "../../redux";
+import {mainColor} from "../../redux";
 
 const mapStateToProps = state => {
   return {
@@ -17,7 +17,6 @@ const mapStateToProps = state => {
 
 export const HomePage = connect(
   mapStateToProps,
-  { sliderPhotos, mostPopularPhotos }
 )(props => {
   console.log("propssliderPhotos", props);
   const [sliderItem, setSliderItem] = useState([]);
@@ -33,11 +32,11 @@ export const HomePage = connect(
     "0012",
     "0020"
   ];
-
+/*
   useEffect(() => {
     props.sliderPhotos(photosArr, setSliderItem);
     props.mostPopularPhotos(mostPopularArr, setMostPopularItem);
-  }, []);
+  }, []);*/
 
   return (
     <div>
