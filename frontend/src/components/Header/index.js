@@ -5,6 +5,7 @@ import {Search} from "./Search";
 import {Menu} from "./Menu";
 import {connect} from 'react-redux'
 import {getMainInfo} from "../../redux/catalog";
+import {getBasket} from "../../redux/basket";
 
 const mapStateToProps = state =>{
     return{
@@ -12,9 +13,10 @@ const mapStateToProps = state =>{
     }
 };
 
-export const Header = connect (mapStateToProps, {getMainInfo})(props => {
+export const Header = connect (mapStateToProps, {getMainInfo, getBasket})(props => {
     useEffect(()=> {
         props.getMainInfo();
+        props.getBasket();
     },[]);
 
     return (
