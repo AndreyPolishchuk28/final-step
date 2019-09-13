@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './styles.scss';
 import { Tabs, message } from 'antd';
-import { addToBasket } from '../../../redux/basket';
 
 
 
