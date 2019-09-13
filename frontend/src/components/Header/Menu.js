@@ -7,7 +7,7 @@ const producer = ['Ibanez', 'Jackson', 'ESP', 'Hamer', 'Gibson'];
 
 export const Menu = () =>{
     let category = item.map(element =>
-        <Link to={`/product-list/${element.toLowerCase()}`}><span className='category-item'>{element}</span></Link>
+        <Link key={element} to={`/product-list/${element.toLowerCase()}`}><span className='category-item'>{element}</span></Link>
     );
 
     // function subMenu() {

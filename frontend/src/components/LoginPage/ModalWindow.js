@@ -48,11 +48,11 @@ export const ModalWindow = withRouter( connect(mapStateToProps)((props) =>{
                                 <div className='field-wrapper'>
                                     <label className='login-input-title'>
                                         E-mail
-                                        <input key='001' id='email' name='email' type='text' placeholder='Your email...' className='login-email-input'/>
+                                        <input id='email' name='email' type='text' placeholder='Your email...' className='login-email-input'/>
                                     </label>
                                     <label className='login-input-title'>
                                         Password
-                                        <input key='002' id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
+                                        <input id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
                                     </label>
                                 </div>
                                     <button onClick={LoginAuth} name='loginSubmit' className='login-submit-btn'>LOG IN</button>
