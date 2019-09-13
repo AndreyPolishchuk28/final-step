@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './styles.scss';
 import { Tabs, Icon } from 'antd';
-import { addToBasket } from '../../../redux';
 
 const { TabPane } = Tabs;
 
@@ -13,7 +12,7 @@ const mapStateToProps = (state) => {
 	return { ...state };
 };
 
-const InfoProduct = connect(mapStateToProps, {addToBasket})((props) => {
+const InfoProduct = connect(mapStateToProps, )((props) => {
 	const product = props.product;
 	const productId = product._id;
 
