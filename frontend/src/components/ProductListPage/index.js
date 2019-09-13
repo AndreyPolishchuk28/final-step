@@ -17,7 +17,7 @@ export const ProductListPage =  (props) => {
     const [sortFromCheap, setSortFromCheap] = useState([products])
     // const [sortFromExpensive, setSortFromExpensive] = useState([products])
     const [sortStatus, setSortStatus] = useState(true)
-    const [sortProducers, setSortProducers] = useState([products])
+ //   const [sortProducers, setSortProducers] = useState([products])
 
     const getProducts = async() => {
         const response = await fetch("/get_products",{
