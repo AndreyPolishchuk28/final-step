@@ -25,22 +25,14 @@ app.use(express.static(path.join(__dirname, "static/build")));
 
 app.get('/main_info', async (req, res) => {
     let categoriesData = await app.catalog.findOne({"name": "categories"});
-    let sliderProductsData = await app.catalog.findOne({"name": "sliderPhotos"});
-    let sliderProducts = [];
-    sliderProductsData.sliderPhotos.forEach(async (item) => {
-        let prod = await app.products.findOne({'id': item});
-        sliderProducts.push(prod)
-    });
-    let mostPopularProductsData = await app.catalog.findOne({"name": "mostPopularPhotos"});
-    let mostPopular = [];
-    mostPopularProductsData.mostPopularPhotos.forEach(async (item) => {
-        let prod = await app.products.findOne({'id': item});
-        mostPopular.push(prod)
-    });
+    let sliderProductsData = await app.catalog.findOne({"name": "sliderProducts"});
+    let sliderProducts = await app.products.find({"id": {$in: [...sliderProductsData.sliderProducts]}}).toArray();
+    let mostPopularProductsData = await app.catalog.findOne({"name": "mostPopularProducts"});
+    let mostPopularProducts = await app.products.find({"id": { $in: [...mostPopularProductsData.mostPopularProducts]}}).toArray();
     let reqBody = {
         categories: categoriesData.categories,
         sliderProducts: sliderProducts,
-        mostPopularProducts: mostPopular
+        mostPopularProducts: mostPopularProducts
     };
     res.send(JSON.stringify(reqBody));
 });
