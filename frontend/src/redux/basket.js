@@ -5,6 +5,7 @@ const GET_BASKET = "GET_BASKET";
 const ADD_TO_BASKET = "ADD_TO_BASKET";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_PRODUCT = "REMOVE_PRODUCT";
+const CREATE_ORDER = "CREATE_ORDER";
 const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
 
 // actions
@@ -31,6 +32,13 @@ export const changeQuantity = (payload) => {
 export const removeProduct = (payload) => {
     return {
         type: REMOVE_PRODUCT,
+        payload: payload
+    };
+};
+
+export const createOrder = (payload) => {
+    return {
+        type: CREATE_ORDER,
         payload: payload
     };
 };
@@ -88,11 +96,28 @@ function* changeQuantitySaga() {
 function* removeProductSaga() {
     while (true) {
         const {payload} = yield take(REMOVE_PRODUCT);
-        const req = yield fetch(`remove_from_basket/${payload}`);
+        const req = yield fetch(`/remove_from_basket/${payload}`);
         const res = yield req.json();
         yield put({
             type: UPDATE_PRODUCTS,
             payload: res.products
+        });
+    }
+}
+
+function* createOrderSaga() {
+    while (true) {
+        const {payload} = yield take(CREATE_ORDER);
+        yield fetch('/create_order', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        yield put({
+            type: UPDATE_PRODUCTS,
+            payload: []
         });
     }
 }
@@ -114,6 +139,7 @@ export function* basketSaga() {
         getBasketSaga(),
         addToBasketSaga(),
         changeQuantitySaga(),
-        removeProduct()
+        removeProduct(),
+        createOrderSaga()
     ]);
 }

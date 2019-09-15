@@ -6,7 +6,10 @@ import {put, take, all} from "redux-saga/effects";
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
 const CREATE_NEW_USER = 'CREATE_NEW_USER';
+const GET_USER_INFO = 'GET_USER_INFO';
+const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
+const SET_USER_INFO = 'SET_USER_INFO';
 
 // actions
 export const login = payload =>{
@@ -25,6 +28,19 @@ export const logout = () =>{
 export const createNewUser = (payload) =>{
     return{
         type: LOGOUT,
+        payload: payload
+    }
+};
+
+export const getUserInfo = () =>{
+    return{
+        type: GET_USER_INFO,
+    }
+};
+
+export const changeUserInfo = (payload) =>{
+    return{
+        type: CHANGE_USER_INFO,
         payload: payload
     }
 };
@@ -77,6 +93,30 @@ function* createNewUserSaga() {
     }
 }
 
+function* getUserInfoSaga() {
+    while (true){
+        yield take(GET_USER_INFO);
+        const response = yield fetch('/get_user_info');
+        const res = yield response.json();
+        yield put({type: SET_USER_INFO, payload: res})
+    }
+}
+
+function* changeUserInfoSaga() {
+    while (true){
+        const { payload } = yield take(CHANGE_USER_INFO);
+        const response = yield fetch('/change_user_info', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        const res = yield response.json();
+        yield put({type: SET_USER_INFO, payload: res})
+    }
+}
+
 // reducer
 
 export function authReducer(state = {loginStatus: false}, action) {
@@ -84,6 +124,8 @@ export function authReducer(state = {loginStatus: false}, action) {
     switch (type) {
         case SET_LOGIN_STATUS:
             return { ...state, loginStatus: payload.loginStatus };
+        case SET_USER_INFO:
+            return { ...state, userInfo: payload};
         default :
             return state
     }
