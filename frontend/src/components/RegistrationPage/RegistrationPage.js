@@ -1,32 +1,73 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import '../LoginPage/style-modal-window.css'
+import { createNewUser } from "../../redux/auth";
+import {connect} from 'react-redux'
 
-export const Registration = () =>{
-    const registrationUser = async () =>{
-        const name = document.getElementById('name');
-        const lastName = document.getElementById('lastName');
-        const email = document.getElementById('email');
-        const password = document.getElementById('password');
-        const confirmPassword = document.getElementById('confirmPassword');
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
 
-        const response = await fetch('/new_user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                first_name: `${name.value}`,
-                last_name: `${lastName.value}`,
-                email: `${email.value}`,
-                password: `${password.value}`,
-            })
-        });
-        const responseJSON = await response.json();
-        if(responseJSON.registered){
-            window.location.href = '/'
-        }else{
-            alert('Такой пользователь уже есть')
+export const Registration = connect(mapStateToProps,{createNewUser})(props =>{
+    function validate(values) {
+        let errors = {};
+        if (!values.email){
+            errors.email = 'Email address is required'
+        }else if (!/\S+@\S+\.\S+/.test(values.email)){
+            errors.email = "Email address is invalid";
         }
+        if (!values.password) {
+            errors.password = "Password is required";
+        } else if (values.password.length < 6) {
+            errors.password = "Password needs to be more than 6 characters";
+        }
+
+        return errors
+    }
+
+    const [values, setValues] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: ""
+    });
+
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleChange = event =>{
+        const {name, value} = event.target;
+        setValues({
+            ...values,
+            [name]: value
+        })
+    };
+
+    const handleSubmit = event =>{
+        event.preventDefault();
+        setErrors(validate(values));
+        setIsSubmitting(true)
+    };
+
+    useEffect(() =>{
+        if (Object.keys(errors).length === 0 && isSubmitting) {
+            callback();
+        }
+    },[errors]);
+    
+    function callback() {
+        console.log('submitted');
+    }
+
+    const registrationUser = async () =>{
+        props.createNewUser({
+            username: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            password: values.password
+        });
     };
 
     return(
@@ -38,23 +79,23 @@ export const Registration = () =>{
                     <div className='field-wrapper'>
                         <label className='login-input-title'>
                         First name
-                        <input id='name' name='name' type='text' placeholder='Your name...' className='login-email-input'/>
+                        <input onChange={handleChange} name='name' type='text' placeholder='Your name...' className='login-email-input'/>
                         </label>
                         <label className='login-input-title'>
                             Last name
-                            <input id='lastName' name='surname' type='text' placeholder='Last name...' className='login-email-input'/>
+                            <input onChange={handleChange} name='surname' type='text' placeholder='Last name...' className='login-email-input'/>
                         </label>
                         <label className='login-input-title'>
                             E-mail
-                            <input id='email' name='email' type='text' placeholder='Your email...' className='login-email-input'/>
+                            <input onChange={handleChange} name='email' type='text' placeholder='Your email...' className='login-email-input'/>
                         </label>
                         <label className='login-input-title'>
                             Password
-                            <input id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
+                            <input onChange={handleChange} name='password' type='password' placeholder='Your password...' className='login-email-input'/>
                         </label>
                         <label className='login-input-title'>
                             Confirm Password
-                            <input id='confirmPassword'  name='confirm-password' type='password' placeholder='Confirm password...' className='login-email-input'/>
+                            <input onChange={handleChange} name='confirm-password' type='password' placeholder='Confirm password...' className='login-email-input'/>
                         </label>
                     </div>
                 </div>
@@ -64,4 +105,4 @@ export const Registration = () =>{
             </div>
         </div>
     )
-}
+});

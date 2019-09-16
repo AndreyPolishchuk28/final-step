@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import './style.css'
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {Search} from "./Search";
 import {Menu} from "./Menu";
 import {connect} from 'react-redux'
 import {getMainInfo} from "../../redux/catalog";
 import {getBasket} from "../../redux/basket";
+import { logout, getLoginStatus } from "../../redux/auth";
 
 const mapStateToProps = state =>{
     return{
@@ -13,8 +14,11 @@ const mapStateToProps = state =>{
     }
 };
 
-export const Header = connect (mapStateToProps, {getMainInfo, getBasket})(props => {
+export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBasket, logout, getLoginStatus})(props => {
+
+
     useEffect(()=> {
+        props.getLoginStatus()
         props.getMainInfo();
         props.getBasket();
     },[]);
@@ -37,7 +41,7 @@ export const Header = connect (mapStateToProps, {getMainInfo, getBasket})(props 
                                         <div>
                                             <i className="far fa-user"></i>
                                             <Link to='/account'><span className='account'>Account</span></Link>
-                                            <button className='btn-logout' >Logout</button>
+                                            <span onClick={props.logout} className='account'>Logout</span>
                                         </div>
                                         :
                                         <div>
@@ -61,4 +65,4 @@ export const Header = connect (mapStateToProps, {getMainInfo, getBasket})(props 
             <Menu/>
         </div>
     )
-});
+}));

@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './style-modal-window.css'
 import {Link, withRouter} from "react-router-dom";
 import {connect} from 'react-redux'
+import { login } from "../../redux/auth";
 
 const mapStateToProps = state =>{
     return{
@@ -9,31 +10,22 @@ const mapStateToProps = state =>{
     }
 };
 
-export const ModalWindow = withRouter( connect(mapStateToProps)((props) =>{
-    const LoginAuth = async () =>{
-            const email = document.getElementById('email');
-            const password = document.getElementById('password');
+export const ModalWindow = withRouter( connect(mapStateToProps,{login})((props) =>{
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
 
-            const response = await fetch ('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: `${email.value}`,
-                    password: `${password.value}`
-                }),
-            });
-                const responseJSON = await response.json();
-                props.dispatch({
-                    type: 'CHANGE_STATUS',
-                    payload: {loginStatus: responseJSON.loginStatus}
-                });
-                if (responseJSON.loginStatus) {
-                    props.history.push('/')
-                } else {
-                    alert(responseJSON.message)
-                }
+    const handleEmail = (event) =>{
+        setEmail(event.target.value);
+    };
+    const handlePassword = (event) =>{
+        setPassword(event.target.value);
+    };
+
+    const LoginAuth = async () =>{
+        props.login({
+            username: email,
+            password: password
+        });
     };
 
     return(
@@ -48,11 +40,11 @@ export const ModalWindow = withRouter( connect(mapStateToProps)((props) =>{
                                 <div className='field-wrapper'>
                                     <label className='login-input-title'>
                                         E-mail
-                                        <input key='001' id='email' name='email' type='text' placeholder='Your email...' className='login-email-input'/>
+                                        <input onChange={handleEmail} id='email' name='email' type='text' placeholder='Your email...' className='login-email-input'/>
                                     </label>
                                     <label className='login-input-title'>
                                         Password
-                                        <input key='002' id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
+                                        <input onChange={handlePassword} id='password'  name='password' type='password' placeholder='Your password...' className='login-email-input'/>
                                     </label>
                                 </div>
                                     <button onClick={LoginAuth} name='loginSubmit' className='login-submit-btn'>LOG IN</button>

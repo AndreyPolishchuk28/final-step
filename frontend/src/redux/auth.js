@@ -1,10 +1,12 @@
 import {put, take, all} from "redux-saga/effects";
+import { push } from 'react-router-redux';
 
 
 // action types
 
 const LOGIN = 'LOGIN';
 const LOGOUT = 'LOGOUT';
+const GET_LOGIN_STATUS = 'GET_LOGIN_STATUS';
 const CREATE_NEW_USER = 'CREATE_NEW_USER';
 const GET_USER_INFO = 'GET_USER_INFO';
 const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
@@ -16,6 +18,12 @@ export const login = payload =>{
     return{
         type: LOGIN,
         payload: payload
+    }
+};
+
+export const getLoginStatus = () =>{
+    return{
+        type: GET_LOGIN_STATUS
     }
 };
 
@@ -59,7 +67,8 @@ function* loginSaga() {
         });
         const res = yield response.json();
         if (res.loginStatus) {
-            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}})
+            yield put(push('/'))
+            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
         } else {
             alert('loginStatus: false')
         }
@@ -71,6 +80,19 @@ function* logoutSaga() {
         yield take(LOGOUT);
         yield fetch('/logout');
         yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: false}})
+    }
+}
+
+function* getLoginStatusSaga() {
+    while (true){
+        const {payload} = yield take(GET_LOGIN_STATUS);
+        const response = yield fetch('/get_login_status');
+        const res = yield response.json();
+        if (res.loginStatus){
+            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}})
+        }else{
+            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: false}})
+        }
     }
 }
 
@@ -136,6 +158,7 @@ export function* authSaga() {
     yield all([
         loginSaga(),
         logoutSaga(),
-        createNewUserSaga()
+        createNewUserSaga(),
+        getLoginStatusSaga()
     ]);
 }

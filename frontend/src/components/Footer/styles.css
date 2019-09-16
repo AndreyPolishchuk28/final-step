@@ -15,9 +15,10 @@
 
 .footer-logo {
   padding-bottom: 60px;
-  text-align: center;
-  width: 150px;
-  margin: -10px auto;
+}
+
+.footer-logo .site-logo {
+  color: white;
 }
 
 .footer-header {
@@ -58,6 +59,7 @@
 
 .contact-info p {
   color: #8f8f8f;
+  margin-bottom: 15px;
 }
 .contact-info span {
   float: left;

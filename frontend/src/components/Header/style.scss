@@ -95,7 +95,7 @@
   min-width: 16px;
   color: #fff;
   font-size: 13px;
-  background: #f51167;
+  background: blueviolet;
   text-align: center;
   border-radius: 30px;
   padding: 0 2px;
@@ -201,10 +201,28 @@ a:hover{
 .account{
   margin: 0 5px;
   color: #282828;
+  cursor: pointer;
 }
 
 .btn-logout{
   color: #282828;
+  cursor: pointer;
+}
+
+.btn-logout:hover{
+  color: blueviolet;
+}
+
+.account:hover{
+  color: blueviolet;
+}
+
+.login:hover{
+  color: blueviolet;
+}
+
+.shopping-cart:hover{
+  color: blueviolet;
 }
 
 
@@ -230,6 +248,10 @@ a:hover{
 
   .toggle-btn{
     display: none;
+  }
+
+  .main-menu a:hover .category-item{
+    color: #999;
   }
 
 }
@@ -275,10 +297,13 @@ a:hover{
   ul a:hover{
     background: #F5F5DC;
   }
-}
+
   .main-menu a:hover .category-item{
     color: black;
   }
+
+}
+
 
 
 @media only screen and (max-width: 991px) and (min-width: 768px){
