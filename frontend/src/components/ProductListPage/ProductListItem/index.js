@@ -1,21 +1,20 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {addToBasket} from "../../../redux/actions";
 import {connect} from 'react-redux';
+import {addToBasket} from "../../../redux/basket";
 
 const mapStateToProps = (state) => {
     return{...state}
 }
 
-export const ProductListItem = connect(mapStateToProps)( props => {
+export const ProductListItem = connect(mapStateToProps, {addToBasket})( props => {
     const product = props.product
     const productId = product._id
 
     const addToBasketRes = async () => {
-		addToBasket(props.dispatch,{
+		props.addToBasket({
 			id: productId,
         	quantity: 1
-        
 		})
     };
     

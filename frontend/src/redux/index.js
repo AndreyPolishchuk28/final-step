@@ -5,16 +5,6 @@ import {authReducer, authSaga} from "./auth";
 import {basketReducer, basketSaga} from "./basket";
 import {catalogReducer, catalogSaga} from "./catalog";
 
-let startState = {
-  basketId: "",
-  productsToDisplay: [],
-  choosedProducts: [],
-  loginStatus: false,
-  sliderPhotos: [],
-};
-
-export const mainColor =  "blueviolet";
-
 // reducer
 
 const reducer = combineReducers({

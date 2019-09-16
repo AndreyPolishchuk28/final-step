@@ -25,36 +25,21 @@ app.use(express.static(path.join(__dirname, "static/build")));
 
 app.get('/main_info', async (req, res) => {
     let categoriesData = await app.catalog.findOne({"name": "categories"});
-    let sliderPhotosData = await app.catalog.findOne({"name": "sliderPhotos"});
-    let mostPopularPhotosData = await app.catalog.findOne({"name": "mostPopularPhotos"});
+    let sliderProductsData = await app.catalog.findOne({"name": "sliderProducts"});
+    let sliderProducts = await app.products.find({"id": {$in: [...sliderProductsData.sliderProducts]}}).toArray();
+    let mostPopularProductsData = await app.catalog.findOne({"name": "mostPopularProducts"});
+    let mostPopularProducts = await app.products.find({"id": { $in: [...mostPopularProductsData.mostPopularProducts]}}).toArray();
     let reqBody = {
         categories: categoriesData.categories,
-        sliderPhotos: sliderPhotosData.sliderPhotos,
-        mostPopularPhotos: mostPopularPhotosData.mostPopularPhotos
+        sliderProducts: sliderProducts,
+        mostPopularProducts: mostPopularProducts
     };
     res.send(JSON.stringify(reqBody));
-});
-
-app.get('/category/:id', async (req, res) => {
-    let reqBody = {
-        name: req.params.id,
-        products: []
-    };
-    await app.products.find({}).forEach((item) => {
-        if (item.category.toLowerCase() === req.params.id.toLowerCase()) {
-            reqBody.products.push(item)
-        }
-    });
-    res.send(JSON.stringify(reqBody))
 });
 
 app.get('/products/:id', async (req, res) => {
     let prod = await app.products.findOne({'id': req.params.id});
     res.send(JSON.stringify(prod))
-});
-
-app.get('/categories', (req, res) => {
-    res.send(JSON.stringify(categories))
 });
 
 app.post('/product_search', async (req, res) => {
@@ -132,19 +117,25 @@ app.post('/new_user', async (req, res) => {
     }
 });
 
-app.get('/customer', checkAuthMiddleware(), async (req, res) => {
+app.get('/get_user_info', checkAuthMiddleware(), async (req, res) => {
+    const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
+    if (user.orders) {
+        const orders = await app.orders.find({"_id": {$in: [...user.orders]}}).toArray();
+        user.orders = orders
+    };
+    res.send(JSON.stringify(user))
+});
+
+app.post('/change_user_info', checkAuthMiddleware(), async (req, res) => {
+    await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
+        $set: {...req.body}
+    });
     const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
     res.send(JSON.stringify(user))
 });
 
-app.post('/change_customer_info', checkAuthMiddleware(), async (req, res) => {
-    await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
-        $set: {...req.body}
-    });
-    res.send(JSON.stringify({message: 'User info changed'}))
-});
-
 app.post('/add_to_basket', async (req, res) => {
+    let prod = await app.products.findOne({'id': req.body.id});
     if (req.cookies.basket) {
         let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
         if(currentBasket.products.some((item) => item.id === req.body.id)) {
@@ -152,7 +143,7 @@ app.post('/add_to_basket', async (req, res) => {
                 if (item.id === req.body.id) {item.quantity = +item.quantity + +req.body.quantity}
             })
         } else {
-            currentBasket.products.push(req.body)
+            currentBasket.products.push({...req.body, product: prod})
         }
         await app.baskets.updateOne({"_id": ObjectId(req.cookies.basket)}, {
             $set: {products: currentBasket.products}
@@ -160,7 +151,7 @@ app.post('/add_to_basket', async (req, res) => {
         res.send(JSON.stringify(await app.baskets.findOne(ObjectId(req.cookies.basket))));
     } else {
         let basket = await app.baskets.insertOne({
-            products: [req.body]
+            products: [{...req.body, product: prod}]
         });
         res.cookie('basket', basket.insertedId);
         if (req.cookies.sessionKey && await app.sessions.findOne({"sessionKey": req.cookies.sessionKey})) {
@@ -194,17 +185,25 @@ app.post('/change_quantity', async (req, res) => {
 });
 
 app.get('/get_basket', async (req, res) => {
-    let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
-    res.send(JSON.stringify(currentBasket))
-});
-
-app.get('/quantity_products', async (req, res) => {
     if (req.cookies.basket) {
         let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
-        res.send(JSON.stringify({QuantityProducts: currentBasket.products.length}))
+        res.send(JSON.stringify(currentBasket))
     } else {
-        res.send(JSON.stringify({QuantityProducts: 0}))
+        res.send()
     }
+});
+
+app.post('/create_order', async (req, res) => {
+    let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
+    await app.baskets.removeOne(ObjectId(req.cookies.basket));
+    const orderMongoDBItem = app.orders.insertOne({...req.body, basket: currentBasket});
+    if (req.cookies.sessionKey) {
+        const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
+        await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
+            $set: {orders: [...user.orders, orderMongoDBItem.insertedId]}
+        });
+    }
+    res.clearCookie('basket').send();
 });
 
 app.use('/', (req, res) => res.sendFile(path.join(__dirname, 'static/build/index.html')));
@@ -217,6 +216,6 @@ function checkAuthMiddleware() {
         if (findResult) {
             return next()
         }
-        res.send(JSON.stringify({messege: 'Prohibited'}))
+        res.send(JSON.stringify({message: 'Prohibited'}))
     }
 }

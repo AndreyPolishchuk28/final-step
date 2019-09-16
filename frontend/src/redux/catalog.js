@@ -57,8 +57,8 @@ function* getProductsSaga() {
 let startState = {
     categories: [],
     products: [],
-    sliderPhotos: [],
-    mostPopularPhotos: []
+    sliderProducts: [],
+    mostPopularProducts: []
 };
 
 export function catalogReducer(state = startState, action){

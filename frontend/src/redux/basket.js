@@ -1,12 +1,20 @@
 import {put, take, all} from "redux-saga/effects";
 
 // action types
+const GET_BASKET = "GET_BASKET";
 const ADD_TO_BASKET = "ADD_TO_BASKET";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_PRODUCT = "REMOVE_PRODUCT";
+const CREATE_ORDER = "CREATE_ORDER";
 const UPDATE_PRODUCTS = "UPDATE_PRODUCTS";
 
 // actions
+export const getBasket = () => {
+    return {
+        type: GET_BASKET
+    };
+};
+
 export const addToBasket = (payload) => {
     return {
         type: ADD_TO_BASKET,
@@ -28,7 +36,27 @@ export const removeProduct = (payload) => {
     };
 };
 
+export const createOrder = (payload) => {
+    return {
+        type: CREATE_ORDER,
+        payload: payload
+    };
+};
+
 // sagas
+function* getBasketSaga() {
+    while (true) {
+        yield take(GET_BASKET);
+        const req = yield fetch("/get_basket");
+        const res = yield req.json();
+        if (res) {
+            yield put({
+                type: UPDATE_PRODUCTS,
+                payload: res.products
+            })
+        }
+    }
+}
 function* addToBasketSaga() {
     while (true) {
         const {payload} = yield take(ADD_TO_BASKET);
@@ -68,11 +96,28 @@ function* changeQuantitySaga() {
 function* removeProductSaga() {
     while (true) {
         const {payload} = yield take(REMOVE_PRODUCT);
-        const req = yield fetch(`remove_from_basket/${payload}`);
+        const req = yield fetch(`/remove_from_basket/${payload}`);
         const res = yield req.json();
         yield put({
             type: UPDATE_PRODUCTS,
             payload: res.products
+        });
+    }
+}
+
+function* createOrderSaga() {
+    while (true) {
+        const {payload} = yield take(CREATE_ORDER);
+        yield fetch('/create_order', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        yield put({
+            type: UPDATE_PRODUCTS,
+            payload: []
         });
     }
 }
@@ -91,8 +136,10 @@ export function basketReducer(state = {products: []}, action) {
 // root saga
 export function* basketSaga() {
     yield all([
+        getBasketSaga(),
         addToBasketSaga(),
         changeQuantitySaga(),
-        removeProduct()
+        removeProduct(),
+        createOrderSaga()
     ]);
 }
