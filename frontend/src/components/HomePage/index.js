@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 const mainColor =  "blueviolet";
 
 const mapStateToProps = state => {
+  console.log('state', state)
   return {
     ...state
   };
@@ -18,31 +19,12 @@ const mapStateToProps = state => {
 export const HomePage = connect(
   mapStateToProps,
 )(props => {
-  console.log("propssliderPhotos", props);
-  const [sliderItem, setSliderItem] = useState([]);
-  const [mostPopularItem, setMostPopularItem] = useState([]);
-  let photosArr = ["0002", "0003", "0011", "0018", "0026"];
-  let mostPopularArr = [
-    "0001",
-    "0003",
-    "0002",
-    "0005",
-    "0010",
-    "0018",
-    "0012",
-    "0020"
-  ];
-/*
-  useEffect(() => {
-    props.sliderPhotos(photosArr, setSliderItem);
-    props.mostPopularPhotos(mostPopularArr, setMostPopularItem);
-  }, []);*/
-
+  
   return (
     <div>
       <SliderContainer>
         <Slider autoplay={800}>
-          {sliderItem.map(item => {
+          {props.catalog.sliderProducts.map(item => {
             return (
               <div key={item.id}>
                 <SliderItem
@@ -60,7 +42,7 @@ export const HomePage = connect(
         <Col xs={24} xl={24} xm={12}>
           <MostPopularContainer>
             <h3>MOST POPULAR PRODUCTS</h3>
-            {mostPopularItem.map(item => {
+            {props.catalog.mostPopularProducts.map(item => {
               return (
                 <MostPopular
                   key={item.id}
