@@ -49,7 +49,7 @@ function* getBasketSaga() {
         yield take(GET_BASKET);
         const req = yield fetch("/get_basket");
         const res = yield req.json();
-        if (res) {
+        if (res._id) {
             yield put({
                 type: UPDATE_PRODUCTS,
                 payload: res.products

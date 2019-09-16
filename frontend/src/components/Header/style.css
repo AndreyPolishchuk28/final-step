@@ -201,6 +201,7 @@ a:hover {
 .account {
   margin: 0 5px;
   color: #282828;
+  cursor: pointer;
 }
 
 .btn-logout {

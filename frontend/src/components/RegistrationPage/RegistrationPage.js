@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import '../LoginPage/style-modal-window.css'
 import { createNewUser } from "../../redux/auth";
 import {connect} from 'react-redux'
@@ -10,7 +10,21 @@ const mapStateToProps = state =>{
 };
 
 export const Registration = connect(mapStateToProps,{createNewUser})(props =>{
-    const validation = () =>{};
+    function validate(values) {
+        let errors = {};
+        if (!values.email){
+            errors.email = 'Email address is required'
+        }else if (!/\S+@\S+\.\S+/.test(values.email)){
+            errors.email = "Email address is invalid";
+        }
+        if (!values.password) {
+            errors.password = "Password is required";
+        } else if (values.password.length < 6) {
+            errors.password = "Password needs to be more than 6 characters";
+        }
+
+        return errors
+    }
 
     const [values, setValues] = useState({
         firstName: "",
@@ -19,6 +33,7 @@ export const Registration = connect(mapStateToProps,{createNewUser})(props =>{
         password: "",
         confirmPassword: ""
     });
+
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -41,15 +56,17 @@ export const Registration = connect(mapStateToProps,{createNewUser})(props =>{
             callback();
         }
     },[errors]);
-
-
+    
+    function callback() {
+        console.log('submitted');
+    }
 
     const registrationUser = async () =>{
         props.createNewUser({
-            username: name,
-            lastName: lastName,
-            email: email,
-            password: password
+            username: values.firstName,
+            lastName: values.lastName,
+            email: values.email,
+            password: values.password
         });
     };
 

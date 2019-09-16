@@ -26,7 +26,6 @@ export const ModalWindow = withRouter( connect(mapStateToProps,{login})((props) 
             username: email,
             password: password
         });
-
     };
 
     return(

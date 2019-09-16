@@ -189,7 +189,7 @@ app.get('/get_basket', async (req, res) => {
         let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
         res.send(JSON.stringify(currentBasket))
     } else {
-        res.send()
+        res.send(JSON.stringify({_id: false}))
     }
 });
 
