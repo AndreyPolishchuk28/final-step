@@ -18,12 +18,24 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
     const [ userChange, setUserChange] = useState({
         ...props.auth.userInfo
     })
+
+    const [ addChange, setAddChange] = useState({
+        ...props.auth.userInfo.def_address
+    })
     
     const changeHandler = (event) => {
         setUserChange({
             ...userChange,
             [event.target.name]: event.target.value
         })
+    }
+
+    const changeAdditionalHandler = (event) => {
+        setAddChange({
+            ...addChange,
+            [event.target.name]: event.target.value 
+        })
+        console.log(addChange);
     }
 
     const submitHandler = async () => {
@@ -35,7 +47,12 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
             const data = await {
                 first_name: userChange.first_name,
                 last_name: userChange.last_name,
-                email: props.auth.userInfo.email
+                email: props.auth.userInfo.email,
+                def_address: {
+                    country: addChange.country,
+                    city: addChange.city,
+                    address: addChange.address
+                }
             }
             
             props.changeUserInfo(data)
@@ -49,11 +66,15 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
                     <Link to="/account">
                         <i class="fas fa-times close-btn"></i>
                     </Link>
-                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.first_name} placeholder="First name" name="first_name"/>
-                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.last_name } placeholder="Last name" name="last_name"/>
+                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.username} placeholder="First name" name="username"/>
+                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.lastName } placeholder="Last name" name="lastName"/>
                     <Link to="/account/info/change/pass">
                         <Button type="Deafault">change password</Button>
                     </Link>
+                    <h1>Additional information</h1>
+                    <input className="input-change" type="text" onChange={changeAdditionalHandler} defaultValue={props.auth.userInfo.def_address.country } placeholder="country" name="country"/>
+                    <input className="input-change" type="text" onChange={changeAdditionalHandler} defaultValue={props.auth.userInfo.def_address.city } placeholder="city" name="city"/>
+                    <input className="input-change" type="text" onChange={changeAdditionalHandler} defaultValue={props.auth.userInfo.def_address.address } placeholder="address" name="address"/>
                     <button className="submit-btn" onClick={submitHandler}>Submit</button>
                 </div>
                 : null 
