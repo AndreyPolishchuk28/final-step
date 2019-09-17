@@ -10,7 +10,6 @@ const mapStateToProps = state =>{
 };
 
 export const RegistrationPage = connect(mapStateToProps,{createNewUser})(props =>{
-    console.log(props);
     const [values, setValues] = useState({
         firstName: "",
         lastName: "",
@@ -60,7 +59,7 @@ export const RegistrationPage = connect(mapStateToProps,{createNewUser})(props =
                 setErrors(validate(values));
             } else{
                 props.createNewUser({
-                    username: values.firstName,
+                    firstName: values.firstName,
                     lastName: values.lastName,
                     email: values.email,
                     password: values.password,
