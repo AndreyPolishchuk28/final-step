@@ -31,6 +31,10 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo}) ((props) => 
         <div className="container-change">
             <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.first_name} placeholder="First name" name="first_name"/>
             <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.last_name} placeholder="Last name" name="last_name"/>
+            <h1>Address</h1>
+            <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.def_address.country} placeholder="country" name="country"/>
+            <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.def_address.city} placeholder="city" name="city"/>
+            <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.def_address.address} placeholder="address" name="address"/>
         </div>
         : null
     )
