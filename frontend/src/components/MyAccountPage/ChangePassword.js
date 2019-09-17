@@ -1,8 +1,18 @@
 import React, {useState} from 'react'
 import {Link} from 'react-router-dom';
+
+import {connect} from 'react-redux'
+import {changeUserInfo} from '../../redux/auth'
+
 import './scss/style.scss'
 
-export const ChangePassword = (props) => {
+const mapStateToProps = (state) => {
+    return {
+        ...state
+    }
+}
+
+export const ChangePassword = connect(mapStateToProps, {changeUserInfo}) ((props) => {
 
     const [ passChange, setPassChange] = useState({
         currentPass: "",
@@ -20,7 +30,7 @@ export const ChangePassword = (props) => {
     const submitHandler = async () => {
         if (passChange.pass !== passChange.repeatPass){
             alert("passwords doesn't match")
-        } else if (passChange.currentPass !== props.userInfo.password){
+        } else if (passChange.currentPass !== props.auth.userInfo.password){
             alert('current password is incorrect')
         } else if(passChange.pass.length < 8){
             alert('password must contain atleast 8 charecters')
@@ -30,15 +40,7 @@ export const ChangePassword = (props) => {
                 password: passChange.pass
             }
 
-            await fetch("/change_customer_info",{
-                method:'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-
-            props.setUserInfo(data)
+            props.changeUserInfo(data)
 
             props.history.push('/account/info/change')
         }
@@ -55,4 +57,4 @@ export const ChangePassword = (props) => {
             <button className="submit-btn" onClick={submitHandler}>Submit password</button>
         </div>
     )
-};
+});

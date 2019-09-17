@@ -46,9 +46,11 @@ function* getProductsSaga() {
         });
         const res = yield req.json();
         if (clearOld) {
-            yield put({type: SET_PRODUCTS, payload: res})
+            yield put({type: SET_PRODUCTS, payload: {products: res, showMoreBtnStatus: true}})
+        } else if (res.length) {
+            yield put({type: SET_MORE_PRODUCTS, payload: {products: res, showMoreBtnStatus: true}})
         } else {
-            yield put({type: SET_MORE_PRODUCTS, payload: res})
+            yield put({type: SET_MORE_PRODUCTS, payload: {products: res, showMoreBtnStatus: false}})
         }
     }
 }
@@ -58,16 +60,18 @@ let startState = {
     categories: [],
     products: [],
     sliderProducts: [],
-    mostPopularProducts: []
+    mostPopularProducts: [],
+    showMoreBtnStatus: true
+
 };
 
 export function catalogReducer(state = startState, action){
     const {type, payload} = action;
     switch(type){
         case SET_PRODUCTS:
-            return {...state, products: payload};
+            return {...state, products: payload.products, showMoreBtnStatus: payload.showMoreBtnStatus};
         case SET_MORE_PRODUCTS:
-            return {...state, products: [...state.products, payload]};
+            return {...state, products: [...state.products, ...payload.products], showMoreBtnStatus: payload.showMoreBtnStatus};
         case SET_MAIN_INFO:
             return {...state, ...payload};
         default :
