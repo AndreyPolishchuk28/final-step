@@ -2,18 +2,22 @@ import React, {useState} from "react";
 import {Row, Col} from "antd";
 import './style-search-result.css'
 import {Link} from "react-router-dom";
+import {connect} from 'react-redux'
+import {getSearchProducts} from "../../redux/catalog";
 
-export const SearchResult = (props) =>{
-    const clearField = () =>{
-        props.setValue("");
-        props.setProducts([])
-    };
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
 
-    let productCards;
-    if (props.products){
-        productCards = props.products.map(item =>{
+export const SearchResult = connect(mapStateToProps, {getSearchProducts})((props) =>{
+    let productCards = props.products.map(item =>{
             return(
-                <Link to={`/product/${item.id}`} onClick={clearField}>
+                <Link onClick={() =>{
+                    props.getSearchProducts({q:''});
+                    props.setValue('')
+                }} to={`/product/${item.id}`}>
                 <div className='wrapper'>
                     <Row gutter={16}>
                         <Col span={4}>
@@ -32,10 +36,9 @@ export const SearchResult = (props) =>{
             )
 
         });
-    }
     return(
         <div className='search-wrapper'>
             {productCards}
         </div>
     )
-};
+});

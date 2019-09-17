@@ -44,12 +44,14 @@ app.get('/products/:id', async (req, res) => {
 
 app.post('/product_search', async (req, res) => {
     let prodArray = [];
-    let searchLength = req.body.q.length;
-    await app.products.find({}).forEach((item) => {
-        if (item.name.slice(0, searchLength).toLowerCase() === req.body.q.toLowerCase()) {
-            prodArray.push(item)
-        }
-    });
+    if (req.body.q.length){
+        let searchLength = req.body.q.length;
+        await app.products.find({}).forEach((item) => {
+            if (item.name.slice(0, searchLength).toLowerCase() === req.body.q.toLowerCase()) {
+                prodArray.push(item)
+            }
+        });
+    }
     res.send(JSON.stringify(prodArray))
 });
 

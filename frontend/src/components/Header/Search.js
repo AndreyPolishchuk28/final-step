@@ -1,46 +1,38 @@
 import React, {useEffect, useState} from 'react'
 import {SearchResult} from "./SearchResult";
-let flag = false;
+import {getSearchProducts} from "../../redux/catalog";
+import {connect} from 'react-redux'
 
-export const Search =() =>{
-    const [products, setProducts] = useState();
-    const [value, setValue] = useState();
+const mapStateToProps = state =>{
+    return{
+        ...state
+    }
+};
 
-    const SearchProduct = async (event) =>{
+export const Search = connect(mapStateToProps, {getSearchProducts})((props) =>{
+    // const [products, setProducts] = useState();
+    const [value, setValue] = useState('');
+
+    const SearchProduct = (event) =>{
         setValue(event.target.value);
-        if (event.target.value){
-            flag = true
-        }else{
-            flag = false
-        }
-
-            const response = await fetch('/product_search', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    q: `${event.target.value}`
-                })
-            });
-            const responseJSON = await response.json();
-            if (flag){
-                setProducts(responseJSON)
-            }else {
-                setProducts([])
-            }
-
-
+        props.getSearchProducts({
+            q: event.target.value
+        })
     };
+
+    // useEffect(() =>{
+    //
+    // },[value]);
+
     return(
-        <div className=''>
+        <div>
             <form className='header-search-form'>
-                <input id='search' onChange={SearchProduct} value={value} type='text' placeholder='Music shop search ...'/>
+                <input value={value} onChange={ SearchProduct } type='text' placeholder='Music shop search ...'/>
                 <button>
                     <i className="fas fa-search"></i>
                 </button>
             </form>
-            <SearchResult products={products} setValue={setValue} setProducts={setProducts}/>
+            {props.catalog.searchProducts.length ? <SearchResult products={props.catalog.searchProducts} setValue={setValue} /> : null}
         </div>
     )
-};
+});
