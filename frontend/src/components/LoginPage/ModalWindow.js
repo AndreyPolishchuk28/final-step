@@ -38,6 +38,10 @@ export const ModalWindow = withRouter( connect(mapStateToProps,{login})((props) 
                         <p className='login-menu-subtitle'>Please enter your account details</p>
                             <div className='login-menu-form'>
                                 <div className='field-wrapper'>
+                                    {props.auth.loginErrorMessage ?
+                                    <p>props.auth.loginErrorMessage</p>
+                                        : null
+                                    }
                                     <label className='login-input-title'>
                                         E-mail
                                         <input onChange={handleEmail} id='email' name='email' type='text' placeholder='Your email...' className='login-email-input'/>

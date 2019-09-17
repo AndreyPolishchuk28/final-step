@@ -35,7 +35,7 @@ export const logout = () =>{
 
 export const createNewUser = (payload) =>{
     return{
-        type: LOGOUT,
+        type: CREATE_NEW_USER,
         payload: payload
     }
 };
@@ -107,6 +107,7 @@ function* createNewUserSaga() {
             body: JSON.stringify(payload)
         });
         const res = yield response.json();
+        console.log(res);
         if (res.registered) {
             yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}})
         } else {
