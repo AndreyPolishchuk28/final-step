@@ -4,14 +4,16 @@ import {connect} from 'react-redux';
 import {addToBasket} from "../../../redux/basket";
 
 const mapStateToProps = (state) => {
-    return{...state}
+    return {
+        ...state
+    }
 }
 
 export const ProductListItem = connect(mapStateToProps, {addToBasket})( props => {
     const product = props.product
     const productId = product._id
-
-    const addToBasketRes = async () => {
+    
+    const addToBasketRes = () => {
 		props.addToBasket({
 			id: productId,
         	quantity: 1
