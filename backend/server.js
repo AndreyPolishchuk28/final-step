@@ -135,7 +135,7 @@ app.post('/change_user_info', checkAuthMiddleware(), async (req, res) => {
 });
 
 app.post('/add_to_basket', async (req, res) => {
-    let prod = await app.products.findOne({'id': req.body.id});
+    let prod = await app.products.findOne(ObjectId(req.body.id));
     if (req.cookies.basket) {
         let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
         if(currentBasket.products.some((item) => item.id === req.body.id)) {
