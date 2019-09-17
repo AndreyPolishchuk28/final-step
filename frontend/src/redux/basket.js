@@ -54,6 +54,11 @@ function* getBasketSaga() {
                 type: UPDATE_PRODUCTS,
                 payload: res.products
             })
+        }else{
+            yield put({
+                type: UPDATE_PRODUCTS,
+                payload: []
+            })
         }
     }
 }

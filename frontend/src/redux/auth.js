@@ -11,6 +11,8 @@ const CREATE_NEW_USER = 'CREATE_NEW_USER';
 const GET_USER_INFO = 'GET_USER_INFO';
 const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
+const SET_LOGIN_ERRORS = 'SET_LOGIN_ERRORS';
+const SET_REGISTERATION_ERRORS = 'SET_REGISTERATION_ERRORS';
 const SET_USER_INFO = 'SET_USER_INFO';
 
 // actions
@@ -35,7 +37,7 @@ export const logout = () =>{
 
 export const createNewUser = (payload) =>{
     return{
-        type: LOGOUT,
+        type: CREATE_NEW_USER,
         payload: payload
     }
 };
@@ -67,10 +69,9 @@ function* loginSaga() {
         });
         const res = yield response.json();
         if (res.loginStatus) {
-            yield put(push('/'))
             yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
         } else {
-            alert('loginStatus: false')
+            yield put({type: SET_LOGIN_ERRORS, payload: {loginStatus: false, loginErrorMessage: res.message}});
         }
     }
 }
@@ -107,10 +108,11 @@ function* createNewUserSaga() {
             body: JSON.stringify(payload)
         });
         const res = yield response.json();
+        console.log(res);
         if (res.registered) {
             yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}})
         } else {
-            alert('registered: false')
+            yield put({type: SET_REGISTERATION_ERRORS, payload: {loginStatus: true, registrationErrorMessage: res.message}})
         }
     }
 }
@@ -141,13 +143,17 @@ function* changeUserInfoSaga() {
 
 // reducer
 
-export function authReducer(state = {loginStatus: false}, action) {
+export function authReducer(state = {loginStatus: false, loginErrorMessage: '', registrationError: ''}, action) {
     const { type, payload } = action;
     switch (type) {
         case SET_LOGIN_STATUS:
-            return { ...state, loginStatus: payload.loginStatus };
+            return { ...state, loginStatus: payload.loginStatus, loginErrorMessage: '', registrationError: ''};
         case SET_USER_INFO:
             return { ...state, userInfo: payload};
+        case SET_LOGIN_ERRORS:
+            return { ...state, loginStatus: false, loginErrorMessage: payload.loginErrorMessage};
+        case SET_REGISTERATION_ERRORS:
+            return { ...state, loginStatus: false, registrationErrorMessage: payload.registrationErrorMessage};
         default :
             return state
     }
@@ -159,6 +165,8 @@ export function* authSaga() {
         loginSaga(),
         logoutSaga(),
         createNewUserSaga(),
-        getLoginStatusSaga()
+        getLoginStatusSaga(),
+        getUserInfoSaga(),
+        changeUserInfoSaga()
     ]);
 }

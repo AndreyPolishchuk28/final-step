@@ -16,12 +16,19 @@ const mapStateToProps = state =>{
 
 export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBasket, logout, getLoginStatus})(props => {
 
-
     useEffect(()=> {
         props.getLoginStatus()
         props.getMainInfo();
         props.getBasket();
     },[]);
+
+    useEffect(()=> {
+        props.getBasket();
+    },[props.auth.loginStatus]);
+
+    const logOut = () =>{
+        props.logout();
+    };
 
     return (
         <div>
@@ -41,7 +48,7 @@ export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBas
                                         <div>
                                             <i className="far fa-user"></i>
                                             <Link to='/account'><span className='account'>Account</span></Link>
-                                            <span onClick={props.logout} className='account'>Logout</span>
+                                            <span onClick={logOut} className='account'>Logout</span>
                                         </div>
                                         :
                                         <div>

@@ -103,7 +103,7 @@ app.get('/get_login_status', async (req, res) => {
 
 app.post('/new_user', async (req, res) => {
     if (await app.users.findOne({"email": req.body.email})) {
-        res.send(JSON.stringify({registered: false}))
+        res.send(JSON.stringify({registered: false, message: 'This email already used'}))
     } else {
         let user = {...req.body, orders: [], basket: ''};
         if (req.cookies.basket) {
@@ -135,7 +135,7 @@ app.post('/change_user_info', checkAuthMiddleware(), async (req, res) => {
 });
 
 app.post('/add_to_basket', async (req, res) => {
-    let prod = await app.products.findOne({'id': req.body.id});
+    let prod = await app.products.findOne(ObjectId(req.body.id));
     if (req.cookies.basket) {
         let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
         if(currentBasket.products.some((item) => item.id === req.body.id)) {

@@ -1,5 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {BrowserRouter as Router, Switch, Route, NavLink} from 'react-router-dom';
+
+import {connect} from 'react-redux'
+import {getUserInfo} from '../../redux/auth'
+
 import {Orders} from './Orders'
 import {FullOrder} from './FullOrder'
 import {AccInfoChange} from './AccInfoChange'
@@ -8,22 +12,17 @@ import {AccInfo} from './AccInfo'
 
 import './scss/style.scss'
 
-export const MyAccountPage = () => {
-
-    const [userInfo, setUserInfo] = useState();
-
-    const getUserInfo = async () => {
-        const response = await fetch("/customer")
-
-        const responseJSON = await response.json();
-        setUserInfo(responseJSON);
-        console.log(responseJSON);
-        console.log(userInfo);
+const mapStateToProps = (state) => {
+    return {
+        ...state
     }
+}
+
+export const MyAccountPage = connect(mapStateToProps, {getUserInfo})((props) => {
 
     useEffect(() => {
-        getUserInfo();
-    }, [])
+        props.getUserInfo()
+    },[])
 
     return (
         <Router>
@@ -40,9 +39,9 @@ export const MyAccountPage = () => {
                     <div className="top-l-corner"></div>
                     <div className="bot-r-corner"></div>
                     <Switch>
-                        <Route exact path='/account' render={(props) => <AccInfo {...props} userInfo={userInfo}/>} />
-                        <Route exact path='/account/info/change'  render={(props) => <AccInfoChange {...props} userInfo={userInfo} setUserInfo={setUserInfo}/>} />
-                        <Route path='/account/info/change/pass'  render={(props) => <ChangePassword {...props} userInfo={userInfo} setUserInfo={setUserInfo}/>} />
+                        <Route exact path='/account' render={(props) => <AccInfo {...props}/>} />
+                        <Route exact path='/account/info/change'  render={(props) => <AccInfoChange {...props}/>} />
+                        <Route path='/account/info/change/pass'  render={(props) => <ChangePassword {...props}/>} />
                         <Route exact path='/account/orders' component={Orders}/>
                         <Route path='/account/orders/:id' component={FullOrder}/>
                     </Switch>
@@ -50,4 +49,4 @@ export const MyAccountPage = () => {
             </section>
         </Router>
         )
-};
+});
