@@ -59,12 +59,12 @@ export const RegistrationPage = connect(mapStateToProps,{createNewUser})(props =
             if (Object.keys(errors).length){
                 setErrors(validate(values));
             } else{
-                console.log('hi');
                 props.createNewUser({
                     username: values.firstName,
                     lastName: values.lastName,
                     email: values.email,
                     password: values.password,
+                    def_address: {}
                 });
             }
     };

@@ -11,6 +11,7 @@ const mapStateToProps = state =>{
 };
 
 export const ModalWindow = withRouter( connect(mapStateToProps,{login})((props) =>{
+    console.log(props);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
@@ -39,7 +40,7 @@ export const ModalWindow = withRouter( connect(mapStateToProps,{login})((props) 
                             <div className='login-menu-form'>
                                 <div className='field-wrapper'>
                                     {props.auth.loginErrorMessage ?
-                                    <p>props.auth.loginErrorMessage</p>
+                                    <p>{props.auth.loginErrorMessage}</p>
                                         : null
                                     }
                                     <label className='login-input-title'>
