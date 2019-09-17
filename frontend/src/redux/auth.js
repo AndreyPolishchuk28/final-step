@@ -159,6 +159,8 @@ export function* authSaga() {
         loginSaga(),
         logoutSaga(),
         createNewUserSaga(),
-        getLoginStatusSaga()
+        getLoginStatusSaga(),
+        getUserInfoSaga(),
+        changeUserInfoSaga()
     ]);
 }
