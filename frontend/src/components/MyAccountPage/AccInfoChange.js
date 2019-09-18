@@ -45,8 +45,8 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
             alert('Last name must contain atleast 1 charecter')
         } else{
             const data = await {
-                first_name: userChange.first_name,
-                last_name: userChange.last_name,
+                firstName: userChange.firstName,
+                lastName: userChange.lastName,
                 email: props.auth.userInfo.email,
                 def_address: {
                     country: addChange.country,
@@ -66,7 +66,7 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
                     <Link to="/account">
                         <i class="fas fa-times close-btn"></i>
                     </Link>
-                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.username} placeholder="First name" name="username"/>
+                    <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.firstName} placeholder="First name" name="firstName"/>
                     <input className="input-change" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.lastName } placeholder="Last name" name="lastName"/>
                     <Link to="/account/info/change/pass">
                         <Button type="Deafault">change password</Button>
