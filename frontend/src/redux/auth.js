@@ -14,6 +14,8 @@ const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 const SET_LOGIN_ERRORS = 'SET_LOGIN_ERRORS';
 const SET_REGISTRATION_ERRORS = 'SET_REGISTRATION_ERRORS';
 const SET_USER_INFO = 'SET_USER_INFO';
+const CLEAR_LOGIN_ERRORS = 'CLEAR_LOGIN_ERRORS';
+const CLEAR_REGISTRATION_ERRORS = 'CLEAR_REGISTRATION_ERRORS';
 
 // actions
 export const login = payload =>{
@@ -55,6 +57,18 @@ export const changeUserInfo = (payload) =>{
     }
 };
 
+export const clearLoginErrors = () =>{
+    return{
+        type: CLEAR_LOGIN_ERRORS
+    }
+};
+
+export const clearRegistrationErrors = () =>{
+    return{
+        type: CLEAR_REGISTRATION_ERRORS
+    }
+};
+
 // sagas
 
 function* loginSaga() {
@@ -87,7 +101,7 @@ function* logoutSaga() {
 
 function* getLoginStatusSaga() {
     while (true){
-        const {payload} = yield take(GET_LOGIN_STATUS);
+        yield take(GET_LOGIN_STATUS);
         const response = yield fetch('/get_login_status');
         const res = yield response.json();
         if (res.loginStatus){
@@ -155,6 +169,10 @@ export function authReducer(state = {loginStatus: false, loginErrorMessage: '', 
             return { ...state, loginStatus: false, loginErrorMessage: payload.loginErrorMessage};
         case SET_REGISTRATION_ERRORS:
             return { ...state, loginStatus: false, registrationErrorMessage: payload.registrationErrorMessage};
+        case CLEAR_LOGIN_ERRORS:
+            return { ...state, loginStatus: false, loginErrorMessage: ''};
+        case CLEAR_REGISTRATION_ERRORS:
+            return { ...state, loginStatus: false, registrationErrorMessage: ''};
         default :
             return state
     }
