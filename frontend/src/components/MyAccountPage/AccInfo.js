@@ -20,7 +20,7 @@ export const AccInfo = connect(mapStateToProps) ((props) => {
         <div className={"info-container"}>   
             {props.auth.userInfo ?
                 <div className={"info-container__items"}>
-                <h2>Name: {props.auth.userInfo.username}</h2>
+                <h2>Name: {props.auth.userInfo.firstName}</h2>
                 <h2>Last name: {props.auth.userInfo.lastName}</h2>
                 <h2>E-mail: {props.auth.userInfo.email}</h2>
                 <h1>Additional information</h1>
