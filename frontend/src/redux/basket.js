@@ -144,7 +144,7 @@ export function* basketSaga() {
         getBasketSaga(),
         addToBasketSaga(),
         changeQuantitySaga(),
-        removeProduct(),
+        removeProductSaga(),
         createOrderSaga()
     ]);
 }
