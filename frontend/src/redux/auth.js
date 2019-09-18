@@ -1,5 +1,5 @@
 import {put, take, all} from "redux-saga/effects";
-import { push } from 'react-router-redux';
+
 
 
 // action types
@@ -12,7 +12,7 @@ const GET_USER_INFO = 'GET_USER_INFO';
 const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 const SET_LOGIN_ERRORS = 'SET_LOGIN_ERRORS';
-const SET_REGISTERATION_ERRORS = 'SET_REGISTERATION_ERRORS';
+const SET_REGISTRATION_ERRORS = 'SET_REGISTRATION_ERRORS';
 const SET_USER_INFO = 'SET_USER_INFO';
 
 // actions
@@ -70,6 +70,7 @@ function* loginSaga() {
         const res = yield response.json();
         if (res.loginStatus) {
             yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
+            payload.history.push('/')
         } else {
             yield put({type: SET_LOGIN_ERRORS, payload: {loginStatus: false, loginErrorMessage: res.message}});
         }
@@ -108,11 +109,11 @@ function* createNewUserSaga() {
             body: JSON.stringify(payload)
         });
         const res = yield response.json();
-        console.log(res);
         if (res.registered) {
-            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}})
+            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
+            payload.history.push('/')
         } else {
-            yield put({type: SET_REGISTERATION_ERRORS, payload: {loginStatus: true, registrationErrorMessage: res.message}})
+            yield put({type: SET_REGISTRATION_ERRORS, payload: {loginStatus: true, registrationErrorMessage: res.message}})
         }
     }
 }
@@ -152,7 +153,7 @@ export function authReducer(state = {loginStatus: false, loginErrorMessage: '', 
             return { ...state, userInfo: payload};
         case SET_LOGIN_ERRORS:
             return { ...state, loginStatus: false, loginErrorMessage: payload.loginErrorMessage};
-        case SET_REGISTERATION_ERRORS:
+        case SET_REGISTRATION_ERRORS:
             return { ...state, loginStatus: false, registrationErrorMessage: payload.registrationErrorMessage};
         default :
             return state

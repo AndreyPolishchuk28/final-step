@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 
 const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
-const API_PORT = 9000;
+const API_PORT = process.env.PORT || 9000;
 const app = express();
 
 client.connect(err => {
