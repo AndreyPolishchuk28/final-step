@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 
 const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
-const API_PORT = 9000;
+const API_PORT = process.env.PORT || 9000;
 const app = express();
 
 client.connect(err => {
@@ -108,6 +108,7 @@ app.post('/new_user', async (req, res) => {
         res.send(JSON.stringify({registered: false, message: 'This email already used'}))
     } else {
         let user = {...req.body, orders: [], basket: ''};
+        delete user.history;
         if (req.cookies.basket) {
             user.basket = req.cookies.basket
         }
@@ -197,14 +198,15 @@ app.get('/get_basket', async (req, res) => {
 
 app.post('/create_order', async (req, res) => {
     let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
-    await app.baskets.removeOne(ObjectId(req.cookies.basket));
-    const orderMongoDBItem = app.orders.insertOne({...req.body, basket: currentBasket});
+    const orderMongoDBItem = await app.orders.insertOne({...req.body, basket: currentBasket});
+    const order = await app.orders.findOne(orderMongoDBItem.insertedId);
     if (req.cookies.sessionKey) {
         const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
         await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
-            $set: {orders: [...user.orders, orderMongoDBItem.insertedId]}
+            $set: {orders: [...user.orders, order], basket: ""}
         });
     }
+    await app.baskets.removeOne({"_id": ObjectId(req.cookies.basket)});
     res.clearCookie('basket').send();
 });
 

@@ -63,6 +63,7 @@ export const RegistrationPage = connect(mapStateToProps,{createNewUser})(props =
                     lastName: values.lastName,
                     email: values.email,
                     password: values.password,
+                    history: props.history,
                     def_address: {}
                 });
             }
