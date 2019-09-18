@@ -8,7 +8,15 @@ import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
 import {CardHeader} from './CardHeader';
 
-export const CardPage = (props) => {
+import {connect} from 'react-redux'
+
+const mapStateToProps = (state) => {
+    return {
+        ...state
+    }
+}
+
+export const CardPage = connect(mapStateToProps)((props) => {
 
 
 
@@ -42,4 +50,4 @@ export const CardPage = (props) => {
             </section>
         </section>
     )
-};
+});

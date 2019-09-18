@@ -19,9 +19,19 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
 
     console.log(props);
 
-    const [ userChange, setUserChange] = useState({
-        ...props.auth.userInfo
+    console.log(props.auth.loginStatus);
+
+    const [ userChange, setUserChange] = useState(() => {
+        if(props.auth.loginStatus){
+            return {...props.auth.userInfo}
+        }else if(!props.auth.loginStatus){
+            return {
+                def_address: {}
+            }
+        }
     })
+
+    console.log(userChange);
     
     const changeHandler = (event) => {
         setUserChange({
@@ -95,7 +105,9 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
 
         console.log(data);
 
-        
+        await props.createOrder(data)
+
+        props.history.push('/')
     }
 
 
@@ -109,13 +121,13 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 <input className="checkout-input" type="text" onChange={changeHandler} placeholder="Card date" name="card_date"/>
                 <input className="checkout-input" type="text" onChange={changeHandler} placeholder="CVV" name="cvv"/>
                 <h1 className="section-header">Customer info</h1>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.firstName} placeholder="First name" name="first_name"/>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.lastName} placeholder="Last name" name="last_name"/>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.email} placeholder="email" name="email"/>
+                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.firstName} placeholder="First name" name="first_name"/>
+                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.lastName} placeholder="Last name" name="last_name"/>
+                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.email} placeholder="email" name="email"/>
                 <h1 className="section-header">Address</h1>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.def_address.country} placeholder="country" name="country"/>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.def_address.city} placeholder="city" name="city"/>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={props.auth.userInfo.def_address.address} placeholder="address" name="address"/>
+                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.def_address.country} placeholder="country" name="country"/>
+                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.def_address.city} placeholder="city" name="city"/>
+                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.def_address.address} placeholder="address" name="address"/>
                 <button onClick={submitOrder} className="order-submit-btn">Place order</button>
             </div>
             <div className="checkout-container__cart">
