@@ -11,7 +11,6 @@ const mapStateToProps = state =>{
 };
 
 export const ModalWindow = withRouter( connect(mapStateToProps,{login})((props) =>{
-    console.log(props);
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
 
@@ -25,7 +24,8 @@ export const ModalWindow = withRouter( connect(mapStateToProps,{login})((props) 
     const LoginAuth = async () =>{
         props.login({
             username: email,
-            password: password
+            password: password,
+            history: props.history
         });
     };
 
