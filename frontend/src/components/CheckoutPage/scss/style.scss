@@ -1,4 +1,4 @@
-$main-color:  #3C1A5B;
+$main-color:  blueviolet;
 $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
 $checkout-yellow: #FFF748;
@@ -24,24 +24,20 @@ $checkout-yellow: #FFF748;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            flex-wrap: wrap;
             width: 100%;
             border-radius: 20px;
-            background: $main-color;
             padding: 20px 0;
         }
         &__main{
-            width: 100%;
-            height: 100px;
-            background-color: $checkout-yellow;
-            border-radius: 10px;
-            margin-bottom: 20px; 
-            padding: 10px;
-            .text-wrap{
-                width: 50%;
+                width: 200px;
+                height: 200px;
                 background-color: $main-color;
                 border-radius: 10px;
                 padding: 5px;
+                margin: 10px;
+                border: 2px solid black;
+                box-shadow: 10px 10px 0px 0px $checkout-yellow;
                 h1{
                     color: white;
                     font-size: 30px;
@@ -50,7 +46,6 @@ $checkout-yellow: #FFF748;
                     color: white;
                     font-size: 25px;
                 }
-            }
             
         }
     } 
@@ -63,11 +58,13 @@ $checkout-yellow: #FFF748;
     width: 200px;
     height: 200px;
     background-color: white;
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
     border-radius: 10px;
+    border: 2px solid black;
     margin: 10px;
+    box-shadow: 10px 10px 0px 0px $main-color;
     overflow: hidden;
 }
 

@@ -13,32 +13,16 @@ const mapStateToProps = (state) => {
 }
 
 export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})((props) => {
-    useEffect(() => {
-        props.getUserInfo();
-    }, [])
 
-    console.log(props);
+    const [ userChange, setUserChange] = useState({def_address: {}})
 
-    console.log(props.auth.loginStatus);
-
-    const [ userChange, setUserChange] = useState(() => {
-        if(props.auth.loginStatus){
-            return {...props.auth.userInfo}
-        }else if(!props.auth.loginStatus){
-            return {
-                def_address: {}
-            }
-        }
-    })
-
-    console.log(userChange);
-    
     const changeHandler = (event) => {
         setUserChange({
             ...userChange,
             [event.target.name]: event.target.value
         })
     }
+   
 
 
     const orderTotal = () => {
@@ -80,6 +64,10 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         )
     })
 
+
+
+    
+
     const submitOrder = async () => {
         const data = await {
                 creation_date: new Date(Date.now()),
@@ -110,6 +98,15 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         props.history.push('/')
     }
 
+    useEffect(() => {
+        props.getUserInfo();
+    }, [])
+
+    useEffect(() => {
+        if(props.auth.userInfo){
+                setUserChange(props.auth.userInfo)
+            }
+    }, [props.auth.userInfo])
 
     return (
         props.auth.userInfo ?
@@ -131,13 +128,11 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 <button onClick={submitOrder} className="order-submit-btn">Place order</button>
             </div>
             <div className="checkout-container__cart">
-                <div className="checkout-container__cart__main">
-                    <div className="text-wrap">
+                <div className="checkout-container__cart__products">
+                    <div className="checkout-container__cart__main">
                         <h1>Your cart</h1>
                         <h2>Total: {orderTotal()}$</h2>
                     </div>
-                </div>
-                <div className="checkout-container__cart__products">
                     {prodViews}
                 </div>
             </div>
