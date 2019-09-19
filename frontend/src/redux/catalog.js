@@ -8,6 +8,8 @@ const SET_PRODUCTS = "SET_PRODUCTS";
 const SET_MORE_PRODUCTS = "SET_MORE_PRODUCTS";
 const GET_SEARCH_PRODUCTS = "GET_SEARCH_PRODUCTS";
 const SET_SEARCH_PRODUCTS = "SET_SEARCH_PRODUCTS";
+const GET_PRODUCT_DETAILS = "GET_PRODUCT_DETAILS";
+const SET_PRODUCT_DETAILS = "SET_PRODUCT_DETAILS";
 
 // actions
 export const getProducts = (payload) => {
@@ -16,6 +18,15 @@ export const getProducts = (payload) => {
         payload: payload
     }
 };
+
+// get product id
+export const getProductDetails = (payload) => {
+    return {
+        type: GET_PRODUCT_DETAILS,
+        payload: payload
+    }
+}
+
 
 export const getMainInfo = () => {
     return{
@@ -33,6 +44,15 @@ export const getSearchProducts = (payload) => {
 
 
 // sagas
+
+function* getProductDetailsSaga() {
+    while (true) {
+        const {payload} = yield take(GET_PRODUCT_DETAILS);
+        const req = yield fetch(`/products/${payload}`);
+        const res = yield req.json();
+        yield put({type: SET_PRODUCT_DETAILS, payload: res})
+    }
+}
 
 function* getMainInfoSaga() {
     while (true) {
@@ -88,8 +108,8 @@ let startState = {
     sliderProducts: [],
     mostPopularProducts: [],
     searchProducts: [],
-    showMoreBtnStatus: true
-
+    showMoreBtnStatus: true,
+    currentProductDetails: {}
 };
 
 export function catalogReducer(state = startState, action){
@@ -102,7 +122,9 @@ export function catalogReducer(state = startState, action){
         case SET_MAIN_INFO:
             return {...state, ...payload};
         case SET_SEARCH_PRODUCTS:
-            return {...state, searchProducts: payload};
+            return { ...state, searchProducts: payload };
+        case SET_PRODUCT_DETAILS: 
+            return { ...state, currentProductDetails: payload}
         default :
             return state
     }
@@ -114,6 +136,7 @@ export function* catalogSaga() {
     yield all([
         getMainInfoSaga(),
         getProductsSaga(),
-        getSearchProductSaga()
+        getSearchProductSaga(),
+        getProductDetailsSaga()
     ]);
 }
