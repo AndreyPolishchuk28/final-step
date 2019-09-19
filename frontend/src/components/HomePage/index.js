@@ -23,7 +23,7 @@ export const HomePage = connect(
   return (
     <div>
       <SliderContainer>
-        <Slider autoplay={800}>
+        <Slider autoplay={1800}>
           {props.catalog.sliderProducts.map(item => {
             return (
               <div key={item.id}>
@@ -69,10 +69,17 @@ const SliderContainer = styled.div`
 
   @keyframes shadow {
     from {
-      color: yellow;
+      text-shadow: 0px 0px 20px black;
+      color: white;
+    }
+    50% {
+      text-shadow: 0px 0px 3px black;
+      color: white;
+
     }
     to {
-      color: #555;
+      text-shadow: 0px 0px 20px black;
+      color: white;
     }
   }
   span {
@@ -117,12 +124,12 @@ const SliderContainer = styled.div`
     width: 150px;
     height: 150px;
     line-height: 150px;
-    animation: shadow 0.8s infinite linear;
+    animation: shadow 1.8s infinite linear;
+    text-shadow: 3px 3px 8px black;
     font-size: 44px;
-    background-color: blueviolet;
+    background-color: ${mainColor};
     border: none;
     border-radius: 50%;
-    color: white;
     font-weight: 700;
     box-shadow: 3px 3px 8px black;
   }

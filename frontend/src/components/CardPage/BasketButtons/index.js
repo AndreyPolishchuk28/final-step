@@ -2,8 +2,8 @@
 import React from 'react';
 import {Button} from "antd";
 
-
-export const BasketButton = () => {
+export const BasketButton =(props) => {
+    console.log(props);
     return (
 
         <div className="button-wrap">

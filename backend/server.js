@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 
 const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
-const API_PORT = 9000;
+const API_PORT = process.env.PORT || 9000;
 const app = express();
 
 client.connect(err => {
@@ -44,12 +44,14 @@ app.get('/products/:id', async (req, res) => {
 
 app.post('/product_search', async (req, res) => {
     let prodArray = [];
-    let searchLength = req.body.q.length;
-    await app.products.find({}).forEach((item) => {
-        if (item.name.slice(0, searchLength).toLowerCase() === req.body.q.toLowerCase()) {
-            prodArray.push(item)
-        }
-    });
+    if (req.body.q.length){
+        let searchLength = req.body.q.length;
+        await app.products.find({}).forEach((item) => {
+            if (item.name.slice(0, searchLength).toLowerCase() === req.body.q.toLowerCase()) {
+                prodArray.push(item)
+            }
+        });
+    }
     res.send(JSON.stringify(prodArray))
 });
 
@@ -106,6 +108,7 @@ app.post('/new_user', async (req, res) => {
         res.send(JSON.stringify({registered: false, message: 'This email already used'}))
     } else {
         let user = {...req.body, orders: [], basket: ''};
+        delete user.history;
         if (req.cookies.basket) {
             user.basket = req.cookies.basket
         }
@@ -119,6 +122,7 @@ app.post('/new_user', async (req, res) => {
 
 app.get('/get_user_info', checkAuthMiddleware(), async (req, res) => {
     const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
+    delete user.password;
     if (user.orders) {
         const orders = await app.orders.find({"_id": {$in: [...user.orders]}}).toArray();
         user.orders = orders
@@ -195,14 +199,14 @@ app.get('/get_basket', async (req, res) => {
 
 app.post('/create_order', async (req, res) => {
     let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
-    await app.baskets.removeOne(ObjectId(req.cookies.basket));
-    const orderMongoDBItem = app.orders.insertOne({...req.body, basket: currentBasket});
+    const orderMongoDBItem = await app.orders.insertOne({...req.body, basket: currentBasket});
     if (req.cookies.sessionKey) {
         const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
         await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
-            $set: {orders: [...user.orders, orderMongoDBItem.insertedId]}
+            $set: {orders: [...user.orders, orderMongoDBItem.insertedId], basket: ""}
         });
     }
+    await app.baskets.removeOne({"_id": ObjectId(req.cookies.basket)});
     res.clearCookie('basket').send();
 });
 

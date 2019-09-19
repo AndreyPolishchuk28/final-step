@@ -32,8 +32,8 @@ export const ChangePassword = connect(mapStateToProps, {changeUserInfo}) ((props
             alert("passwords doesn't match")
         } else if (passChange.currentPass !== props.auth.userInfo.password){
             alert('current password is incorrect')
-        } else if(passChange.pass.length < 8){
-            alert('password must contain atleast 8 charecters')
+        } else if(passChange.pass.length < 6){
+            alert('password must contain atleast 6 charecters')
         }
         else {
             const data = await {

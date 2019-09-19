@@ -6,6 +6,10 @@ const SET_MAIN_INFO = "SET_MAIN_INFO";
 const GET_PRODUCTS = "GET_PRODUCTS";
 const SET_PRODUCTS = "SET_PRODUCTS";
 const SET_MORE_PRODUCTS = "SET_MORE_PRODUCTS";
+const GET_SEARCH_PRODUCTS = "GET_SEARCH_PRODUCTS";
+const SET_SEARCH_PRODUCTS = "SET_SEARCH_PRODUCTS";
+const GET_PRODUCT_DETAILS = "GET_PRODUCT_DETAILS";
+const SET_PRODUCT_DETAILS = "SET_PRODUCT_DETAILS";
 
 // actions
 export const getProducts = (payload) => {
@@ -15,13 +19,40 @@ export const getProducts = (payload) => {
     }
 };
 
+// get product id
+export const getProductDetails = (payload) => {
+    return {
+        type: GET_PRODUCT_DETAILS,
+        payload: payload
+    }
+}
+
+
 export const getMainInfo = () => {
     return{
         type: GET_MAIN_INFO
     }
 };
 
+export const getSearchProducts = (payload) => {
+    return{
+        type: GET_SEARCH_PRODUCTS,
+        payload: payload
+    }
+};
+
+
+
 // sagas
+
+function* getProductDetailsSaga() {
+    while (true) {
+        const {payload} = yield take(GET_PRODUCT_DETAILS);
+        const req = yield fetch(`/products/${payload}`);
+        const res = yield req.json();
+        yield put({type: SET_PRODUCT_DETAILS, payload: res})
+    }
+}
 
 function* getMainInfoSaga() {
     while (true) {
@@ -55,14 +86,30 @@ function* getProductsSaga() {
     }
 }
 
+function* getSearchProductSaga() {
+    while (true) {
+        const {payload} = yield take(GET_SEARCH_PRODUCTS);
+        const req = yield fetch('/product_search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+        const res = yield req.json();
+        yield put({type: SET_SEARCH_PRODUCTS, payload: res})
+    }
+}
+
 // reducer
 let startState = {
     categories: [],
     products: [],
     sliderProducts: [],
     mostPopularProducts: [],
-    showMoreBtnStatus: true
-
+    searchProducts: [],
+    showMoreBtnStatus: true,
+    currentProductDetails: {}
 };
 
 export function catalogReducer(state = startState, action){
@@ -74,6 +121,10 @@ export function catalogReducer(state = startState, action){
             return {...state, products: [...state.products, ...payload.products], showMoreBtnStatus: payload.showMoreBtnStatus};
         case SET_MAIN_INFO:
             return {...state, ...payload};
+        case SET_SEARCH_PRODUCTS:
+            return { ...state, searchProducts: payload };
+        case SET_PRODUCT_DETAILS: 
+            return { ...state, currentProductDetails: payload}
         default :
             return state
     }
@@ -84,6 +135,8 @@ export function catalogReducer(state = startState, action){
 export function* catalogSaga() {
     yield all([
         getMainInfoSaga(),
-        getProductsSaga()
+        getProductsSaga(),
+        getSearchProductSaga(),
+        getProductDetailsSaga()
     ]);
 }
