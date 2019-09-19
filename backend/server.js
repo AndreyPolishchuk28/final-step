@@ -122,6 +122,7 @@ app.post('/new_user', async (req, res) => {
 
 app.get('/get_user_info', checkAuthMiddleware(), async (req, res) => {
     const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
+    delete user.password;
     if (user.orders) {
         const orders = await app.orders.find({"_id": {$in: [...user.orders]}}).toArray();
         user.orders = orders
@@ -199,11 +200,10 @@ app.get('/get_basket', async (req, res) => {
 app.post('/create_order', async (req, res) => {
     let currentBasket = await app.baskets.findOne(ObjectId(req.cookies.basket));
     const orderMongoDBItem = await app.orders.insertOne({...req.body, basket: currentBasket});
-    const order = await app.orders.findOne(orderMongoDBItem.insertedId);
     if (req.cookies.sessionKey) {
         const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
         await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
-            $set: {orders: [...user.orders, order], basket: ""}
+            $set: {orders: [...user.orders, orderMongoDBItem.insertedId], basket: ""}
         });
     }
     await app.baskets.removeOne({"_id": ObjectId(req.cookies.basket)});
