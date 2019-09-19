@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Row, Col} from "antd";
 import './style-search-result.css'
 import {Link} from "react-router-dom";
