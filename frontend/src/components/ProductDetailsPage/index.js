@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PhotoProduct from './PhotoProduct';
 import InfoProduct from './InfoProduct';
 import './styles.scss';
 import { Row, Col } from 'antd';
+import { getProductDetails } from '../../redux/catalog';
 
-export const ProductDetailsPage = (props) => {
-	const [product, setProduct] = useState();
 
-	const getProduct = async () => {
-		const response = await fetch(`/products/${props.match.params.id}`);
-		const responseJSON = await response.json();
-		setProduct(responseJSON);
-	};
+const mapStateToProps = (state) => {
+	return { ...state };
+};
 
+export const ProductDetailsPage = connect(mapStateToProps, {getProductDetails}) ((props) => {
+	let product = props.catalog.currentProductDetails;
+	console.log(product)
+	
 	useEffect(() => {
-		getProduct();
+		props.getProductDetails(props.match.params.id);
 	}, []);
 
 	return (
@@ -22,16 +24,16 @@ export const ProductDetailsPage = (props) => {
 			<Row>
 				<Col xs={24} sm={24} md={12} lg={12}>
 					<div className="product-details__container--photo">
-						{product ? <PhotoProduct product={product} /> : null}
+						{product.id ? <PhotoProduct product={product} /> : null}
 					</div>
 				</Col>
 
 				<Col xs={24} sm={24} md={12} lg={12}>
 					<div className="product-details__container--info">
-						{product ? <InfoProduct product={product} /> : null}
+						{product.id ? <InfoProduct product={product} /> : null}
 					</div>
 				</Col>
 			</Row>
 		</div>
 	);
-};
+});
