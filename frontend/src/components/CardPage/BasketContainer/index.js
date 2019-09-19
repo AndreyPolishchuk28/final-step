@@ -73,7 +73,7 @@ export const BasketContainer = connect(mapStateToProps, { getBasket })(props => 
             {orderName}
             <Counter/>
             {orderColor}
-            {orderPrice}
+            {`$`+orderPrice}
             <button onClick={removeProduct}>X</button>
 
         </ul>
