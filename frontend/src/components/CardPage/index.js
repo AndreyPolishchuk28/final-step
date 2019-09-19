@@ -7,25 +7,22 @@ import "./styles.scss";
 import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
 import {CardHeader} from './CardHeader';
+// import { getBasket } from "../../redux/basket";
+// import { connect } from 'react-redux';
+// import mapStateToProps from "react-redux/es/connect/mapStateToProps";
 
-import {connect} from 'react-redux'
 
-const mapStateToProps = (state) => {
-    return {
-        ...state
-    }
-}
 
-export const CardPage = connect(mapStateToProps)((props) => {
+/*const mapStateToProps = (state) => {
+    return{...state}
+};*/
+export const CardPage = (props) => {
+    /*const basket = connect(mapStateToProps, { getBasket }) (props => {
 
+    });*/
 
 
     const  totalPrice = 90;
-
-    //
-    // function handleDelete() {
-    //     console.log("hi")
-    // }
 
 
     return (
@@ -50,4 +47,4 @@ export const CardPage = connect(mapStateToProps)((props) => {
             </section>
         </section>
     )
-});
+};
