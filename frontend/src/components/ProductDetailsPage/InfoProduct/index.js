@@ -4,8 +4,6 @@ import './styles.scss';
 import { Tabs, message } from 'antd';
 import { addToBasket } from '../../../redux/basket';
 
-
-
 const { TabPane } = Tabs;
 
 function callback(key) {}

@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../LoginPage/style-modal-window.css'
-import { createNewUser } from "../../redux/auth";
+import { createNewUser, clearRegistrationErrors } from "../../redux/auth";
 import {connect} from 'react-redux'
 
 const mapStateToProps = state =>{
@@ -9,7 +9,7 @@ const mapStateToProps = state =>{
     }
 };
 
-export const RegistrationPage = connect(mapStateToProps,{createNewUser})(props =>{
+export const RegistrationPage = connect(mapStateToProps,{createNewUser, clearRegistrationErrors})(props =>{
     const [values, setValues] = useState({
         firstName: "",
         lastName: "",
@@ -69,6 +69,10 @@ export const RegistrationPage = connect(mapStateToProps,{createNewUser})(props =
             }
     };
 
+    useEffect(() => () =>{
+        props.clearRegistrationErrors()
+    },[]);
+
     return(
         <form>
             <div className='login-menu register'>
@@ -100,6 +104,10 @@ export const RegistrationPage = connect(mapStateToProps,{createNewUser})(props =
                             Confirm Password
                             <input onChange={handleChange} value={values.confirmPassword} name='confirmPassword' type='password' placeholder='Confirm password...' className='login-email-input'/>
                             {errors.confirmPassword && <p className='error'>{errors.confirmPassword}</p>}
+                            {props.auth.registrationErrorMessage ?
+                                <p className='error'>{props.auth.registrationErrorMessage}</p>
+                                : null
+                            }
                         </label>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {SearchResult} from "./SearchResult";
 import {getSearchProducts} from "../../redux/catalog";
 import {connect} from 'react-redux'
