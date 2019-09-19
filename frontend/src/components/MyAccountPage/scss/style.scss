@@ -1,4 +1,4 @@
-$main-color:  #f51167;
+$main-color:  blueviolet;
 $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
 
@@ -167,7 +167,7 @@ $light-grey: rgb(191, 185, 185);
         display: flex;
         flex-wrap: wrap;
         .orders-wrapper__items__each{
-            width: 200px;
+            width: 300px;
             border: 1px solid black;
             margin: 5px;
             padding: 10px;
@@ -299,11 +299,11 @@ $light-grey: rgb(191, 185, 185);
         grid-template-rows: 100%;
         padding: 20px;
         width: 100%;
-        .full-order-info__products{
+        &__products{
             display: flex;
             flex-wrap: wrap;
             align-items: flex-start;
-            .full-order-info__products__items{
+            &__items{
                 min-width: 120px;
                 max-width: 150px;
                 padding: 15px;
@@ -312,8 +312,12 @@ $light-grey: rgb(191, 185, 185);
                 margin: 10px;
                 word-wrap: break-word;
             }
+            &__text{
+                font-size: 14px;
+            }
         }
     }
+
     .orders-wrapper{
         justify-content: space-between;
         align-items: flex-start;
