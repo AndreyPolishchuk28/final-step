@@ -13,32 +13,16 @@ const mapStateToProps = (state) => {
 }
 
 export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})((props) => {
-    useEffect(() => {
-        props.getUserInfo();
-    }, [])
 
-    console.log(props);
+    const [ userChange, setUserChange] = useState({def_address: {}})
 
-    console.log(props.auth.loginStatus);
-
-    const [ userChange, setUserChange] = useState(() => {
-        if(props.auth.loginStatus){
-            return {...props.auth.userInfo}
-        }else if(!props.auth.loginStatus){
-            return {
-                def_address: {}
-            }
-        }
-    })
-
-    console.log(userChange);
-    
     const changeHandler = (event) => {
         setUserChange({
             ...userChange,
             [event.target.name]: event.target.value
         })
     }
+   
 
 
     const orderTotal = () => {
@@ -58,20 +42,35 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
             backgroundImage: `url('/static/img/${elem.product.photo[0]}')`,
         }
         return (
-            <div className="prod-views" style={viewBgStyle} key={index}>
+            <div className="prod-views" style={viewBgStyle} key={index} 
+            onMouseOver = {(event) => {
+                if(event.target.className === "prod-views"){
+                    event.target.children[0].style.backgroundColor = "blueviolet"}
+            }
+            }
+            onMouseLeave = {(event) => {
+                if(event.target.className === "prod-views"){
+                    event.target.children[0].style.backgroundColor = "#8a2be23d"}
+            }
+            }
+            >
+
                 <button className="show-close-info-btn" onClick={(event) => {
                     event.target.style.top = "100%"
-                    event.target.nextElementSibling.style.top = 0
+                    event.target.nextElementSibling.style.top = "-1px"
                 }}>?</button>
-                <div className="prod-info"  onMouseLeave={(event) => {
+
+                <div className="prod-info"  
+                onMouseLeave = {(event) => {
                     if(event.target.className === "prod-info"){
                         event.target.style.top = "100%"
-                        event.target.previousElementSibling.style.top = "calc(100% - 40px)"}
+                        event.target.previousElementSibling.style.top = "calc(100% - 40px)"
+                        event.target.previousElementSibling.style.backgroundColor = "#8a2be23d"
+                    }
                 }
-                }>
+                }
+                >
                     <h1 className="prod-info__name">Name: {elem.product.name}</h1>
-                    <p className="prod-info__brand">Brand: {elem.product.producer}</p>
-                    <p className="prod-info__category">Category: {elem.product.category}</p>
                     <h1 className="prod-info__price">{elem.product.price}$</h1>
                     <h1 className="prod-info__quantity">{elem.quantity}x</h1>
                     <h1 className="prod-info__id">id: {elem.product._id}</h1>
@@ -79,6 +78,10 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
             </div>
         )
     })
+
+
+
+    
 
     const submitOrder = async () => {
         const data = await {
@@ -100,7 +103,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                     card_date: userChange.card_date,
                     cvv: userChange.cvv
                 },
-                product_items: props.basket
+                product_items: props.basket.products
             }
 
         console.log(data);
@@ -110,6 +113,15 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         props.history.push('/')
     }
 
+    useEffect(() => {
+        props.getUserInfo();
+    }, [])
+
+    useEffect(() => {
+        if(props.auth.userInfo){
+                setUserChange(props.auth.userInfo)
+            }
+    }, [props.auth.userInfo])
 
     return (
         props.auth.userInfo ?
@@ -132,13 +144,13 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
             </div>
             <div className="checkout-container__cart">
                 <div className="checkout-container__cart__main">
-                    <div className="text-wrap">
-                        <h1>Your cart</h1>
-                        <h2>Total: {orderTotal()}$</h2>
-                    </div>
+                    <h1>Your cart</h1>
                 </div>
                 <div className="checkout-container__cart__products">
                     {prodViews}
+                </div>
+                <div className="checkout-container__cart__main">
+                    <h2>Total: {orderTotal()}$</h2>
                 </div>
             </div>
         </div>
