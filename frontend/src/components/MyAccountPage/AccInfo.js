@@ -27,6 +27,7 @@ export const AccInfo = connect(mapStateToProps) ((props) => {
                 <h2>Country: {props.auth.userInfo.def_address.country}</h2>
                 <h2>City: {props.auth.userInfo.def_address.city}</h2>
                 <h2>Address: {props.auth.userInfo.def_address.address}</h2>
+                <h2>Postal code: {props.auth.userInfo.def_address.postal}</h2>
                 <Link exact to="/account/info/change">
                     <Button type="default">Change profile info</Button>
                 </Link>
