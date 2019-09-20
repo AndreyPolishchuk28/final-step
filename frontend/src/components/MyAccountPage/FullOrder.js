@@ -61,7 +61,8 @@ export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
                     <p>Country: {data.billing_address.country}</p>       
                     <p>City: {data.billing_address.city}</p>       
                     <p>Address: {data.billing_address.address}</p>       
-                    <p>{data.customer_info.customer_no}</p>    
+                    <p>Postal: {data.billing_address.postal}</p>  
+                    <p>Orders delivery type: {data.billing_address.delivery}</p>    
                     <p>{data.customer_info.email}</p>  
                 </div>
                 <div className="full-order-info__products">
