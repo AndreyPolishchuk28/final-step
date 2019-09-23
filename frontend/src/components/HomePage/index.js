@@ -184,10 +184,12 @@ const MostPopularContainer = styled.div`
     margin: 20px;
     font-size: 22px;
     border-radius: 5px;
+    transition: 0.6s;
   }
   .most-popular-wrapper:hover {
     border: 2px solid #282828;
     text-shadow: 1px 1px 2px #555;
+    transform: scale(1.1)
   }
   p {
     padding-top: 15px;
