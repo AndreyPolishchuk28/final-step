@@ -42,7 +42,7 @@ export const ChangePassword = connect(mapStateToProps, {changeUserInfo}) ((props
 
             props.changeUserInfo(data)
 
-            props.history.push('/account/info/change')
+            props.setPageState({ page: "changeInfo"})
         }
     }
   
