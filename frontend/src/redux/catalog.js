@@ -1,4 +1,4 @@
-import {put, take, all} from "redux-saga/effects";
+import {put, take, all, takeLatest} from "redux-saga/effects";
 
 // action types
 const GET_MAIN_INFO = "GET_MAIN_INFO";
@@ -86,20 +86,22 @@ function* getProductsSaga() {
     }
 }
 
-function* getSearchProductSaga() {
-    while (true) {
-        const {payload} = yield take(GET_SEARCH_PRODUCTS);
+function* getSearchProductSaga(action) {
         const req = yield fetch('/product_search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: JSON.stringify(action.payload)
         });
         const res = yield req.json();
         yield put({type: SET_SEARCH_PRODUCTS, payload: res})
-    }
 }
+
+function* getSearchProductWatcher() {
+    yield takeLatest(GET_SEARCH_PRODUCTS, getSearchProductSaga);
+}
+
 
 // reducer
 let startState = {
@@ -136,7 +138,7 @@ export function* catalogSaga() {
     yield all([
         getMainInfoSaga(),
         getProductsSaga(),
-        getSearchProductSaga(),
+        getSearchProductWatcher(),
         getProductDetailsSaga()
     ]);
 }
