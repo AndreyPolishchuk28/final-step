@@ -1,6 +1,5 @@
 import React from 'react'
 import {Button} from 'antd'
-import {Link} from 'react-router-dom';
 
 import {connect} from 'react-redux'
 
@@ -28,9 +27,7 @@ export const AccInfo = connect(mapStateToProps) ((props) => {
                 <h2>City: {props.auth.userInfo.def_address.city}</h2>
                 <h2>Address: {props.auth.userInfo.def_address.address}</h2>
                 <h2>Postal code: {props.auth.userInfo.def_address.postal}</h2>
-                <Link exact to="/account/info/change">
-                    <Button type="default">Change profile info</Button>
-                </Link>
+                <Button type="default" onClick={() => {props.setPageState({ page: "changeInfo"})}}>Change profile info</Button>
             </div>
             : null
             }

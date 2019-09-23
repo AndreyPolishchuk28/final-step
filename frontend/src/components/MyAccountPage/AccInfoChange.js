@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {Button} from 'antd'
-import {Link} from 'react-router-dom';
 
 import {connect} from 'react-redux'
 import {changeUserInfo} from '../../redux/auth'
@@ -58,20 +57,18 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
             
             props.changeUserInfo(data)
 
-            props.history.push('/account')
+            props.setPageState({ page: "info"})
         }
     }
   
     return ( props.auth.userInfo ?
                 <div className="container-change">
-                    <Link to="/account">
-                        <i class="fas fa-times close-btn"></i>
-                    </Link>
+                    <i class="fas fa-times close-btn" onClick={() => {props.setPageState("info")}}></i>
                     <input className="input-change" type="text" onChange={changeHandler} defaultValue={userChange.firstName} placeholder="First name" name="firstName"/>
                     <input className="input-change" type="text" onChange={changeHandler} defaultValue={userChange.lastName } placeholder="Last name" name="lastName"/>
-                    <Link to="/account/info/change/pass">
-                        <Button type="Deafault">change password</Button>
-                    </Link>
+
+                    <Button type="Deafault" onClick={() => {props.setPageState({ page: "changePassword"})}}>change password</Button>
+
                     <h1>Additional information</h1>
                     <input className="input-change" type="text" onChange={changeAdditionalHandler} defaultValue={addChange.country } placeholder="country" name="country"/>
                     <input className="input-change" type="text" onChange={changeAdditionalHandler} defaultValue={addChange.city } placeholder="city" name="city"/>

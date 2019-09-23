@@ -23,7 +23,7 @@ export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
     console.log(props);
 
     if(props.auth.userInfo){
-        dataArr = props.auth.userInfo.orders.filter(item => props.match.params.id === item._id)
+        dataArr = props.auth.userInfo.orders.filter(item => props.id === item._id)
         
         console.log(dataArr);
 
