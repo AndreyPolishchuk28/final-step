@@ -26,7 +26,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     const changeHandler = (event) => {
         setUserChange({
             ...userChange,
-            [event.target.name]: event.target.value
+            [event.target.id]: event.target.value
         })
         console.log(userChange);
     }
@@ -34,7 +34,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     const addressHandler = (event) => {
         setAddressChange({
             ...addressChange,
-            [event.target.name]: event.target.value
+            [event.target.id]: event.target.value
         })
         console.log(addressChange);
     }
@@ -59,6 +59,34 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
             console.log(delivery);
         }
     })
+
+    const inputAnimF = (event) => {
+        event.target.previousElementSibling.classList.add("active")
+    }
+
+    const inputAnimB = (event) => {
+        if(!event.target.value){
+        event.target.previousElementSibling.classList.remove("active")
+        }
+    }
+
+    const checkoutInput = (strFor, label, def, changeFunc) => {
+        if(def !== "" && def){
+            return (
+                <div className="checkout-input-wrapper">
+                    <label className="checkout-label active" for={strFor}>{label}</label>
+                    <input className="checkout-input" type="text" onChange={changeFunc} id={strFor} defaultValue={def} required onFocus={inputAnimF} onBlur={inputAnimB}/>
+                </div>
+            )
+        } else {
+            return (
+                <div className="checkout-input-wrapper">
+                    <label className="checkout-label" for={strFor}>{label}</label>
+                    <input className="checkout-input" type="text" onChange={changeFunc} id={strFor} defaultValue={def} required onFocus={inputAnimF} onBlur={inputAnimB}/>
+                </div>
+            )
+        }
+    }
 
     const orderTotal = () => {
 
@@ -132,14 +160,14 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
 
     
 
-    const submitOrder = async () => {
+    const submitOrder = () => {
         
         if(payment.payment === ""){
             alert("no payment chosen")
         } else if( delivery.delivery === ""){
             alert("no delivery chosen")
         } else {
-        const data = await {
+        const data = {
                 creation_date: new Date(Date.now()),
                 order_total: orderTotal(),
                 currency: "USD",
@@ -164,7 +192,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 product_items: props.basket.products
             }
 
-            await props.createOrder(data)
+            props.createOrder(data)
             props.history.push('/')
         }
     }
@@ -182,8 +210,8 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
 
     return (
         props.auth.userInfo ?
-        <form  className="checkout-container">
-            <div className="checkout-container__inputs">
+        <div  className="checkout-container">
+            <form className="checkout-container__inputs" onSubmit={(event) => {event.preventDefault()}}>
                 <h1 className="section-header">Payment information</h1>
                 <div className="payment-radio-wrap">
                     <h1 className="payment-radio-wrap__header">Choose payment method</h1>
@@ -197,20 +225,21 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                     </label>
                 </div>
 
+                {checkoutInput("card_number", "Card number", "", changeHandler)}
+                {checkoutInput("expiration_date", "Expiration date", "", changeHandler)}
+                {checkoutInput("email", "CVV", "", changeHandler)}
 
-                <input className="checkout-input" type="text" onChange={changeHandler} placeholder="Card number" name="card_number" required/>
-                <input className="checkout-input" type="text" onChange={changeHandler} placeholder="Expiration Date" name="Expiration Date" required/>
-                <input className="checkout-input" type="text" onChange={changeHandler} placeholder="CVV" name="cvv" required/>
                 <h1 className="section-header">Customer info</h1>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.firstName} placeholder="First name" name="first_name" required/>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.lastName} placeholder="Last name" name="last_name" required/>
-                <input className="checkout-input" type="text" onChange={changeHandler} defaultValue={userChange.email} placeholder="email" name="email" required/>
-                <h1 className="section-header">Address</h1>
-                <input className="checkout-input" type="text" onChange={addressHandler} defaultValue={addressChange.country} placeholder="country" name="country" required/>
-                <input className="checkout-input" type="text" onChange={addressHandler} defaultValue={addressChange.city} placeholder="city" name="city" required/>
-                <input className="checkout-input" type="text" onChange={addressHandler} defaultValue={addressChange.address} placeholder="address" name="address" required/>
-                <input className="checkout-input" type="text" onChange={addressHandler} defaultValue={addressChange.postal} placeholder="Postal code" name="postal" required/>
+                {checkoutInput("first_name", "First name", userChange.firstName, changeHandler)}
+                {checkoutInput("last_name", "Last name", userChange.lastName, changeHandler)}
+                {checkoutInput("email", "Email", userChange.email, changeHandler)}
                 
+                <h1 className="section-header">Address</h1>
+                {checkoutInput("country", "Country", addressChange.country, addressHandler)}
+                {checkoutInput("city", "City", addressChange.city, addressHandler)}
+                {checkoutInput("address", "Address", addressChange.address, addressHandler)}
+                {checkoutInput("postal", "Postal code", addressChange.postal, addressHandler)}
+
                 <div className="payment-radio-wrap">
                     <h1 className="payment-radio-wrap__header">Choose delivery period</h1>
                     <label className="payment-radio-wrap__label">
@@ -228,7 +257,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 </div>
 
                 <button onClick={submitOrder} className="order-submit-btn">Place order</button>
-            </div>
+            </form>
             <div className="checkout-container__cart">
                 <div className="checkout-container__cart__main">
                     <h1>Your cart</h1>
@@ -242,7 +271,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                     <h2>Total: {orderTotal() + deliveryCost()}$</h2>
                 </div>
             </div>
-        </form>
+        </div>
         : null
     )
 });
