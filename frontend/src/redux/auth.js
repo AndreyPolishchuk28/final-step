@@ -10,6 +10,9 @@ const GET_LOGIN_STATUS = 'GET_LOGIN_STATUS';
 const CREATE_NEW_USER = 'CREATE_NEW_USER';
 const GET_USER_INFO = 'GET_USER_INFO';
 const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
+const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
+const SET_CHANGE_PASSWORD_STATUS = 'SET_CHANGE_PASSWORD_STATUS';
+const CLEAR_CHANGE_PASSWORD_STATUS = 'CLEAR_CHANGE_PASSWORD_STATUS';
 const SET_LOGIN_STATUS = 'SET_LOGIN_STATUS';
 const SET_LOGIN_ERRORS = 'SET_LOGIN_ERRORS';
 const SET_REGISTRATION_ERRORS = 'SET_REGISTRATION_ERRORS';
@@ -54,6 +57,19 @@ export const changeUserInfo = (payload) =>{
     return{
         type: CHANGE_USER_INFO,
         payload: payload
+    }
+};
+
+export const changePassword = (payload) =>{
+    return{
+        type: CHANGE_PASSWORD,
+        payload: payload
+    }
+};
+
+export const clearChangePasswordStatus = () =>{
+    return{
+        type: CLEAR_CHANGE_PASSWORD_STATUS,
     }
 };
 
@@ -156,9 +172,32 @@ function* changeUserInfoSaga() {
     }
 }
 
+function* changePasswordSaga() {
+    while (true){
+        const { payload } = yield take(CHANGE_PASSWORD);
+        const response = yield fetch('/change_password', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        });
+        const res = yield response.json();
+        yield put({type: SET_CHANGE_PASSWORD_STATUS, payload: res})
+    }
+}
+
+
 // reducer
 
-export function authReducer(state = {loginStatus: false, loginErrorMessage: '', registrationError: ''}, action) {
+const startState = {
+    loginStatus: false,
+    loginErrorMessage: '',
+    registrationError: '',
+    changePasswordStatus: ''
+};
+
+export function authReducer(state = startState, action) {
     const { type, payload } = action;
     switch (type) {
         case SET_LOGIN_STATUS:
@@ -173,6 +212,10 @@ export function authReducer(state = {loginStatus: false, loginErrorMessage: '', 
             return { ...state, loginStatus: false, loginErrorMessage: ''};
         case CLEAR_REGISTRATION_ERRORS:
             return { ...state, loginStatus: false, registrationErrorMessage: ''};
+        case SET_CHANGE_PASSWORD_STATUS:
+            return { ...state, changePasswordStatus: payload.changePasswordStatus};
+        case CLEAR_CHANGE_PASSWORD_STATUS:
+            return { ...state, changePasswordStatus: ''};
         default :
             return state
     }
@@ -186,6 +229,7 @@ export function* authSaga() {
         createNewUserSaga(),
         getLoginStatusSaga(),
         getUserInfoSaga(),
-        changeUserInfoSaga()
+        changeUserInfoSaga(),
+        changePasswordSaga()
     ]);
 }
