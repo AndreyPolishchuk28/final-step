@@ -81,6 +81,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
         skip = 0
         sortingCheapHandler = false;
         sortingExpensiveHandler = false;
+        checkedArr= [];
         getProductsHandler();
         
     }, [props.match.params.category]);
