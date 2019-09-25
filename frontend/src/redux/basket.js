@@ -23,6 +23,7 @@ export const addToBasket = (payload) => {
 };
 
 export const changeQuantity = (payload) => {
+    console.log(payload)
     return {
         type: CHANGE_QUANTITY,
         payload: payload

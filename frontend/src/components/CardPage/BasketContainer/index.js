@@ -1,12 +1,10 @@
 
 
-import React, {useState, useEffect} from 'react';
-import { Counter } from "./Counter/Counter";
+import React from 'react';
 import { connect } from 'react-redux';
 // import { createOrder } from "../../../redux/basket";
-import { removeProduct } from "../../../redux/basket"
-import { getBasket } from "../../../redux/basket";
-// import mapStateToProps from "react-redux/es/connect/mapStateToProps";
+import { removeProduct, changeQuantity, getBasket} from "../../../redux/basket";
+import "./styles.css"
 
 
 const mapStateToProps = (state) => {
@@ -14,70 +12,39 @@ const mapStateToProps = (state) => {
 
 };
 
-export const BasketContainer = connect(mapStateToProps, { getBasket })(props => {
-
-    const dataBasket = props.basket.products.map(({product}) => ({product}) );
-    const data = dataBasket.map(({product: {name, photo, color, price}}) => ({name, photo, color, price}));
-
-    const orderName = (
-        <div>
-            {data.map( (product) =>
-                <div key={product.name}>
-                    {product.name}
-                </div>
-            )}
-        </div>
-    );
-    const orderColor = (
-        <div>
-            {data.map( (product) =>
-              <div key={product.color}>
-                  {product.color}
-              </div>
-            )}
-        </div>
-    );
-    const orderPrice = (
-        <div>
-        {data.map( (product) =>
-            <div key={product.price}>
-                {product.price}
-            </div>
-            )}
-        </div>
-    );
-    /*return (
-        <div>
-            {orderName}
-            <Counter/>
-            {orderColor}
-            {orderPrice}
-        </div>
-    );*/
+export const BasketContainer = connect(mapStateToProps, { getBasket, removeProduct, changeQuantity })(props => {
 
 
-
-
-    // const [state, setState] = useState({});
-    //      console.log('state',state)
-
-    // const customerBasketRes = async () => {
-    //         props.getBasket({
-    //              // id: productId,
-    //         })
-    // }
-
-    return(
-
+    const list = (
         <ul className="data-order">
-            {orderName}
-            <Counter/>
-            {orderColor}
-            {`$`+orderPrice}
-            <button onClick={removeProduct}>X</button>
+            {props.basket.products.map(({quantity, product: { name, photo, color, price, id}}) => (
+                <li key={id} className="order">
+                    <div>
+                        <img src={`static/img/${photo[0]}`} className="img" alt="photo"/>
+                        {name}
+                    </div>
+                    <div>
+                        <button onClick={()=> {
+                            if(quantity > 1) props.changeQuantity(quantity - 1)
+                        }}>-</button>
+                        <button>{quantity}</button>
+                        <button onClick={ ()=> {props.changeQuantity({id, quantity: quantity + 1})}}>+</button>
+                    </div>
+                    <div>
+                        {color}
+                    </div>
+                    <div className="price">
+                        $ {price}
+                    </div>
+                    <button className="item-remove" onClick={() => props.removeProduct(id)}>
+                        {`X`}
+                    </button>
+                </li>
+            ))}
+        </ul>);
 
-        </ul>
-    )
-});
+
+    return list
+ });
 
 // export default BasketContainer;
