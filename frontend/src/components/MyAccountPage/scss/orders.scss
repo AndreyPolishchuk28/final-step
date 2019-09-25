@@ -1,0 +1,108 @@
+$main-color:  blueviolet;
+$submit-green: rgb(125, 193, 23);
+$light-grey: rgb(191, 185, 185);
+
+.full-order-wrapper{ 
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.full-order-info{
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 1fr;
+    width: 100%;
+    .full-order-info__products{
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        .full-order-info__products__items{
+            width: 100%;
+            padding: 15px;
+            border: 1px solid black;
+            border-radius: 5px;
+            margin: 10px;
+            word-wrap: break-word;
+        }
+    }
+}
+
+.orders-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .orders-wrapper__items{
+        display: flex;
+        flex-wrap: wrap;
+        .orders-wrapper__items__each{
+            width: 300px;
+            border: 1px solid black;
+            margin: 5px;
+            padding: 10px;
+            border-radius: 5px;
+            word-wrap: break-word;
+        }
+    }
+}
+
+
+@media (max-width: 510px) {
+    .orders-wrapper{
+        .orders-wrapper__items{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+@media (min-width: 640px) {
+
+    .full-order-wrapper{ 
+        flex-direction: row;
+        padding: 15px;
+    }
+
+    .full-order-info{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 100%;
+        padding: 20px;
+        width: 100%;
+        &__products{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-start;
+            &__items{
+                min-width: 120px;
+                max-width: 150px;
+                padding: 15px;
+                border: 1px solid black;
+                border-radius: 5px;
+                margin: 10px;
+                word-wrap: break-word;
+            }
+            &__text{
+                font-size: 14px;
+            }
+        }
+    }
+
+    .orders-wrapper{
+        justify-content: space-between;
+        align-items: flex-start;
+        margin: 15px;
+    }
+}
+
+@media (min-width: 960px){
+    .full-order-wrapper{ 
+        padding: 20px;
+    }
+
+    .orders-wrapper{
+        margin: 20px;
+    }
+    }
+    
