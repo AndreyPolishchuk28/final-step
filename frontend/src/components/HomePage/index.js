@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import styled from "styled-components";
@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 const mainColor =  "blueviolet";
 
 const mapStateToProps = state => {
-  console.log('state', state)
   return {
     ...state
   };
