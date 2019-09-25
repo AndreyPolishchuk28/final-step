@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Slider from "react-animated-slider";
 import "react-animated-slider/build/horizontal.css";
 import styled from "styled-components";
@@ -10,7 +10,6 @@ import { connect } from "react-redux";
 const mainColor =  "blueviolet";
 
 const mapStateToProps = state => {
-  console.log('state', state)
   return {
     ...state
   };
@@ -184,10 +183,12 @@ const MostPopularContainer = styled.div`
     margin: 20px;
     font-size: 22px;
     border-radius: 5px;
+    transition: 0.6s;
   }
   .most-popular-wrapper:hover {
     border: 2px solid #282828;
     text-shadow: 1px 1px 2px #555;
+    transform: scale(1.1)
   }
   p {
     padding-top: 15px;
