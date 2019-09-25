@@ -3,7 +3,7 @@ import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {getUserInfo} from '../../redux/auth'
 
-import './scss/style.scss'
+import './scss/orders.scss'
 
 const mapStateToProps = (state) => {
     return {
@@ -31,12 +31,6 @@ export const Orders = connect(mapStateToProps, {getUserInfo}) ((props) => {
             )
         })
     }
-
-    console.log(props);
-
-    useEffect(() => {
-        props.getUserInfo();
-    }, [])
 
     return (
         <div className="orders-wrapper">
