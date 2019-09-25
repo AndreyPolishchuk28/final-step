@@ -26,6 +26,12 @@ $light-grey: rgb(191, 185, 185);
     align-content: flex-start;
 }
 
+
+.change-input-wrapper{
+    position: relative;
+    margin: 0;
+}
+
 .input-change{
     border: 1px solid $light-grey;
     padding-left: 20px;
@@ -38,7 +44,26 @@ $light-grey: rgb(191, 185, 185);
     }
 }
 
+.change-label{
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    margin: 0;
+    transition: .2s ease-in-out;
+}
+
+.change-label-active {
+    top: 15px;
+    font-size: 10px;
+}
+
 @media (min-width: 640px) {
+
+    .change-input-wrapper{
+        position: relative;
+        margin: 10px 0;
+    }
+
     .input-change{
         border: 1px solid $light-grey;
         padding-left: 20px;
@@ -76,5 +101,18 @@ $light-grey: rgb(191, 185, 185);
         &:focus{
             outline: none;
         }
+    }
+
+    .change-label{
+        position: absolute;
+        top: 16px;
+        left: 20px;
+        margin: 0;
+        transition: .2s ease-in-out;
+    }
+
+    .change-label-active {
+        top: 5px;
+        font-size: 10px;
     }
  }

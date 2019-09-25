@@ -7,20 +7,20 @@ $checkout-white: #f0f0f0;
 .checkout-container{
     display: flex;
     width: 100%;
-    padding: 0 5%;
+    padding: 0 1%;
     margin: 100px auto;
-    align-items: flex-start;
-    justify-content: space-between;
+    flex-direction: column-reverse;
+
     &__inputs{
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
-        width: 45%;
+        width: 100%;
     }
     &__cart{
         display: flex;
         flex-direction: column;
-        width: 45%;
+        width: 100%;
         background: $checkout-white;
         border-radius: 10px;
         &__products{
@@ -43,12 +43,23 @@ $checkout-white: #f0f0f0;
                     font-size: 30px;
                     margin: 0;
                 }
-                h2{
+                .total-costs{
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
                     color: black;
                     font-size: 25px;
-                    margin: 0;
-                }
-            
+                    margin: 0; 
+                    &--fin{
+                        display: flex;
+                        justify-content: space-between;
+                        width: 100%;
+                        color: black;
+                        margin: 0; 
+                        font-weight: 700;
+                        font-size: 28px;
+                    }
+                }    
         }
     } 
 }
@@ -73,7 +84,7 @@ $checkout-white: #f0f0f0;
     background-repeat: no-repeat;
     background-position: bottom;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: 9px;
 
 }
 
@@ -87,22 +98,31 @@ $checkout-white: #f0f0f0;
     left: 0;
     padding: 10px;
     &__name{
-        font-size: 14px;
-    }
-    &__brand{
-        font-size: 10px;
-    }
-    &__category{
-        font-size: 10px;
+        font-weight: 700;
+        margin-top: 5px;
+        font-size: 15px;
+        span{
+            font-weight: 500;
+            font-size: 15px;
+        }
     }
     &__price{
-        font-size: 14px;
+        font-weight: 700;
+        margin-top: 10px;
+        font-size: 15px;
+        span{
+            font-weight: 500;
+            font-size: 15px;
+        }
     }
     &__quantity{
-        font-size: 14px;
-    }
-    &__id{
-        font-size: 10px;
+        font-weight: 700;
+        margin-top: 10px;
+        font-size: 15px;
+        span{
+            font-weight: 500;
+            font-size: 15px;
+        }
     }
     &:hover{
         top: 0;
@@ -139,6 +159,11 @@ $checkout-white: #f0f0f0;
     margin: 20px 0 0 0;
 }
 
+.checkout-input-wrapper{
+    position: relative;
+    margin: 10px 0;
+}
+
 .checkout-input{
     border: 1px solid $light-grey;
     padding-left: 20px;
@@ -149,6 +174,19 @@ $checkout-white: #f0f0f0;
     &:focus{
         outline: none;
     }
+}
+
+.checkout-label{
+    position: absolute;
+    top: 25px;
+    left: 20px;
+    margin: 0;
+    transition: .2s ease-in-out;
+}
+
+.active {
+    top: 15px;
+    font-size: 10px;
 }
 
 .order-submit-btn{
@@ -178,7 +216,7 @@ $checkout-white: #f0f0f0;
     }
 }
 
-@media (min-width: 960px){
+@media (min-width: 640px){
     
     .checkout-container{
         display: flex;
@@ -187,125 +225,17 @@ $checkout-white: #f0f0f0;
         margin: 100px auto;
         align-items: flex-start;
         justify-content: space-between;
+        flex-direction: row;
         &__inputs{
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
             width: 45%;
         }
         &__cart{
-            display: flex;
-            flex-direction: column;
             width: 45%;
-            background: $checkout-white;
-            border-radius: 10px;
-            &__products{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-wrap: wrap;
-                width: 100%;
-                border-radius: 20px;
-                padding: 20px 0;
-            }
-            &__main{
-                    width: 100%;
-                    text-align: center;
-                    border-radius: 10px;
-                    padding: 10px;
-                    // box-shadow: 10px 10px 0px 0px $checkout-yellow;
-                    h1{
-                        color: black;
-                        font-size: 30px;
-                        margin: 0;
-                    }
-                    h2{
-                        color: black;
-                        font-size: 25px;
-                        margin: 0;
-                    }
-                
-            }
         } 
     }
 
 
-    .prod-wrap{
-        border: 1px solid $light-grey;
-        margin: 10px;
-        border-radius: 10px;
-        width: 150px;
-        height: 150px;
-    }
-
-    .prod-views{
-        box-sizing: border-box;
-        position: relative;
-        display: inline-block;
-        width: 148px;
-        height: 148px;
-        background-color: white;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: bottom;
-        overflow: hidden;
-        border-radius: 10px;
-
-    }
-
-    .prod-info{
-        position: absolute;
-        background: white;
-        width: calc(100% + 2px);
-        height: calc(100% + 2px) ;
-        top: 100%;
-        transition: 0.5s;
-        left: 0;
-        padding: 10px;
-        &__name{
-            font-size: 14px;
-        }
-        &__brand{
-            font-size: 10px;
-        }
-        &__category{
-            font-size: 10px;
-        }
-        &__price{
-            font-size: 14px;
-        }
-        &__quantity{
-            font-size: 14px;
-        }
-        &__id{
-            font-size: 10px;
-        }
-        &:hover{
-            top: 0;
-        }
-    }
-
-    .show-close-info-btn{
-        z-index: 1000;
-        position: absolute;
-        top: calc(100% - 40px);
-        right: 10px;
-        width: 30px;
-        height: 30px;
-        background:  $light-main-color;
-        border: none;
-        font-size: 20px;
-        font-weight: 700;
-        border-radius: 50%;
-        color: white;
-        transition: 0.5s;
-        &:focus{
-            outline: 0;
-        }
-        &:hover{
-            background: $main-color;
-        }
-    }
+    
 
     .section-header{
         font-size: 25px;
