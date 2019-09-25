@@ -10,6 +10,7 @@ const GET_SEARCH_PRODUCTS = "GET_SEARCH_PRODUCTS";
 const SET_SEARCH_PRODUCTS = "SET_SEARCH_PRODUCTS";
 const GET_PRODUCT_DETAILS = "GET_PRODUCT_DETAILS";
 const SET_PRODUCT_DETAILS = "SET_PRODUCT_DETAILS";
+const SET_ERROR = "SET_ERROR";
 
 // actions
 export const getProducts = (payload) => {
@@ -47,46 +48,62 @@ export const getSearchProducts = (payload) => {
 
 function* getProductDetailsSaga() {
     while (true) {
-        const {payload} = yield take(GET_PRODUCT_DETAILS);
-        const req = yield fetch(`/products/${payload}`);
-        const res = yield req.json();
-        yield put({type: SET_PRODUCT_DETAILS, payload: res})
+        try {
+            const {payload} = yield take(GET_PRODUCT_DETAILS);
+            const req = yield fetch(`/products/${payload}`);
+            const res = yield req.json();
+            yield put({type: SET_PRODUCT_DETAILS, payload: res})
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
+        }
     }
 }
 
 function* getMainInfoSaga() {
     while (true) {
-        yield take(GET_MAIN_INFO);
-        const req = yield fetch('/main_info');
-        const res = yield req.json();
-        yield put({type: SET_MAIN_INFO, payload: res})
+        try {
+            yield take(GET_MAIN_INFO);
+            const req = yield fetch('/main_info');
+            const res = yield req.json();
+            yield put({type: SET_MAIN_INFO, payload: res})
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
+        }
     }
 }
 
 
 function* getProductsSaga() {
     while (true) {
-        const {payload} = yield take(GET_PRODUCTS);
-        const {clearOld} = payload;
-        const req = yield fetch('/get_products', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        });
-        const res = yield req.json();
-        if (clearOld) {
-            yield put({type: SET_PRODUCTS, payload: {products: res, showMoreBtnStatus: true}})
-        } else if (res.length) {
-            yield put({type: SET_MORE_PRODUCTS, payload: {products: res, showMoreBtnStatus: true}})
-        } else {
-            yield put({type: SET_MORE_PRODUCTS, payload: {products: res, showMoreBtnStatus: false}})
+        try {
+            const {payload} = yield take(GET_PRODUCTS);
+            const {clearOld} = payload;
+            const req = yield fetch('/get_products', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            const res = yield req.json();
+            if (clearOld) {
+                yield put({type: SET_PRODUCTS, payload: {products: res, showMoreBtnStatus: true}})
+            } else if (res.length) {
+                yield put({type: SET_MORE_PRODUCTS, payload: {products: res, showMoreBtnStatus: true}})
+            } else {
+                yield put({type: SET_MORE_PRODUCTS, payload: {products: res, showMoreBtnStatus: false}})
+            }
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
         }
     }
 }
 
 function* getSearchProductSaga(action) {
+    try {
         const req = yield fetch('/product_search', {
             method: 'POST',
             headers: {
@@ -96,6 +113,10 @@ function* getSearchProductSaga(action) {
         });
         const res = yield req.json();
         yield put({type: SET_SEARCH_PRODUCTS, payload: res})
+    } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
+    }
 }
 
 function* getSearchProductWatcher() {
@@ -111,7 +132,8 @@ let startState = {
     mostPopularProducts: [],
     searchProducts: [],
     showMoreBtnStatus: true,
-    currentProductDetails: {}
+    currentProductDetails: {},
+    error: ''
 };
 
 export function catalogReducer(state = startState, action){
@@ -126,7 +148,9 @@ export function catalogReducer(state = startState, action){
         case SET_SEARCH_PRODUCTS:
             return { ...state, searchProducts: payload };
         case SET_PRODUCT_DETAILS: 
-            return { ...state, currentProductDetails: payload}
+            return { ...state, currentProductDetails: payload};
+        case SET_ERROR:
+            return { ...state, error: payload.error};
         default :
             return state
     }
