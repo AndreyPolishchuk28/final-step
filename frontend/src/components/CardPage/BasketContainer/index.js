@@ -17,7 +17,7 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
 
     const list = (
         <ul className="data-order">
-            {props.basket.products.map(({quantity, product: { name, photo, color, price, id}}) => (
+            {props.basket.products.map(({quantity, product: { name, photo, color, price, _id, id}}) => (
                 <li key={id} className="order">
                     <div>
                         <img src={`static/img/${photo[0]}`} className="img" alt="photo"/>
@@ -25,10 +25,10 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
                     </div>
                     <div>
                         <button onClick={()=> {
-                            if(quantity > 1) props.changeQuantity(quantity - 1)
+                            if(quantity > 1) {props.changeQuantity({id: _id, quantity: quantity - 1})}
                         }}>-</button>
                         <button>{quantity}</button>
-                        <button onClick={ ()=> {props.changeQuantity({id, quantity: quantity + 1})}}>+</button>
+                        <button onClick={ ()=> {props.changeQuantity({id: _id, quantity: quantity + 1})}}>+</button>
                     </div>
                     <div>
                         {color}

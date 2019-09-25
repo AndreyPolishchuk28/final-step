@@ -41,6 +41,9 @@
     position: relative;
     display: block;
     & img {
+        width: 500px;
+        height: 755px;
+        object-fit: contain;
         max-width: 100%;
     }
 }
