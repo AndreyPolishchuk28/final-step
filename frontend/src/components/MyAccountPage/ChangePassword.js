@@ -1,10 +1,9 @@
-import React, {useState} from 'react'
-import {Link} from 'react-router-dom';
+import React, {useState, useEffect} from 'react'
 
 import {connect} from 'react-redux'
-import {changeUserInfo} from '../../redux/auth'
+import {changePassword, clearChangePasswordStatus} from '../../redux/auth'
 
-import './scss/style.scss'
+import './scss/change.scss'
 
 const mapStateToProps = (state) => {
     return {
@@ -12,7 +11,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export const ChangePassword = connect(mapStateToProps, {changeUserInfo}) ((props) => {
+export const ChangePassword = connect(mapStateToProps, { changePassword, clearChangePasswordStatus}) ((props) => {
 
     const [ passChange, setPassChange] = useState({
         currentPass: "",
@@ -27,30 +26,38 @@ export const ChangePassword = connect(mapStateToProps, {changeUserInfo}) ((props
         })
     }
 
-    const submitHandler = async () => {
+    const submitHandler = () => {
         if (passChange.pass !== passChange.repeatPass){
             alert("passwords doesn't match")
-        } else if (passChange.currentPass !== props.auth.userInfo.password){
-            alert('current password is incorrect')
         } else if(passChange.pass.length < 6){
             alert('password must contain atleast 6 charecters')
-        }
-        else {
-            const data = await {
-                password: passChange.pass
+        } else{ 
+            const data = {
+                oldPassword: passChange.currentPass,
+                newPassword:  passChange.pass
             }
+            props.changePassword(data)
 
-            props.changeUserInfo(data)
-
-            props.history.push('/account/info/change')
+            }
         }
-    }
+
+    useEffect(() => () => {
+        props.clearChangePasswordStatus()
+    },[])
+
+    useEffect(() => {
+        if(props.auth.changePasswordStatus === "Success"){
+            props.setPageState({ page: "changeInfo"})
+        } else if(props.auth.changePasswordStatus === "Failed"){
+            alert("u r  dumbass!!!")
+            props.clearChangePasswordStatus()
+        }
+    },[props.auth.changePasswordStatus])
   
     return (
         <div className="container-change">
-            <Link to="/account/info/change">
-                <i class="fas fa-times close-btn"></i>
-            </Link>
+            <i className="fas fa-times close-btn" onClick={() => {props.setPageState({ page: "changeInfo"})}}></i>
+            <h1 className="info-header">Password</h1>
             <input className="input-change"  type="text" onChange={changeHandler} placeholder="Type current password" name="currentPass"/>
             <input className="input-change"  type="text" onChange={changeHandler} placeholder="Password for change" name="pass"/>
             <input className="input-change"  type="text" onChange={changeHandler} placeholder="Reapet password for change" name="repeatPass"/>

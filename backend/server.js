@@ -4,6 +4,8 @@ const path = require('path');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
 const cookieParser = require('cookie-parser');
+const bcrypt = require('bcrypt');
+const salt = '$2b$10$YG8wDZX3RfOJ00KUNjgb5O';
 
 const uri = "mongodb+srv://admin:admin@clustertest-mse2m.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
@@ -75,7 +77,7 @@ app.post('/login', async (req, res) => {
     let sessionKey;
     if (user) {
         sessionKey = user._id + Date.now();
-        if (user.password === req.body.password) {
+        if (user.password === bcrypt.hashSync(req.body.password, salt)) {
             await app.sessions.insertOne({sessionKey: sessionKey, userId: user._id});
             res.cookie('sessionKey', sessionKey, {maxAge: 2592000000});
             if (user.basket) {
@@ -107,7 +109,7 @@ app.post('/new_user', async (req, res) => {
     if (await app.users.findOne({"email": req.body.email})) {
         res.send(JSON.stringify({registered: false, message: 'This email already used'}))
     } else {
-        let user = {...req.body, orders: [], basket: ''};
+        let user = {...req.body, orders: [], basket: '', password: bcrypt.hashSync(req.body.password, salt)};
         delete user.history;
         if (req.cookies.basket) {
             user.basket = req.cookies.basket
@@ -126,7 +128,7 @@ app.get('/get_user_info', checkAuthMiddleware(), async (req, res) => {
     if (user.orders) {
         const orders = await app.orders.find({"_id": {$in: [...user.orders]}}).toArray();
         user.orders = orders
-    };
+    }
     res.send(JSON.stringify(user))
 });
 
@@ -136,6 +138,20 @@ app.post('/change_user_info', checkAuthMiddleware(), async (req, res) => {
     });
     const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
     res.send(JSON.stringify(user))
+});
+
+app.post('/change_password', checkAuthMiddleware(), async (req, res) => {
+    const user = await app.users.findOne(ObjectId(req.cookies.sessionKey.slice(0, 24)));
+    if (user.password === bcrypt.hashSync(req.body.oldPassword, salt)) {
+        await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
+            $set: {
+                password: bcrypt.hashSync(req.body.newPassword, salt)
+            }
+        });
+        res.send(JSON.stringify({changePasswordStatus: 'Success'}))
+    } else {
+        res.send(JSON.stringify({changePasswordStatus: 'Failed'}))
+    }
 });
 
 app.post('/add_to_basket', async (req, res) => {
@@ -157,7 +173,7 @@ app.post('/add_to_basket', async (req, res) => {
         let basket = await app.baskets.insertOne({
             products: [{...req.body, product: prod}]
         });
-        res.cookie('basket', basket.insertedId);
+        res.cookie('basket', basket.insertedId, {maxAge: 2592000000});
         if (req.cookies.sessionKey && await app.sessions.findOne({"sessionKey": req.cookies.sessionKey})) {
             await app.users.updateOne({"_id": ObjectId(req.cookies.sessionKey.slice(0, 24))}, {
                 $set: {basket: basket.insertedId}
