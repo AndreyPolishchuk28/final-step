@@ -3,7 +3,7 @@ import React, {useEffect} from 'react'
 import {connect} from 'react-redux'
 import {getUserInfo} from '../../redux/auth'
 
-import './scss/style.scss'
+import './scss/orders.scss'
 
 const mapStateToProps = (state) => {
     return {
@@ -12,41 +12,22 @@ const mapStateToProps = (state) => {
 }
 
 export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
-    let dataArr = []
 
-    let data =  {billing_address:""}
+    const dataArr = props.auth.userInfo.orders.filter(item => props.id === item._id)
 
-    let allOrders = []
+    const data = dataArr[0];
 
-    let products = []
-
-    console.log(props);
-
-    if(props.auth.userInfo){
-        dataArr = props.auth.userInfo.orders.filter(item => props.id === item._id)
-        
-        console.log(dataArr);
-
-        data = dataArr[0];
-
-        console.log(data);
-
-        allOrders = data.product_items.map((item, index) => {
-                return (
-                    <div className="full-order-info__products__items"  key={index}>
-                        <h1 className="full-order-info__products__text">{item.product.name}</h1>
-                        <h1 className="full-order-info__products__text">{item.product.producer}</h1>
-                        <h1 className="full-order-info__products__text">{item.product.category}</h1>
-                        <h1 className="full-order-info__products__text">{item.product.price}</h1>
-                        <h1 className="full-order-info__products__text">{item.product._id}</h1>
-                    </div>
-                    )
-            })
-    }
-
-    useEffect(() => {
-        props.getUserInfo();
-    }, [])
+    const allOrders = data.product_items.map((item, index) => {
+            return (
+                <div className="full-order-info__products__items"  key={index}>
+                    <h1 className="full-order-info__products__text">{item.product.name}</h1>
+                    <h1 className="full-order-info__products__text">{item.product.producer}</h1>
+                    <h1 className="full-order-info__products__text">{item.product.category}</h1>
+                    <h1 className="full-order-info__products__text">{item.product.price}</h1>
+                    <h1 className="full-order-info__products__text">{item.product._id}</h1>
+                </div>
+                )
+        })
 
     return (
         <div>

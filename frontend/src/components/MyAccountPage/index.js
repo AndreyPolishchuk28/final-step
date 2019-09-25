@@ -9,7 +9,7 @@ import {AccInfoChange} from './AccInfoChange'
 import {ChangePassword} from './ChangePassword'
 import {AccInfo} from './AccInfo'
 
-import './scss/style.scss'
+import './scss/main.scss'
 
 const mapStateToProps = (state) => {
     return {
@@ -26,7 +26,7 @@ export const MyAccountPage = connect(mapStateToProps, {getUserInfo})((props) => 
     const returnPage = () => {
         switch(pageState.page){
             case "info":
-                return <AccInfo setPageState={setPageState}/>
+                return <AccInfo userInfo={props.auth.userInfo} setPageState={setPageState}/>
             case "changeInfo":
                 return <AccInfoChange setPageState={setPageState}/>
             case "changePassword":
