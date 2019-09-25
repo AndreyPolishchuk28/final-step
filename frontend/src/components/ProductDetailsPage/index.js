@@ -17,7 +17,13 @@ export const ProductDetailsPage = connect(mapStateToProps, {getProductDetails}) 
 	
 	useEffect(() => {
 		props.getProductDetails(props.match.params.id);
+		window.scrollTo(0, 0);
 	}, []);
+
+	useEffect(() => {
+		props.getProductDetails(props.match.params.id);
+		window.scrollTo(0, 0);
+	}, [props.match.params.id]);
 
 	return (
 		<div className="product-details__container">
