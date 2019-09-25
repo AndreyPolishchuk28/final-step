@@ -6,6 +6,7 @@ import "./styles.scss";
 import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
 import {CardHeader} from './CardHeader';
+import "./styles.scss"
 // import { getBasket } from "../../redux/basket";
 // import { connect } from 'react-redux';
 // import mapStateToProps from "react-redux/es/connect/mapStateToProps";
