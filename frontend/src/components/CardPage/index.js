@@ -1,8 +1,7 @@
 
 import React from 'react';
-// import {Counter} from './Counter';
-import {Link} from "react-router-dom";
-import { Button } from "antd";
+// import {Link} from "react-router-dom";
+// import { Button } from "antd";
 import "./styles.scss";
 import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
@@ -17,10 +16,6 @@ import {CardHeader} from './CardHeader';
     return{...state}
 };*/
 export const CardPage = (props) => {
-    /*const basket = connect(mapStateToProps, { getBasket }) (props => {
-
-    });*/
-
 
     const  totalPrice = 90;
 
@@ -36,7 +31,7 @@ export const CardPage = (props) => {
                         <div className="category">Quantity</div>
                         <div className="category">Color</div>
                         <div className="category">Price</div>
-                        <div> </div>
+                        <div>Delete</div>
                     </ul>
                     <BasketContainer/>
                     <div className="user-choice">

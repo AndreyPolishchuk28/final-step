@@ -7,7 +7,7 @@ export const BasketButton =(props) => {
     return (
 
         <div className="button-wrap">
-            <Button className="checkout-button" type="primary submit" block>proceed to checkout</Button>
+            <Button className="checkout-button" type="primary" href="./checkout" block>proceed to checkout</Button>
             <Button className="continue-button" type="primary" href="/" block>continue shopping</Button>
         </div>
     )
