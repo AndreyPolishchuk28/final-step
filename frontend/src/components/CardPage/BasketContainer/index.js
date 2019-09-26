@@ -4,6 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 // import { createOrder } from "../../../redux/basket";
 import { removeProduct, changeQuantity, getBasket} from "../../../redux/basket";
+import { Row, Col } from "antd";
 import "./styles.css"
 
 
@@ -16,32 +17,34 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
 
 
     const list = (
-        <ul className="data-order">
+        <div className="data-order">
             {props.basket.products.map(({quantity, product: { name, photo, color, price, _id, id}}) => (
-                <li key={id} className="order">
-                    <div>
+                <Row  type="flex" key={id} className="order">
+                    <Col span={8} order={1} className="item-order">
                         <img src={`static/img/${photo[0]}`} className="img" alt="photo"/>
                         {name}
-                    </div>
-                    <div>
+                    </Col>
+                    <Col span={5} order={2} pull={1}>
                         <button onClick={()=> {
                             if(quantity > 1) {props.changeQuantity({id: _id, quantity: quantity - 1})}
                         }}>-</button>
                         <button>{quantity}</button>
                         <button onClick={ ()=> {props.changeQuantity({id: _id, quantity: quantity + 1})}}>+</button>
-                    </div>
-                    <div>
+                    </Col>
+                    <Col span={4} order={3}>
                         {color}
-                    </div>
-                    <div className="price">
+                    </Col>
+                    <Col span={4} order={4} className="price">
                         $ {price}
-                    </div>
+                    </Col>
+                    <Col span={3} order={5} push={2}>
                     <button className="item-remove" onClick={() => props.removeProduct(id)}>
                         {`X`}
                     </button>
-                </li>
+                    </Col>
+                </Row>
             ))}
-        </ul>);
+        </div>);
 
 
     return list
