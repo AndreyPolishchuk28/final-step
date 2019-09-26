@@ -22,6 +22,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
 
     const [ delivery, setDelivery] = useState({delivery: ""})
 
+    const [err, setErr] = useState({});
 
     const changeHandler = (event) => {
         setUserChange({
@@ -60,6 +61,69 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         }
     })
 
+    function validate(userChange, addressChange, payment, delivery) {
+        let errors = {};
+
+        if(userChange.firstName === "" || !userChange.firstName){
+            errors.firstNameReq = 'First name is required'
+        }
+        if(userChange.lastName === "" || !userChange.lastName){
+            errors.lastNameReq = 'Last name is required'
+        }
+        if (userChange.email === "" || !userChange.email){
+            errors.emailReq = 'Email address is required'
+        }else if (!/\S+@\S+\.\S+/.test(userChange.email)){
+            errors.emailInvalid = "Email address is invalid";
+        }
+
+        if(!userChange.card_number){
+            errors.cardNumbReq = 'Card number is required'
+        } else if (userChange.card_number.length < 16 || isNaN(userChange.card_number)){
+            errors.cardNumbInvalid = "Card number is invalid";
+        }
+
+        if(!userChange.expiration_date){
+            errors.expDateReq = 'Expiriation date is required'
+        } else if (userChange.expiration_date.length < 4 || isNaN(userChange.expiration_date)){
+            errors.expDateInvalid = "Expiration date is invalid";
+        }
+
+        if (!userChange.cvv){
+            errors.cvvReq = 'CVV is required'
+        }  else if (userChange.cvv.length < 3 || isNaN(userChange.cvv)){
+            errors.cvvInvalid = "CVV is invalid";
+        }
+
+        if (payment.payment === ""){
+            errors.paymentReq = 'Payment is required'
+        }
+
+        if (delivery.delivery === ""){
+            errors.deliveryReq = 'Delivery is required'
+        }
+
+        if(addressChange.country === "" || !addressChange.country){
+            errors.countryReq = 'Country is required'
+        }
+        if(addressChange.city === "" || !addressChange.city){
+            errors.cityReq = 'City is required'
+        }
+        if(addressChange.address === "" || !addressChange.address){
+            errors.addressReq = 'Address is required'
+        }
+
+        if(addressChange.postal === "" || !addressChange.postal){
+            errors.postalReq = 'Postal code is required'
+        } else if (isNaN(addressChange.postal)){
+            errors.postalInvalid = "Postal code is invalid";
+        }
+
+        console.log(errors);
+
+        return errors
+    }
+
+
     const inputAnimF = (event) => {
         event.target.previousElementSibling.classList.add("active")
     }
@@ -70,12 +134,13 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         }
     }
 
-    const checkoutInput = (strFor, label, def, changeFunc) => {
+    const checkoutInput = (strFor, label, def, changeFunc, error) => {
         if(def !== "" && def){
             return (
                 <div className="checkout-input-wrapper">
                     <label className="checkout-label active" for={strFor}>{label}</label>
                     <input className="checkout-input" type="text" onChange={changeFunc} id={strFor} defaultValue={def} required onFocus={inputAnimF} onBlur={inputAnimB}/>
+                    {error ? <p className='error'>{error}</p> : null}
                 </div>
             )
         } else {
@@ -83,6 +148,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 <div className="checkout-input-wrapper">
                     <label className="checkout-label" for={strFor}>{label}</label>
                     <input className="checkout-input" type="text" onChange={changeFunc} id={strFor} defaultValue={def} required onFocus={inputAnimF} onBlur={inputAnimB}/>
+                    {error ? <p className='error'>{error}</p> : null}
                 </div>
             )
         }
@@ -146,10 +212,9 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                     }
                     }
                     >
-                        <h1 className="prod-info__name">Name: {elem.product.name}</h1>
-                        <h1 className="prod-info__price">{elem.product.price}$</h1>
-                        <h1 className="prod-info__quantity">{elem.quantity}x</h1>
-                        <h1 className="prod-info__id">id: {elem.product._id}</h1>
+                        <h1 className="prod-info__name">Model: <span>{elem.product.name}</span></h1>
+                        <h1 className="prod-info__price">Price for one: <span>{elem.product.price}$</span></h1>
+                        <h1 className="prod-info__quantity">Quantity in cart: <span>{elem.quantity}x</span></h1>
                     </div>
                 </div>
             </div>
@@ -161,19 +226,20 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     
 
     const submitOrder = () => {
+
+        let errors = validate(userChange, addressChange, payment, delivery)
         
-        if(payment.payment === ""){
-            alert("no payment chosen")
-        } else if( delivery.delivery === ""){
-            alert("no delivery chosen")
+        if (Object.keys(errors).length){
+            console.log("kek");
+            setErr(validate(userChange, addressChange, payment, delivery))
         } else {
         const data = {
                 creation_date: new Date(Date.now()),
                 order_total: orderTotal(),
                 currency: "USD",
                 customer_info: {
-                    first_name: userChange.first_name,
-                    last_name: userChange.last_name,
+                    firstName: userChange.firstName,
+                    lastName: userChange.lastName,
                     email: props.auth.userInfo.email
                 },
                 billing_address: {
@@ -204,7 +270,10 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     useEffect(() => {
         if(props.auth.userInfo){
                 setUserChange(props.auth.userInfo)
+                console.log(props);
+            if(props.auth.userInfo.def_address){
                 setAddressChange(props.auth.userInfo.def_address)
+            }
             }
     }, [props.auth.userInfo])
 
@@ -224,21 +293,27 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                         Visa
                     </label>
                 </div>
+                {err.paymentReq ? <p className='error'>{err.paymentReq}</p> : null}
 
-                {checkoutInput("card_number", "Card number", "", changeHandler)}
-                {checkoutInput("expiration_date", "Expiration date", "", changeHandler)}
-                {checkoutInput("email", "CVV", "", changeHandler)}
+                {checkoutInput("card_number", "Card number", "", changeHandler, err.cardNumbReq)}
+                {err.cardNumbInvalid ? <p className='error'>{err.cardNumbInvalid}</p> : null}
+                {checkoutInput("expiration_date", "Expiration date", "", changeHandler, err.expDateReq)}
+                {err.expDateInvalid ? <p className='error'>{err.expDateInvalid}</p> : null}
+                {checkoutInput("cvv", "CVV", "", changeHandler, err.cvvReq)}
+                {err.cvvInvalid ? <p className='error'>{err.cvvInvalid}</p> : null}
 
                 <h1 className="section-header">Customer info</h1>
-                {checkoutInput("first_name", "First name", userChange.firstName, changeHandler)}
-                {checkoutInput("last_name", "Last name", userChange.lastName, changeHandler)}
-                {checkoutInput("email", "Email", userChange.email, changeHandler)}
+                {checkoutInput("firstName", "First name", userChange.firstName, changeHandler, err.firstNameReq)}
+                {checkoutInput("lastName", "Last name", userChange.lastName, changeHandler, err.lastNameReq)}
+                {checkoutInput("email", "Email", userChange.email, changeHandler, err.emailReq)}
+                {err.emailInvalid ? <p className='error'>{err.emailInvalid}</p> : null}
                 
                 <h1 className="section-header">Address</h1>
-                {checkoutInput("country", "Country", addressChange.country, addressHandler)}
-                {checkoutInput("city", "City", addressChange.city, addressHandler)}
-                {checkoutInput("address", "Address", addressChange.address, addressHandler)}
-                {checkoutInput("postal", "Postal code", addressChange.postal, addressHandler)}
+                {checkoutInput("country", "Country", addressChange.country, addressHandler, err.countryReq)}
+                {checkoutInput("city", "City", addressChange.city, addressHandler, err.cityReq)}
+                {checkoutInput("address", "Address", addressChange.address, addressHandler, err.addressReq)}
+                {checkoutInput("postal", "Postal code", addressChange.postal, addressHandler, err.postalReq)}
+                {err.postalInvalid ? <p className='error'>{err.postalInvalid}</p> : null}
 
                 <div className="payment-radio-wrap">
                     <h1 className="payment-radio-wrap__header">Choose delivery period</h1>
@@ -255,6 +330,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                         Two day + 15$
                     </label>
                 </div>
+                {err.deliveryReq ? <p className='error'>{err.deliveryReq}</p> : null}
 
                 <button onClick={submitOrder} className="order-submit-btn">Place order</button>
             </form>
@@ -266,9 +342,9 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                     {prodViews}
                 </div>
                 <div className="checkout-container__cart__main">
-                    <h2>Total cart: {orderTotal()}$</h2>
-                    <h2>Deliery: {deliveryCost()}$</h2>
-                    <h2>Total: {orderTotal() + deliveryCost()}$</h2>
+                    <div className="total-costs"><span>Total cart:</span><span>{orderTotal()}$</span></div>
+                    <div className="total-costs"><span>Deliery:</span><span>{deliveryCost()}$</span></div>
+                    <div className="total-costs--fin"><span>Total:</span><span>{orderTotal() + deliveryCost()}$</span></div>
                 </div>
             </div>
         </div>
