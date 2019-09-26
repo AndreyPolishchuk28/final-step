@@ -1,24 +1,25 @@
 
 import React from 'react';
-// import {Link} from "react-router-dom";
-// import { Button } from "antd";
-import "./styles.scss";
+import { connect } from "react-redux";
 import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
 import {CardHeader} from './CardHeader';
-// import { getBasket } from "../../redux/basket";
-// import { connect } from 'react-redux';
-// import mapStateToProps from "react-redux/es/connect/mapStateToProps";
+import "./styles.scss"
 
 
+const mapStateToProps = (state) => {
+    return{
+        products: state.basket.products
+    }
+};
 
-/*const mapStateToProps = (state) => {
-    return{...state}
-};*/
-export const CardPage = (props) => {
+export const CardPage = connect(mapStateToProps)(props => {
 
-    const  totalPrice = 90;
+    let totalPrice = 0;
 
+        props.products.map(item => {
+            totalPrice += item.quantity* item.product.price
+        });
 
     return (
         <section className="main-section">
@@ -35,11 +36,11 @@ export const CardPage = (props) => {
                     </ul>
                     <BasketContainer/>
                     <div className="user-choice">
-                        <div className="total-price">Total {totalPrice}</div>
+                        <div className="total-price">Total ${totalPrice}</div>
                     </div>
                 </div>
                 <BasketButton/>
             </section>
         </section>
     )
-};
+});

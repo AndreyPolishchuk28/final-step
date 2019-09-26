@@ -7,34 +7,21 @@
   background-color: #cbd3da;
 }
 
-.caption {
+.caption, .page-way, .caption-order-section {
   padding: 20px;
 }
 
-.page-way {
-  padding: 20px;
-}
-
-.caption-order-section {
-  padding: 20px;
-}
-
-.order {
+.order, .order-category {
   display: flex;
   justify-content: space-around;
-  margin: 50px;
+  /*margin: 50px;*/
 }
 
 .order-section {
   background-color: #cbd3da;
   width: 65%;
   border-radius: 20px 20px 30px 30px;
-  margin: 50px 30px 50px 30px;
-}
-
-.order-category {
-  display: flex;
-  justify-content: space-around;
+  margin: 50px 30px;
 }
 
 .user-choice {
@@ -48,7 +35,7 @@
   font-size: medium;
   font-weight: bold;
   text-align: right;
-  margin: 10px 40px 10px;
+  margin: 10px 40px;
   padding-top: 10px;
 }
 
@@ -56,17 +43,13 @@
   padding: 30px;
 }
 
-.checkout-button {
+.checkout-button, .continue-button {
   margin: 30px;
 }
 
-.continue-button {
-  margin: 30px;
-}
-
-.img {
+/*.img {
   width: 50px;
   height: 50px;
-}
+}*/
 
 /*# sourceMappingURL=styles.css.map */
