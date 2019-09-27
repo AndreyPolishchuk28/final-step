@@ -38,7 +38,7 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
                         $ {price}
                     </Col>
                     <Col span={3} order={5} push={2}>
-                    <button className="item-remove" onClick={() => props.removeProduct(id)}>
+                    <button className="item-remove" onClick={() => props.removeProduct(_id)}>
                         {`X`}
                     </button>
                     </Col>
