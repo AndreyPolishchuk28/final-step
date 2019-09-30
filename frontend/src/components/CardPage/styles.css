@@ -1,9 +1,6 @@
-* {
-  box-sizing: border-box;
-}
 
 .redirection {
-  height: 150px;
+  height: 20%;
   background-color: #cbd3da;
 }
 
@@ -11,19 +8,14 @@
   padding: 20px;
 }
 
-.order, .order-category {
-  display: flex;
-  justify-content: space-around;
-  /*margin: 50px;*/
-}
-
 .order-section {
   background-color: #cbd3da;
-  width: 65%;
   border-radius: 20px 20px 30px 30px;
-  margin: 50px 30px;
+  margin: 50px 0 70px;
 }
-
+.text-center {
+  margin-bottom: 20px;
+}
 .user-choice {
   height: 50px;
   background-color: blueviolet;
@@ -35,21 +27,10 @@
   font-size: medium;
   font-weight: bold;
   text-align: right;
+  color: white;
   margin: 10px 40px;
   padding-top: 10px;
 }
 
-.button-wrap {
-  padding: 30px;
-}
-
-.checkout-button, .continue-button {
-  margin: 30px;
-}
-
-/*.img {
-  width: 50px;
-  height: 50px;
-}*/
 
 /*# sourceMappingURL=styles.css.map */
