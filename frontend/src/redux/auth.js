@@ -19,6 +19,7 @@ const SET_REGISTRATION_ERRORS = 'SET_REGISTRATION_ERRORS';
 const SET_USER_INFO = 'SET_USER_INFO';
 const CLEAR_LOGIN_ERRORS = 'CLEAR_LOGIN_ERRORS';
 const CLEAR_REGISTRATION_ERRORS = 'CLEAR_REGISTRATION_ERRORS';
+const SET_ERROR = 'SET_ERROR';
 
 // actions
 export const login = payload =>{
@@ -89,101 +90,139 @@ export const clearRegistrationErrors = () =>{
 
 function* loginSaga() {
     while (true){
-        const { payload } = yield take(LOGIN);
-        const response = yield fetch('/login', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
-        const res = yield response.json();
-        if (res.loginStatus) {
-            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
-            payload.history.push('/')
-        } else {
-            yield put({type: SET_LOGIN_ERRORS, payload: {loginStatus: false, loginErrorMessage: res.message}});
+        try {
+            const {payload} = yield take(LOGIN);
+            const response = yield fetch('/login', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            const res = yield response.json();
+            if (res.loginStatus) {
+                yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
+                payload.history.push('/')
+            } else {
+                yield put({type: SET_LOGIN_ERRORS, payload: {loginStatus: false, loginErrorMessage: res.message}});
+            }
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
         }
     }
 }
 
 function* logoutSaga() {
     while (true){
-        yield take(LOGOUT);
-        yield fetch('/logout');
-        yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: false}})
+        try {
+            yield take(LOGOUT);
+            yield fetch('/logout');
+            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: false}})
+        } catch (e) {
+        yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+        console.log("Request failed!");
+        }
     }
 }
 
 function* getLoginStatusSaga() {
     while (true){
-        yield take(GET_LOGIN_STATUS);
-        const response = yield fetch('/get_login_status');
-        const res = yield response.json();
-        if (res.loginStatus){
-            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}})
-        }else{
-            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: false}})
+        try {
+            yield take(GET_LOGIN_STATUS);
+            const response = yield fetch('/get_login_status');
+            const res = yield response.json();
+            if (res.loginStatus) {
+                yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}})
+            } else {
+                yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: false}})
+            }
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
         }
     }
 }
 
 function* createNewUserSaga() {
     while (true){
-        const { payload } = yield take(CREATE_NEW_USER);
-        const response = yield fetch('/new_user', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
-        const res = yield response.json();
-        if (res.registered) {
-            yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
-            payload.history.push('/')
-        } else {
-            yield put({type: SET_REGISTRATION_ERRORS, payload: {loginStatus: true, registrationErrorMessage: res.message}})
+        try {
+            const {payload} = yield take(CREATE_NEW_USER);
+            const response = yield fetch('/new_user', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            const res = yield response.json();
+            if (res.registered) {
+                yield put({type: SET_LOGIN_STATUS, payload: {loginStatus: true}});
+                payload.history.push('/')
+            } else {
+                yield put({
+                    type: SET_REGISTRATION_ERRORS,
+                    payload: {loginStatus: true, registrationErrorMessage: res.message}
+                })
+            }
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
         }
     }
 }
 
 function* getUserInfoSaga() {
     while (true){
-        yield take(GET_USER_INFO);
-        const response = yield fetch('/get_user_info');
-        const res = yield response.json();
-        yield put({type: SET_USER_INFO, payload: res})
+        try {
+            yield take(GET_USER_INFO);
+            const response = yield fetch('/get_user_info');
+            const res = yield response.json();
+            yield put({type: SET_USER_INFO, payload: res})
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
+        }
     }
 }
 
 function* changeUserInfoSaga() {
     while (true){
-        const { payload } = yield take(CHANGE_USER_INFO);
-        const response = yield fetch('/change_user_info', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
-        const res = yield response.json();
-        yield put({type: SET_USER_INFO, payload: res})
+        try {
+            const {payload} = yield take(CHANGE_USER_INFO);
+            const response = yield fetch('/change_user_info', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            const res = yield response.json();
+            yield put({type: SET_USER_INFO, payload: res})
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
+        }
     }
 }
 
 function* changePasswordSaga() {
     while (true){
-        const { payload } = yield take(CHANGE_PASSWORD);
-        const response = yield fetch('/change_password', {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(payload)
-        });
-        const res = yield response.json();
-        yield put({type: SET_CHANGE_PASSWORD_STATUS, payload: res})
+        try {
+            const {payload} = yield take(CHANGE_PASSWORD);
+            const response = yield fetch('/change_password', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+            const res = yield response.json();
+            yield put({type: SET_CHANGE_PASSWORD_STATUS, payload: res})
+        } catch (e) {
+            yield put({type: SET_ERROR, payload: {error: "Request failed!"}});
+            console.log("Request failed!");
+        }
     }
 }
 
@@ -194,7 +233,8 @@ const startState = {
     loginStatus: false,
     loginErrorMessage: '',
     registrationError: '',
-    changePasswordStatus: ''
+    changePasswordStatus: '',
+    error: ''
 };
 
 export function authReducer(state = startState, action) {
@@ -216,6 +256,8 @@ export function authReducer(state = startState, action) {
             return { ...state, changePasswordStatus: payload.changePasswordStatus};
         case CLEAR_CHANGE_PASSWORD_STATUS:
             return { ...state, changePasswordStatus: ''};
+        case SET_ERROR:
+            return { ...state, error: payload.error};
         default :
             return state
     }

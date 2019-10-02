@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React from 'react'
 
 import {connect} from 'react-redux'
 import {getUserInfo} from '../../redux/auth'
@@ -20,12 +20,12 @@ export const Orders = connect(mapStateToProps, {getUserInfo}) ((props) => {
     if(props.auth.userInfo){
         orders = props.auth.userInfo.orders.map((item, index) => {
             return (
-                <div className="orders-wrapper__items__each" key={index} onClick={() => {
+                <div className="orders-wrapper__each" key={index} onClick={() => {
                     props.setPageState({ page: "fullOrder"})
                     props.setOrder({ id: item._id})
             }}>    
                     <p className="card-title">Order id: {item._id}</p>
-                    <p className="card-text">Date creation: {item.creation_date}</p>
+                    <p className="card-text">Creation date: {item.creation_date}</p>
                     <p className="card-text">Total price: {item.order_total} {item.currency}</p>
                 </div>
             )
@@ -34,9 +34,7 @@ export const Orders = connect(mapStateToProps, {getUserInfo}) ((props) => {
 
     return (
         <div className="orders-wrapper">
-            <div className="orders-wrapper__items">
                 {orders}
-            </div>
         </div>
     )
 });

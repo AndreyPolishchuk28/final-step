@@ -1,4 +1,4 @@
-$main-color:  blueviolet;
+$main-color:  #173F5F;
 $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
 
@@ -90,6 +90,7 @@ $light-grey: rgb(191, 185, 185);
     padding: 5px;
     border-left: 2px solid $main-color;
     border-bottom: 2px solid $main-color;
+    margin-top: 20px;
     border-radius:  0 0 0 10px;
 }
 
@@ -100,9 +101,40 @@ $light-grey: rgb(191, 185, 185);
     flex-direction: row;
     }
 
+    .page-viewer{
+        position: relative;
+        padding: 0 20px;
+        width: 70%;
+        .top-l-corner{
+            display: block;
+            content: "";
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border-top: 2px solid $main-color;
+            border-left: 2px solid  $main-color;
+            border-radius: 20px 0 0 0;
+        }
+        .bot-r-corner{
+            display: block;
+            content: "";
+            height: 50px;
+            width: 50px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            border-bottom: 2px solid $main-color;
+            border-right: 2px solid  $main-color;
+            border-radius: 0 0 20px 0;
+        }
+    }
+
     .acc-navigation{
         flex-direction: column;
         justify-content: start;
+        margin: 0 10px 20px 10px;
         .navigation-btn{
             position: relative;
             border-radius: 5px;
@@ -137,33 +169,7 @@ $light-grey: rgb(191, 185, 185);
         } 
     }
 
-    .page-viewer{
-        position: relative;
-        padding: 0 20px;
-        width: 70%;
-        .top-l-corner{
-            content: "";
-            height: 50px;
-            width: 50px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            border-top: 1px solid $main-color;
-            border-left: 1px solid  $main-color;
-            border-radius: 20px 0 0 0;
-        }
-        .bot-r-corner{
-            content: "";
-            height: 50px;
-            width: 50px;
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            border-bottom: 1px solid $main-color;
-            border-right: 1px solid  $main-color;
-            border-radius: 0 0 20px 0;
-        }
-    }
+    
 
     .info-container{
         margin: 15px;
@@ -211,7 +217,7 @@ $light-grey: rgb(191, 185, 185);
     }
 
     .acc-navigation{
-        margin:30px 10px 20px 30px;
+        margin: 0 10px 20px 30px;
         .navigation-btn{
             color: black;
             border: 1px solid $light-grey;

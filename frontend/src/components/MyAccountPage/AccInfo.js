@@ -12,9 +12,6 @@ const mapStateToProps = (state) => {
 }
 
 export const AccInfo = connect(mapStateToProps) ((props) => { 
-
-    console.log(props);
-
     return (
         <div className={"info-container"}>   
             {props.auth.userInfo ?

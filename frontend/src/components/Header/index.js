@@ -26,6 +26,12 @@ export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBas
         props.getBasket();
     },[props.auth.loginStatus]);
 
+    useEffect(() => {
+        if (props.auth.error) alert(props.auth.error);
+        if (props.basket.error) alert(props.basket.error);
+        if (props.catalog.error) alert(props.catalog.error);
+    }, [props.auth.error, props.basket.error, props.catalog.error]);
+
     const logOut = () =>{
         props.logout();
     };

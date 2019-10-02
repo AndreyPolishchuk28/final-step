@@ -19,27 +19,70 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         repeatPass: ""
     })
 
+    const [err, setErr] = useState({});
+
     const changeHandler = (event) => {
         setPassChange({
             ...passChange,
-            [event.target.name]: event.target.value
+            [event.target.id]: event.target.value
         })
     }
 
-    const submitHandler = () => {
+    function validate(passChange) {
+        let errors = {};
+
+        if(!passChange.currentPass){
+            errors.currentPassReq = 'Current password is required'
+        }
+        if(!passChange.pass){
+            errors.passReq = 'New password is required'
+        }
         if (passChange.pass !== passChange.repeatPass){
-            alert("passwords doesn't match")
-        } else if(passChange.pass.length < 6){
-            alert('password must contain atleast 6 charecters')
-        } else{ 
+            errors.confirmPass = "Passwords aren't the same";
+        }
+        if (passChange.pass && passChange.pass.length < 6) {
+            errors.passL = "Password should contain more than 6 characters";
+        }
+        if (props.auth.changePasswordStatus === "Failed") {
+            errors.currPassValid = "Current password is incorrect";
+        }
+        return errors
+    }
+
+
+    const inputAnimF = (event) => {
+        event.target.previousElementSibling.classList.add("change-label-active")
+    }
+
+    const inputAnimB = (event) => {
+        if(!event.target.value){
+        event.target.previousElementSibling.classList.remove("change-label-active")
+        }
+    }
+
+    const changePassInput = (strFor, label, changeFunc, error) => {
+        return (
+            <div className="change-input-wrapper">
+                <label className="change-label" for={strFor}>{label}</label>
+                <input className="input-change" type="text" onChange={changeFunc} id={strFor} onFocus={inputAnimF} onBlur={inputAnimB}/>
+                {error ? <p className='error'>{error}</p> : null}
+            </div>
+        )
+    }
+    
+    const submitHandler = () => {
+        let errors = validate(passChange)
+        
+        if (Object.keys(errors).length){
+            setErr(validate(passChange))
+        } else {
             const data = {
                 oldPassword: passChange.currentPass,
                 newPassword:  passChange.pass
             }
             props.changePassword(data)
-
-            }
         }
+    }
 
     useEffect(() => () => {
         props.clearChangePasswordStatus()
@@ -49,7 +92,7 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         if(props.auth.changePasswordStatus === "Success"){
             props.setPageState({ page: "changeInfo"})
         } else if(props.auth.changePasswordStatus === "Failed"){
-            alert("u r  dumbass!!!")
+            setErr(validate(passChange))
             props.clearChangePasswordStatus()
         }
     },[props.auth.changePasswordStatus])
@@ -58,9 +101,11 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         <div className="container-change">
             <i className="fas fa-times close-btn" onClick={() => {props.setPageState({ page: "changeInfo"})}}></i>
             <h1 className="info-header">Password</h1>
-            <input className="input-change"  type="text" onChange={changeHandler} placeholder="Type current password" name="currentPass"/>
-            <input className="input-change"  type="text" onChange={changeHandler} placeholder="Password for change" name="pass"/>
-            <input className="input-change"  type="text" onChange={changeHandler} placeholder="Reapet password for change" name="repeatPass"/>
+            {changePassInput("currentPass", "Current password", changeHandler, err.currentPassReq)}
+            {err.currPassValid ? <p className='error'>{err.currPassValid}</p> : null}
+            {changePassInput("pass", "Password for change", changeHandler, err.passReq)}
+            {err.passL ? <p className='error'>{err.passL}</p> : null}
+            {changePassInput("repeatPass", "Reapet password for change", changeHandler, err.confirmPass)}
             <button className="submit-btn" onClick={submitHandler}>Submit password</button>
         </div>
     )
