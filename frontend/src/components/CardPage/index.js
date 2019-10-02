@@ -28,7 +28,7 @@ export const CardPage = connect(mapStateToProps)(props => {
             <Row type="flex" className="order">
                 <Col xs={24} lg={16} className="order-section">
                     <h2 className="caption-order-section">Your cart</h2>
-                    <Row type="flex" className="text-center">
+                    <Row type="flex" className="text-center name-price">
                         <Col span={8} order={1}>Product</Col>
                         <Col span={5} order={2}>Quantity</Col>
                         <Col span={4} order={3}>Color</Col>

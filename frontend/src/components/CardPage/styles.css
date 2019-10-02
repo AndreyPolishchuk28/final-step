@@ -1,7 +1,7 @@
 
 .redirection {
   height: 20%;
-  background-color: #cbd3da;
+  background-color: #f0f0f0;
 }
 
 .caption, .page-way, .caption-order-section {
@@ -9,16 +9,19 @@
 }
 
 .order-section {
-  background-color: #cbd3da;
+  background-color: #f0f0f0;
   border-radius: 20px 20px 30px 30px;
   margin: 50px 0 70px;
+}
+.name-price {
+  font-weight: bold;
 }
 .text-center {
   margin-bottom: 20px;
 }
 .user-choice {
   height: 50px;
-  background-color: blueviolet;
+  background-color: #173F5F;
   border-bottom-right-radius: 30px;
   border-bottom-left-radius: 30px;
 }

@@ -24,11 +24,10 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
                         {name}
                     </Col>
                     <Col span={5} order={2} className="text-center">
-                        <button onClick={()=> {
-                            if(quantity > 1) {props.changeQuantity({id: _id, quantity: quantity - 1})}
-                        }}>-</button>
-                        <button>{quantity}</button>
-                        <button onClick={ ()=> {props.changeQuantity({id: _id, quantity: quantity + 1})}}>+</button>
+                        <button className="quantity-dec" onClick={()=> {
+                            if(quantity > 1) {props.changeQuantity({id: _id, quantity: quantity - 1})}}}>-</button>
+                        <button className="quantity">{quantity}</button>
+                        <button className="quantity-inc" onClick={ ()=> {props.changeQuantity({id: _id, quantity: quantity + 1})}}>+</button>
                     </Col>
                     <Col span={4} order={3} className="text-center">
                         {color}
