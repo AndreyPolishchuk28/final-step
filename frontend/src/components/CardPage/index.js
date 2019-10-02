@@ -1,45 +1,49 @@
 
 import React from 'react';
-// import {Link} from "react-router-dom";
-// import { Button } from "antd";
-import "./styles.scss";
+import { connect } from "react-redux";
 import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
 import {CardHeader} from './CardHeader';
-// import { getBasket } from "../../redux/basket";
-// import { connect } from 'react-redux';
-// import mapStateToProps from "react-redux/es/connect/mapStateToProps";
+import {Row, Col} from "antd";
+import "./styles.css"
 
 
+const mapStateToProps = (state) => {
+    return{
+        products: state.basket.products
+    }
+};
 
-/*const mapStateToProps = (state) => {
-    return{...state}
-};*/
-export const CardPage = (props) => {
+export const CardPage = connect(mapStateToProps)(props => {
 
-    const  totalPrice = 90;
+    let totalPrice = 0;
 
+        props.products.map(item => {
+            totalPrice += item.quantity * item.product.price
+        });
 
     return (
         <section className="main-section">
             <CardHeader/>
-            <section className="order">
-                <div className="order-section">
+            <Row type="flex" className="order">
+                <Col xs={24} lg={16} className="order-section">
                     <h2 className="caption-order-section">Your cart</h2>
-                    <ul className="order-category text-center">
-                        <div className="category">Product</div>
-                        <div className="category">Quantity</div>
-                        <div className="category">Color</div>
-                        <div className="category">Price</div>
-                        <div>Delete</div>
-                    </ul>
+                    <Row type="flex" className="text-center">
+                        <Col span={8} order={1}>Product</Col>
+                        <Col span={5} order={2}>Quantity</Col>
+                        <Col span={4} order={3}>Color</Col>
+                        <Col span={4} order={4}>Price</Col>
+                        <Col span={3} order={5}>Delete</Col>
+                    </Row>
                     <BasketContainer/>
                     <div className="user-choice">
-                        <div className="total-price">Total {totalPrice}</div>
+                        <div className="total-price">Total ${totalPrice}</div>
                     </div>
-                </div>
-                <BasketButton/>
-            </section>
+                </Col>
+                <Col xs={24} lg={8}>
+                    <BasketButton/>
+                </Col>
+            </Row>
         </section>
     )
-};
+});

@@ -1,19 +1,18 @@
+
 .img {
+    object-fit: contain;
     width: 50px;
     height: 50px;
     padding: 5px;
 }
-/*.item-remove, .price {
-    justify-items: center;
-}*/
-.data-order {
-    display: flex ;
-    flex-wrap: wrap;
-    justify-content: space-around;
+.item-remove {
+    font-weight: bolder;
+    height: 20px;
+    width: 20px;
+    text-align: center;
+    padding: 0;
+    border-width: revert;
 }
-.order {
-    justify-content: space-around;
-    margin: 50px;
-}
+
 
 /*# sourceMappingURL=styles.css.map */
