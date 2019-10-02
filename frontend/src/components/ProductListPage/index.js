@@ -126,10 +126,12 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
                     </Col>
                 </Col>
                 <Col xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:6, pull:18}}>
-                    <h4>Producer</h4>
-                    {producers.map(item => 
-                        <Checkbox name={item} onClick={checkboxHandler} key={item}>{item}</Checkbox>
-                    )}
+                    <div className='filters-wrapper'>
+                        <h4>Producer</h4>
+                        {producers.map(item =>
+                            <Checkbox name={item} onClick={checkboxHandler} key={item}>{item}</Checkbox>
+                        )}
+                    </div>
                 </Col>
             </Row>
             </div>
