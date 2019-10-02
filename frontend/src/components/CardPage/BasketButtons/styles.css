@@ -7,7 +7,6 @@
 }
 
 .checkout-button, .continue-button {
-    background-color: blueviolet;
     font-size: medium;
     font-weight: bold;
     color: white;
@@ -16,6 +15,12 @@
     padding-top: 15px;
     border-radius: 50px;
 
+}
+.checkout-button {
+    background-color: #173F5F;
+}
+.continue-button {
+    background-color: #413a3a;
 }
 
 
