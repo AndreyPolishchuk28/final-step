@@ -36,7 +36,6 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
             ...addChange,
             [event.target.id]: event.target.value 
         })
-        console.log(addChange);
     }
 
     function validate(userChange) {
@@ -48,8 +47,6 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         if(userChange.last_name === ""){
             errors.lastNameReq = 'Last name is required'
         }
-
-        console.log(errors);
 
         return errors
     }
@@ -66,23 +63,13 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
     }
 
     const changeInput = (strFor, label, def, changeFunc, error) => {
-        if(def !== "" && def){
-            return (
-                <div className="change-input-wrapper">
-                    <label className="change-label change-label-active" for={strFor}>{label}</label>
-                    <input className="input-change" type="text" onChange={changeFunc} id={strFor} defaultValue={def} onFocus={inputAnimF} onBlur={inputAnimB}/>
-                    {error ? <p className='error'>{error}</p> : null}
-                </div>
-            )
-        } else {
-            return (
-                <div className="change-input-wrapper">
-                    <label className="change-label" for={strFor}>{label}</label>
-                    <input className="input-change" type="text" onChange={changeFunc} id={strFor} defaultValue={def} onFocus={inputAnimF} onBlur={inputAnimB}/>
-                    {error ? <p className='error'>{error}</p> : null}
-                </div>
-            )
-        }
+        return (
+            <div className="change-input-wrapper">
+                <label className={def ? "change-label change-label-active" : "change-label"} for={strFor}>{label}</label>
+                <input className="input-change" type="text" onChange={changeFunc} id={strFor} defaultValue={def} onFocus={inputAnimF} onBlur={inputAnimB}/>
+                {error ? <p className='error'>{error}</p> : null}
+            </div>
+        )
     }
     
 

@@ -1,8 +1,14 @@
-$main-color:  blueviolet;
+$main-color:  #173F5F;
 $light-main-color:  #8a2be23d;
 $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
 $checkout-white: #f0f0f0;
+
+.err-cust{
+    padding: 0;
+    margin: 0;
+    color: black;
+}
 
 .checkout-container{
     display: flex;
@@ -32,17 +38,20 @@ $checkout-white: #f0f0f0;
             border-radius: 20px;
             padding: 20px 0;
         }
+        &__header{
+            text-align: center;
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px;
+            color: black;
+            font-size: 30px;
+            margin: 0;
+        }
         &__main{
                 width: 100%;
                 text-align: center;
                 border-radius: 10px;
                 padding: 10px;
-                // box-shadow: 10px 10px 0px 0px $checkout-yellow;
-                h1{
-                    color: black;
-                    font-size: 30px;
-                    margin: 0;
-                }
                 .total-costs{
                     display: flex;
                     justify-content: space-between;
@@ -152,6 +161,7 @@ $checkout-white: #f0f0f0;
 }
 
 .section-header{
+    font-weight: 700;
     font-size: 25px;
     border-radius: 10px;
     color: $main-color;
@@ -196,6 +206,9 @@ $checkout-white: #f0f0f0;
     color: white;
     font-size: 20px;
     border-radius: 10px;
+    :focus{
+        outline: 0
+    }
 }
 
 .payment-radio-wrap{
@@ -253,9 +266,10 @@ $checkout-white: #f0f0f0;
     .checkout-input{
         border: 1px solid $light-grey;
         padding-left: 20px;
+        padding-top: 10px;
         width: 100%;
-        height: 50px;   
-        border-radius: 10px;
+        height: 45px;   
+        border-radius: 5px;
         margin: 0;
         &:focus{
             outline: none;
