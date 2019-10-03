@@ -102,9 +102,8 @@ const SliderContainer = styled.div`
   }
   .guitar-name {
     display: inline-block;
-    font-size: 45px;
+    font-size: 40px;
     color: white;
-    /*text-shadow: 3px 3px 8px black;*/
     text-align: left;
     padding-right: 40px;
     padding-top: 50px;
@@ -113,28 +112,23 @@ const SliderContainer = styled.div`
   }
   .guitar-price {
     display: inline-block;
-    font-size: 45px;
+    font-size: 40px;
     text-decoration: line-through;
     color: white;
     margin-bottom: 0;
-    /*text-shadow: 3px 3px 8px black;*/
   }
   button {
     position: absolute;
-    top: 80px;
-    right: 200px;
-    width: 150px;
-    height: 150px;
-    line-height: 150px;
-    /*animation: shadow 1.8s infinite linear;*/
-    /*text-shadow: 3px 3px 8px black;*/
-    font-size: 40px;
+    top: 105px;
+    right: 160px;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    font-size: 34px;
     background-color: ${mainColor};
     border: 2px solid white;
     border-radius: 50%;
     color: white;
-    /*font-weight: 700;*/
-    /*box-shadow: 3px 3px 8px black;*/
   }
   .slider {
     height: 580px;
@@ -143,6 +137,15 @@ const SliderContainer = styled.div`
   @media screen and (max-width: 980px) {
     .slider {
       height: 500px;
+    }
+    button {
+      top: 120px;
+      right: 80px;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      font-size: 14px;
+      box-shadow: 3px 3px 8px black;
     }
   }
   @media screen and (max-width: 640px) {
