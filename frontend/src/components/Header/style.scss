@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 .header-top{
-  padding-top: 23px;
+  padding-top: 35px;
 }
 
 .container{
@@ -55,10 +55,11 @@
 
 .user-panel{
   margin: 8px 0;
+  vertical-align: middle;
 }
 
 .user-panel .up-item:first-child {
-  margin-right: 25px;
+  margin-right: 45px;
 }
 
 .user-panel .up-item {
@@ -95,7 +96,7 @@
   min-width: 16px;
   color: #fff;
   font-size: 13px;
-  background: blueviolet;
+  background: #173F5F;
   text-align: center;
   border-radius: 30px;
   padding: 0 2px;
@@ -139,6 +140,7 @@ a:hover{
 
 .main-menu{
   margin-bottom: 0;
+  font-size: 17px;
   position: relative;
 }
 
@@ -210,26 +212,33 @@ a:hover{
 }
 
 .btn-logout:hover{
-  color: blueviolet;
+  color: #173F5F;
 }
 
 .account:hover{
-  color: blueviolet;
+  color: #173F5F;
 }
 
 .login:hover{
-  color: blueviolet;
+  color: #173F5F;
 }
 
 .shopping-cart:hover{
-  color: blueviolet;
+  color: #173F5F;
 }
 
 .error{
   color:red;
 }
 
+.text-center {
+  margin-bottom: 10px;
+}
 
+.search-icon {
+  font-size: 20px;
+  margin-top: 8px;
+}
 
 @media (min-width: 768px){
   .site-logo{

@@ -200,7 +200,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 </div>
                 {!radioOpt.payment ? <p className='err-cust'>Payment is required</p> : null}
 
-                <button onClick={submitOrder} className="order-submit-btn">Place order</button>
+                <span onClick={submitOrder} className="order-submit-btn">Place order</span>
             </form>
             <div className="checkout-container__cart">
                 <h1 className="checkout-container__cart__header">Your cart</h1>
