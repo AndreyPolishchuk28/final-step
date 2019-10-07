@@ -50,8 +50,6 @@ export const MyAccountPage = connect(mapStateToProps, {getUserInfo})((props) => 
                     <button className={"navigation-btn navigation-btn-bot"} onClick={() => {setPageState({ page: "orders"})}}><i className="fas fa-clipboard-list"></i><span>Order history</span></button>
                 </nav>
                 <div className="page-viewer">
-                    <div className="top-l-corner"></div>
-                    <div className="bot-r-corner"></div>
                     {returnPage()}
                 </div>
             </section>

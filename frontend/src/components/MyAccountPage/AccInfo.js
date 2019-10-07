@@ -13,9 +13,8 @@ const mapStateToProps = (state) => {
 
 export const AccInfo = connect(mapStateToProps) ((props) => { 
     return (
-        <div className={"info-container"}>   
-            {props.auth.userInfo ?
-                <div className={"info-container__items"}>
+        props.auth.userInfo ?
+            <div className={"info-container"}>
                 <h1 className="info-header">Main information</h1>
                 <h2 className="info-items">Name: {props.auth.userInfo.firstName}</h2>
                 <h2 className="info-items">Last name: {props.auth.userInfo.lastName}</h2>
@@ -28,8 +27,5 @@ export const AccInfo = connect(mapStateToProps) ((props) => {
                 <Button type="default" onClick={() => {props.setPageState({ page: "changeInfo"})}}>Change profile info</Button>
             </div>
             : null
-            }
-            
-        </div>
     )
 })

@@ -25,6 +25,8 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         delivery: ""
     })
 
+    const [ validState, setValidState] = useState({status: true})
+
     const [err, setErr] = useState({});
 
     const changeHandler = (event) => {
@@ -54,16 +56,6 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     function validate() {
         let errors = {};
 
-        if(!userChange.firstName || !userChange.lastName){
-                errors.empty = "true"
-        }
-
-        Object.values(addressChange).forEach((key) =>  {
-            if(!key){
-                errors.empty = "true"
-            }
-        })
-
         Object.values(radioOpt).forEach((key) =>  {
             if(!key){
                 errors.empty = "true"
@@ -82,7 +74,6 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     }
 
     const orderTotal = () => {
-
         let cost = 0
 
         props.basket.products.forEach(elem => {
@@ -93,40 +84,49 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         return cost
     }
 
-    const deliveryCost = () => {
-        if(radioOpt.delivery === "" || radioOpt.delivery === "Standatd(7 days) FREE" ){return 0}
-        if(radioOpt.delivery === "Next day + 25$" ){return 25}
-        if(radioOpt.delivery === "Two day + 15$" ){return 15}
-    }
-
     const submitOrder = () => {
+
+        let validateInfo = true
+        let validateAddress = true
+
+        const data = {
+            creation_date: new Date(Date.now()),
+            order_total: orderTotal(),
+            currency: "USD",
+            customer_info: {
+                firstName: userChange.firstName,
+                lastName: userChange.lastName,
+                email: userChange.email
+            },
+            billing_address: {
+                country: addressChange.country,
+                city: addressChange.city,
+                address: addressChange.address,
+                postal: addressChange.postal,
+                delivery: radioOpt.delivery
+            },
+            product_items: props.basket.products
+        }
+
+        validateInfo = Object.values(data.customer_info).every((elem) => elem )
+
+        validateAddress = Object.values(data.billing_address).every((elem) => elem )
+
+        if(validateInfo && validateAddress){
+            console.log("som");
+        } else {
+            console.log("smol");
+        }
 
         let errors = validate()
 
-        if (Object.keys(errors).length){
-            setErr(validate())
-        } else {
-        const data = {
-                creation_date: new Date(Date.now()),
-                order_total: orderTotal(),
-                currency: "USD",
-                customer_info: {
-                    firstName: userChange.firstName,
-                    lastName: userChange.lastName,
-                    email: userChange.email
-                },
-                billing_address: {
-                    country: addressChange.country,
-                    city: addressChange.city,
-                    address: addressChange.address,
-                    postal: addressChange.postal,
-                    delivery: radioOpt.delivery
-                },
-                product_items: props.basket.products
-            }
-
+        if (!Object.keys(errors).length && validateInfo && validateAddress){
+            alert("norm")
             props.createOrder(data)
-            props.history.push('/')
+            props.history.push("/")
+        } else {
+            setErr(validate())
+            setValidState({status: false})
         }
     }
 
@@ -139,6 +139,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 setUserChange(props.auth.userInfo)
             if(props.auth.userInfo.def_address){
                 setAddressChange(props.auth.userInfo.def_address)
+                console.log(addressChange);
             }
             }
     }, [props.auth.userInfo])
@@ -149,34 +150,34 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
             <form className="checkout-container__inputs" onSubmit={(event) => {event.preventDefault()}}>
 
                 <h1 className="section-header">Customer info</h1>
-                <CheckoutInput strFor="firstName" label="First name" value={userChange.firstName} changeFunc={changeHandler}/>
-                <CheckoutInput strFor="lastName" label="Last name" value={userChange.lastName} changeFunc={changeHandler}/>
-                <CheckoutInput strFor="email" label="Email" value={userChange.email} changeFunc={changeHandler}/>
+                <CheckoutInput valid={validState} strFor="firstName" label="First name" value={userChange.firstName} changeFunc={changeHandler}/>
+                <CheckoutInput valid={validState} strFor="lastName" label="Last name" value={userChange.lastName} changeFunc={changeHandler}/>
+                <CheckoutInput valid={validState} strFor="email" label="Email" value={userChange.email} changeFunc={changeHandler}/>
                 {err.emailInvalid ? <p className='error'>{err.emailInvalid}</p> : null}
                 
                 <h1 className="section-header">Address</h1>
-                <CheckoutInput strFor="country" label="Country" value={addressChange.country} changeFunc={addressHandler}/>
-                <CheckoutInput strFor="city" label="City" value={addressChange.city} changeFunc={addressHandler}/>
-                <CheckoutInput strFor="address" label="Address" value={addressChange.address} changeFunc={addressHandler}/>
-                <CheckoutInput strFor="postal" label="Postal code" value={addressChange.postal} changeFunc={addressHandler}/>
+                <CheckoutInput valid={validState} strFor="country" label="Country" value={addressChange.country} changeFunc={addressHandler}/>
+                <CheckoutInput valid={validState} strFor="city" label="City" value={addressChange.city} changeFunc={addressHandler}/>
+                <CheckoutInput valid={validState} strFor="address" label="Address" value={addressChange.address} changeFunc={addressHandler}/>
+                <CheckoutInput valid={validState} strFor="postal" label="Postal code" value={addressChange.postal} changeFunc={addressHandler}/>
                 {err.postalInvalid ? <p className='error'>{err.postalInvalid}</p> : null}
 
                 <div className="payment-radio-wrap">
                     <h1 className="payment-radio-wrap__header">Choose delivery period</h1>
                     <label className="payment-radio-wrap__label">
-                        <input type='radio' value="Standatd(7 days) FREE" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                        <input type='radio' value="0" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
                         Standatd(7 days) FREE
                     </label>
                     <label className="payment-radio-wrap__label">
-                        <input type='radio' value="Next day + 25$" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                        <input type='radio' value="25" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
                         Next day + 25$
                     </label>
                     <label className="payment-radio-wrap__label">
-                        <input type='radio' value="Two day + 15$" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                        <input type='radio' value="15" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
                         Two day + 15$
                     </label>
                 </div>
-                {!radioOpt.delivery ? <p className='err-cust'>Delivery is required</p> : null}
+                {!radioOpt.delivery && !validState.status ? <p className='err-cust'>Delivery is required</p> : null}
 
                 <h1 className="section-header">Payment information</h1>
                 <div className="payment-radio-wrap">
@@ -198,7 +199,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                         On product's arriving
                     </label>
                 </div>
-                {!radioOpt.payment ? <p className='err-cust'>Payment is required</p> : null}
+                {!radioOpt.payment && !validState.status ? <p className='err-cust'>Payment is required</p> : null}
 
                 <span onClick={submitOrder} className="order-submit-btn">Place order</span>
             </form>
@@ -209,8 +210,8 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 </div>
                 <div className="checkout-container__cart__main">
                     <div className="total-costs"><span>Total cart:</span><span>{orderTotal()}$</span></div>
-                    <div className="total-costs"><span>Deliery:</span><span>{deliveryCost()}$</span></div>
-                    <div className="total-costs--fin"><span>Total:</span><span>{orderTotal() + deliveryCost()}$</span></div>
+                    <div className="total-costs"><span>Deliery:</span><span>{+radioOpt.delivery}$</span></div>
+                    <div className="total-costs--fin"><span>Total:</span><span>{orderTotal() + +radioOpt.delivery}$</span></div>
                 </div>
             </div>
         </div>
