@@ -206,7 +206,7 @@ $checkout-white: #f0f0f0;
     color: white;
     font-size: 20px;
     border-radius: 10px;
-    :focus{
+    &:focus{
         outline: 0
     }
 }
