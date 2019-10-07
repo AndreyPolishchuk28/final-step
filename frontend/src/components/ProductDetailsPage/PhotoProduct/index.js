@@ -8,7 +8,7 @@ const PhotoProduct = ({ product }) => {
 		return (
 			<div key={item}>
 				<div className="carusel-wrapp">
-					<img src={`/static/img/${item}`} />
+					<img src={`/static/img/${item}`} alt=''/>
 				</div>
 			</div>
 		);

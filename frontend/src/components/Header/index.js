@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import './style.css'
 import {Link, withRouter} from "react-router-dom";
 import {Search} from "./Search";

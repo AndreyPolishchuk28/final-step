@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react'
-
-import {getUserInfo} from '../../redux/auth'
+import React from 'react'
 
 import './scss/style.scss'
 
@@ -21,13 +19,13 @@ export const Cart = ((props) => {
 
                 onMouseOver = {(event) => {
                     if(event.target.className === "prod-views"){
-                        event.target.children[0].style.backgroundColor = "blueviolet"}
+                        event.target.children[0].style.backgroundColor = "#173F5F"}
                 }
                 }
 
                 onMouseLeave = {(event) => {
                     if(event.target.className === "prod-views"){
-                        event.target.children[0].style.backgroundColor = "#8a2be23d"}
+                        event.target.children[0].style.backgroundColor = "#999999"}
                 }
                 }>
 
@@ -41,7 +39,7 @@ export const Cart = ((props) => {
                         if(event.target.className === "prod-info"){
                             event.target.style.top = "100%"
                             event.target.previousElementSibling.style.top = "calc(100% - 40px)"
-                            event.target.previousElementSibling.style.backgroundColor = "#8a2be23d"
+                            event.target.previousElementSibling.style.backgroundColor = "#999999"
                         }
                     }
                     }
