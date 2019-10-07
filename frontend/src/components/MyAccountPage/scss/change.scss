@@ -1,10 +1,10 @@
-$main-color:  blueviolet;
+$main-color:  #173F5F;
 $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
 
 .close-btn{
     position: absolute;
-    right: 20px;
+    right: 0;
     top: 0;
     color: red;
     font-size: 30px;
@@ -21,6 +21,7 @@ $light-grey: rgb(191, 185, 185);
 
 .container-change{
     display: flex;
+    padding-right: 20px;
     flex-direction: column;
     justify-content: start;
     align-content: flex-start;

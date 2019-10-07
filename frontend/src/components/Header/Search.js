@@ -29,7 +29,7 @@ export const Search = connect(mapStateToProps, {getSearchProducts})((props) =>{
             <form className='header-search-form'>
                 <input value={value} onChange={ SearchProduct } type='text' placeholder='Music shop search ...'/>
                 <button>
-                    <i className="fas fa-search"></i>
+                    <i className="fas fa-search search-icon"></i>
                 </button>
             </form>
             {props.catalog.searchProducts.length ? <SearchResult products={props.catalog.searchProducts} setValue={setValue} /> : null}
