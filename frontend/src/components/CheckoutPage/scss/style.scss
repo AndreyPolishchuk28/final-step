@@ -208,6 +208,9 @@ $checkout-white: #f0f0f0;
     font-size: 20px;
     border-radius: 10px;
     text-transform: uppercase;
+    &:focus {
+        outline: 0;
+    }
     &:hover {
         background-color: #999;
     }
