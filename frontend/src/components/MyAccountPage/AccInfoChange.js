@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {changeUserInfo} from '../../redux/auth'
 
 import './scss/change.scss'
-import {Button, Icon} from 'antd'
+import {Button, Icon, Input} from 'antd'
 
 const mapStateToProps = (state) => {
     return {
@@ -51,22 +51,10 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         return errors
     }
 
-
-    const inputAnimF = (event) => {
-        event.target.previousElementSibling.classList.add("change-label-active")
-    }
-
-    const inputAnimB = (event) => {
-        if(!event.target.value){
-        event.target.previousElementSibling.classList.remove("change-label-active")
-        }
-    }
-
     const changeInput = (strFor, label, def, changeFunc, error) => {
         return (
             <div className="change-input-wrapper">
-                <label className={def ? "change-label change-label-active" : "change-label"} for={strFor}>{label}</label>
-                <input className="input-change" type="text" onChange={changeFunc} id={strFor} defaultValue={def} onFocus={inputAnimF} onBlur={inputAnimB}/>
+                <Input size="large" placeholder={label} onChange={changeFunc} id={strFor} defaultValue={def}/>
                 {error ? <p className='error'>{error}</p> : null}
             </div>
         )

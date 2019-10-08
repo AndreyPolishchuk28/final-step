@@ -77,11 +77,11 @@ $light-grey: rgb(191, 185, 185);
 .info-header{
     display: inline-block;
     font-size: 20px;
-    padding: 10px;
+    padding: 10px 17px 4px;
     color: white;
     background: $main-color;
     margin-top: 10px;
-    border-radius:  0 20px 20px 20px;
+    border-radius: 5px;
 }
 
 @media (min-width: 640px) {
@@ -149,11 +149,11 @@ $light-grey: rgb(191, 185, 185);
     .info-header{
         display: inline-block;
         font-size: 30px;
-        padding: 5px;
+        padding: 10px 17px 4px;
         color: white;
         background: $main-color;
         margin: 10px 0 20px 0;
-        border-radius:  0 20px 20px 20px;
+        border-radius: 5px;
     }
 }
 
@@ -168,11 +168,11 @@ $light-grey: rgb(191, 185, 185);
     .info-header{
         display: inline-block;
         font-size: 35px;
-        padding: 5px;
+        padding: 10px 17px 4px;
         color: white;
         background: $main-color;
         margin: 10px 0 20px 0;
-        border-radius:  0 20px 20px 20px;
+        border-radius:  5px;
     }
 
     .acc-navigation{

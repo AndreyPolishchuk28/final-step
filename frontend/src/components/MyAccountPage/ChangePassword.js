@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {changePassword, clearChangePasswordStatus} from '../../redux/auth'
 
-import {Button, Icon} from "antd"
+import {Button, Icon, Input} from "antd"
 import './scss/change.scss'
 
 const mapStateToProps = (state) => {
@@ -50,22 +50,10 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         return errors
     }
 
-
-    const inputAnimF = (event) => {
-        event.target.previousElementSibling.classList.add("change-label-active")
-    }
-
-    const inputAnimB = (event) => {
-        if(!event.target.value){
-        event.target.previousElementSibling.classList.remove("change-label-active")
-        }
-    }
-
     const changePassInput = (strFor, label, changeFunc, error) => {
         return (
             <div className="change-input-wrapper">
-                <label className="change-label" for={strFor}>{label}</label>
-                <input className="input-change" type="password" onChange={changeFunc} id={strFor} onFocus={inputAnimF} onBlur={inputAnimB}/>
+                <Input.Password placeholder={label} onChange={changeFunc} id={strFor} size="large"/>
                 {error ? <p className='error'>{error}</p> : null}
             </div>
         )

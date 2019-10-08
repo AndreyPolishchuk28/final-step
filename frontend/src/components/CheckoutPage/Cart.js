@@ -2,6 +2,8 @@ import React from 'react'
 
 import './scss/style.scss'
 
+import {Icon} from 'antd'
+
 
 export const Cart = ((props) => {
     const final = props.info.map((elem, index) => {
@@ -19,27 +21,30 @@ export const Cart = ((props) => {
 
                 onMouseOver = {(event) => {
                     if(event.target.className === "prod-views"){
-                        event.target.children[0].style.backgroundColor = "#173F5F"}
+                        event.target.children[0].style.color = "#173F5F"}
                 }
                 }
 
                 onMouseLeave = {(event) => {
                     if(event.target.className === "prod-views"){
-                        event.target.children[0].style.backgroundColor = "#999999"}
+                        event.target.children[0].style.color = "#999999"}
                 }
                 }>
 
-                    <button className="show-close-info-btn" onClick={(event) => {
-                        event.target.style.top = "100%"
-                        event.target.nextElementSibling.style.top = "-1px"
-                    }}>?</button>
+                    <Icon type="info-circle" theme="filled" className="show-close-info-btn" onClick={(event) => {
+                        if(event.target.tagName === "svg"){
+                            // console.log(event.target.tagName);
+                            event.target.parentElement.style.top = "100%"
+                            event.target.parentElement.nextElementSibling.style.top = "-1px"
+                        }
+                    }}></Icon>
 
                     <div className="prod-info"  
                     onMouseLeave = {(event) => {
                         if(event.target.className === "prod-info"){
                             event.target.style.top = "100%"
-                            event.target.previousElementSibling.style.top = "calc(100% - 40px)"
-                            event.target.previousElementSibling.style.backgroundColor = "#999999"
+                            event.target.previousElementSibling.style.top = "calc(100% - 25px)"
+                            event.target.previousElementSibling.style.color = "#999999"
                         }
                     }
                     }
