@@ -1,35 +1,51 @@
-
-.redirection {
-  height: 20%;
-  background-color: #f0f0f0;
+* {
+  box-sizing: border-box;
 }
 
-.caption, .page-way, .caption-order-section {
-  padding: 35px 30px 30px;
+.redirection {
+  height: 150px;
+  background-color: #cbd3da;
+}
+
+.caption {
+  padding: 20px;
   text-transform: uppercase;
-  font-size: 22px;
-  font-weight: 700;
+}
+
+.page-way {
+  padding: 20px;
+}
+
+.caption-order-section {
+  padding: 20px;
 }
 
 .order {
-  margin-left: 50px;
+  display: flex;
+  justify-content: space-around;
+  margin: 50px;
 }
 
 .order-section {
-  background-color: #f0f0f0;
-  border-radius: 20px;
-  margin: 50px 0 70px;
+  background-color: #cbd3da;
+  width: 65%;
+  border-radius: 20px 20px 30px 30px;
+  margin: 50px 30px 50px 30px;
 }
-.name-price {
-  font-weight: bold;
-  margin-bottom: 30px;
+
+.order-category {
+  display: flex;
+  justify-content: space-around;
 }
-.text-center {
-  margin-bottom: 20px;
+
+.data-order {
+  display: flex;
+  justify-content: space-between;
 }
+
 .user-choice {
   height: 50px;
-  background-color: #173F5F;
+  background-color: deeppink;
   border-bottom-right-radius: 30px;
   border-bottom-left-radius: 30px;
 }
@@ -38,56 +54,20 @@
   font-size: medium;
   font-weight: bold;
   text-align: right;
-  color: white;
-  margin: 10px 40px;
+  margin: 10px 40px 10px;
   padding-top: 10px;
 }
 
-.product-img {
-  margin-left: 30px;
+.button-wrap {
+  padding: 30px;
 }
 
-.product-row {
-  margin-top: 10px;
-  margin-bottom: 0;
+.checkout-button {
+  margin: 30px;
 }
 
-.products-wrapper {
-  padding: 10px;
-}
-
-.product-name {
-  position: relative;
-  top: -10px;
-}
-
-.item-remove {
-  border-radius: 10px;
-  font-size: 10px;
-  padding-top: 3px;
-  padding-left: 1px;
-}
-
-.item-remove:hover {
-  background-color: firebrick;
-}
-
-.quantity-dec:hover {
-  background-color: #999999;
-}
-
-.quantity-inc:hover {
-  background-color: #999999;
-}
-
-.checkout-button:hover {
-  background-color: #999999;
-  color: white;
-}
-
-.continue-button:hover {
-  background-color: #999999;
-  color: white;
+.continue-button {
+  margin: 30px;
 }
 
 /*# sourceMappingURL=styles.css.map */

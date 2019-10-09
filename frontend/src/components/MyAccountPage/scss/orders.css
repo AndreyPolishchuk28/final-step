@@ -1,0 +1,140 @@
+.full-order-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.full-order-info {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+}
+.full-order-info__products {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.full-order-info__products__items {
+  min-width: 170px;
+  max-width: 170px;
+  min-height: 150px;
+  max-height: 150px;
+  padding: 15px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
+  word-wrap: break-word;
+}
+.full-order-info__products__text {
+  font-size: 14px;
+}
+.full-order-info__items {
+  margin-top: 20px;
+}
+.full-order-info__items__address-main {
+  font-size: 25px;
+}
+.full-order-info__items__address {
+  padding-left: 10px;
+  font-size: 20px;
+}
+.full-order-info__items__delivery {
+  font-size: 14px;
+}
+.full-order-info__items__email {
+  font-size: 14px;
+}
+.full-order-info__items__total {
+  font-size: 25px;
+  color: #173F5F;
+}
+
+.orders-wrapper {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.orders-wrapper__each {
+  width: 300px;
+  border: 1px solid black;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  word-wrap: break-word;
+}
+
+@media (min-width: 640px) {
+  .full-order-info__products__items {
+    min-width: 160px;
+    max-width: 160px;
+  }
+}
+@media (min-width: 960px) {
+  .full-order-wrapper {
+    flex-direction: row;
+    padding: 15px;
+  }
+
+  .full-order-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 100%;
+    padding: 20px;
+    width: 100%;
+  }
+  .full-order-info__products {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .full-order-info__products__items {
+    min-width: 180px;
+    max-width: 180px;
+    min-height: 150px;
+    max-height: 150px;
+    padding: 15px;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 10px;
+    word-wrap: break-word;
+  }
+  .full-order-info__products__text {
+    font-size: 14px;
+  }
+  .full-order-info__items__address-main {
+    font-size: 25px;
+  }
+  .full-order-info__items__address {
+    padding-left: 10px;
+    font-size: 20px;
+  }
+  .full-order-info__items__delivery {
+    font-size: 14px;
+  }
+  .full-order-info__items__email {
+    font-size: 14px;
+  }
+  .full-order-info__items__total {
+    font-size: 25px;
+    color: #173F5F;
+  }
+
+  .orders-wrapper {
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 15px;
+  }
+}
+@media (min-width: 960px) {
+  .full-order-wrapper {
+    padding: 20px;
+  }
+
+  .orders-wrapper {
+    margin: 20px;
+  }
+}
+
+/*# sourceMappingURL=orders.css.map */
