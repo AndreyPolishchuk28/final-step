@@ -34,7 +34,7 @@ export const ProductListItem = connect(mapStateToProps, {addToBasket})( props =>
             <div className="pi-links">
                 <button href ="#"  onClick={addToBasketRes} className="add-card">
                     <i className="fas fa-shopping-cart"></i>
-                    <span>Add to card</span>
+                    <span>Add to cart</span>
                 </button>
             </div>
         </div>

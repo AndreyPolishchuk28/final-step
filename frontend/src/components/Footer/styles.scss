@@ -4,7 +4,7 @@
 }
 
 .footer-widget {
-    margin: 0px 30px 30px 70px;
+    margin: 0px 30px 70px 30px;
     overflow: hidden;
     & p {
         margin-bottom: 50px;
@@ -71,7 +71,7 @@
 
 .footer-social-links {
     border-top: 2px solid #3b3535;
-    padding: 46px 0;
+    padding: 46px 0px 20px 0px;
 }
 
 .social-links {
@@ -96,12 +96,14 @@
             font-size: 30px;
             margin-right: 15px;
             color: #d7d7d7;
+            
         }    
     }
+
     & .instagram:hover i {
         color: #2F5D84;
     }
-    & .google-plus:hover i {
+    & .google-plus:hover i{
         color: #E04B37;
     }
     & .twitter:hover i {
@@ -119,11 +121,24 @@
     & .tumblr:hover i {
         color:#37475E;
     }
+
+    .soc-link-text {
+            color:white;
+    }
+
 }
 
+.subfooter-text {
+    margin: 40px 20px 20px 0px;
+    text-align: center;
+}
 
 @media only screen and (max-width: 767px){
-.social-links a span {
-    display: none;
-}
-}
+    .social-links a span {
+        display: none;
+    }
+
+    .social-links a {
+        margin:0px;
+    }
+    }
