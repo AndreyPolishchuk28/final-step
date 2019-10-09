@@ -1,38 +1,50 @@
-import React  from "react";
+import React, {useState, useEffect} from "react";
 import './style.css'
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 
 const item = ['Guitars', 'Keyboards', 'Drums', 'Microphones', 'Earphones'];
 
-export const Menu = () =>{
+export const Menu = withRouter((props) =>{
     let category = item.map(element =>
         <Link key={element} to={`/product-list/${element.toLowerCase()}`}><span className='category-item'>{element}</span></Link>
     );
 
+    const [open, setOpen] = useState(false);
+
     const openMenu = () =>{
-        document.getElementById('sidebar').classList.toggle('active');
+        if(open){
+            setOpen(false)
+        }else{
+            setOpen(true)
+        }
     };
+
+    const blurHandler = (event) =>{
+        console.log(event.target.className);
+        if(event.target.className !== 'container container-blur'){
+            setOpen(false)
+        }
+    };
+
+    useEffect(() =>{
+        setOpen(false)
+    },[props.location.pathname])
 
     return(
         <nav className='main-navbar'>
-            <div className='container' id='sidebar'>
-                <div className='toggle-btn' onClick={openMenu}>
+            <div tabIndex={0} onBlur={blurHandler} className='container container-blur' id='sidebar'>
+                <div  className='toggle-btn'  onClick={openMenu}>
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-
-                <ul className='main-menu '>
-                    <ul className='sub-menu'>
-                        <li>Jackson</li>
-                        <li>Ibanez</li>
-                        <li>ESP</li>
-                        <li>Hamer</li>
-                        <li>Gibson</li>
-                    </ul>
+                {open ? <ul className='main-menu'>
+                    {category}
+                </ul> : <ul className='main-menu hide'>
                     {category}
                 </ul>
+                }
             </div>
         </nav>
     )
-}
+});

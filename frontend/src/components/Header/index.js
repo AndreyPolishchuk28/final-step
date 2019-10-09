@@ -15,9 +15,8 @@ const mapStateToProps = state =>{
 };
 
 export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBasket, logout, getLoginStatus})(props => {
-
     useEffect(()=> {
-        props.getLoginStatus()
+        props.getLoginStatus();
         props.getMainInfo();
         props.getBasket();
     },[]);
