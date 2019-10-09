@@ -1,6 +1,6 @@
 .page-top-info {
     background-color: #f8f7f7;
-    padding: 70px 0 70px;
+    padding: 30px 20px 15px;
     & h4 {
         text-transform: uppercase;
         color: #414141;
@@ -8,8 +8,17 @@
     }
 }
 
+.black{
+    color:black;
+}
+
 .page-top-text {
     padding-left: 30px;
+}
+
+.filters-wrapper {
+    margin: 10%;
+    margin: 10%;
 }
 
 .category-header, .price-sorting {
@@ -37,14 +46,26 @@
     margin: 30px 30px;
 }
 
+.product-item {
+    margin-bottom: 50px;
+
+    :hover .pi-picture  {
+        transition: 0.4s;
+        transform: scale(1.05);
+    }
+
+}
+
+
 .pi-picture {
     position: relative;
     display: block;
     & img {
-        width: 500px;
-        height: 500px;
+        height: 250px;
         object-fit: contain;
         max-width: 100%;
+        display: block;
+        margin: 0 auto;
     }
 }
 
@@ -54,20 +75,20 @@
     height: 87px;
 
     &__header {
-        font-size: 16px;
+        font-size: 22px;
         color: #111111;
         margin-bottom: 0;
-        display: inline-block;
+        display: block;
+        text-align: center;
     }
     &__price {
-        display: inline-block;
-        float: right;
+        font-size: 14px;
+        display: block;
         font-weight: 700;
         color: #111111;
-        padding-left: 40px;
         overflow: hidden;
-        font-size: large;
         line-height: 1.2;
+        text-align: center;
     }
 }
 
@@ -82,11 +103,11 @@
 }
 
 .add-card {
-    border: 2px solid  blueviolet;
+    border: 2px solid  #173F5F;
 }
 .pi-links .add-card {
     color: white;
-    background-color: blueviolet;
+    background-color: #173F5F;
     width: 39px;
     height: 38px;
     border-radius: 50px;
@@ -109,10 +130,10 @@
     font-size: 14px;
     transition: font-size 0.1s, opacity 0.5s, top 0.5s;
     transition-delay: 0.3s;
-    
-    
+
+
 }
- 
+
 .add-card span {
     opacity: 0;
     position: absolute;
@@ -140,18 +161,18 @@
 }
 
 .ant-checkbox-wrapper:hover .ant-checkbox-inner{
-    border-color: blueviolet;
-} 
+    border-color: #173F5F;
+}
 .ant-checkbox-input:focus + .ant-checkbox-inner {
-    border-color: blueviolet;
+    border-color: #173F5F;
 }
 .ant-checkbox-inner {
     border-radius: 50%;
 }
 
 .ant-checkbox-checked .ant-checkbox-inner{
-    background-color: blueviolet;
-    border-color: blueviolet;
+    background-color: #173F5F;
+    border-color: #173F5F;
 }
 
 .ant-checkbox-wrapper {
@@ -161,6 +182,16 @@
     margin-left: 0px;
 }
 
-@media only screen and (min-width : 320px) and (max-width : 480px) {
-    .price-sorting {margin-top: 30px;}
+.empty-text {
+    text-align: center;
+    margin: 30px 0px;
 }
+
+@media only screen and (min-width: 375px) {
+    .pi-links{
+        padding: 10px 65px;
+    }
+}
+// @media only screen and (min-width : 320px) and (max-width : 480px) {
+//     .price-sorting {margin-top: 30px;}
+// }
