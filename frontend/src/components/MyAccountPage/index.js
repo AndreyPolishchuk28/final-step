@@ -10,7 +10,7 @@ import {ChangePassword} from './ChangePassword'
 import {AccInfo} from './AccInfo'
 
 import './scss/main.scss'
-import {Button, ButtonGroup} from "antd"
+import {Menu, Icon} from "antd"
 
 const mapStateToProps = (state) => {
     return {
@@ -33,9 +33,9 @@ export const MyAccountPage = connect(mapStateToProps, {getUserInfo})((props) => 
             case "changePassword":
                 return <ChangePassword setPageState={setPageState}/>
             case "orders":
-                return <Orders setPageState={setPageState} setOrder={setOrder}/>
+                return <Orders setPageState={setPageState} setOrder={setOrder} history={props.history}/>
             case "fullOrder":
-                return <FullOrder setPageState={setPageState} id={order.id}/>
+                return <FullOrder setPageState={setPageState} id={order.id}  history={props.history}/>
         }
     }
 
@@ -46,10 +46,13 @@ export const MyAccountPage = connect(mapStateToProps, {getUserInfo})((props) => 
 
     return (
             <section className="main-wrapper">
-                <Button.Group>
-                    <Button size="large" onClick={() => {setPageState({ page: "info"})}}>Account info</Button>
-                    <Button size="large" className={"navigation-btn navigation-btn-bot"} onClick={() => {setPageState({ page: "orders"})}}>Order history</Button>
-                </Button.Group>
+                <Menu
+                    mode="inline"
+                    mode="horisontal"
+                >
+                    <Menu.Item key="1" onClick={() => {setPageState({ page: "info"})}}><Icon type="mail" />Account info</Menu.Item>
+                    <Menu.Item key="2" onClick={() => {setPageState({ page: "orders"})}}><Icon type="mail" />Order history</Menu.Item> 
+                </Menu>
                 <div className="page-viewer">
                     {returnPage()}
                 </div>

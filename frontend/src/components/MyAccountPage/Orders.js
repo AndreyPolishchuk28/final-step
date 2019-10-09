@@ -19,7 +19,7 @@ export const Orders = connect(mapStateToProps, {getUserInfo}) ((props) => {
 
 
     if(props.auth.userInfo){
-        orders = props.auth.userInfo.orders.map((item, index) => {
+        orders = props.auth.userInfo.orders.map((item) => {
             return (
                 <Card size="small" title={"Order"} 
                 extra={<a href="#" 

@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {getUserInfo} from '../../redux/auth'
 
 import './scss/orders.scss'
+import {Card} from "antd"
 
 const mapStateToProps = (state) => {
     return {
@@ -13,18 +14,29 @@ const mapStateToProps = (state) => {
 
 export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
 
+    console.log(props);
+
     const dataArr = props.auth.userInfo.orders.filter(item => props.id === item._id)
 
     const data = dataArr[0];
 
     const allProducts = data.product_items.map((item, index) => {
             return (
-                <div className="full-order-info__products__items"  key={index}>
-                    <h1 className="full-order-info__products__text">Model: {item.product.name}</h1>
+                <Card
+                size="small" title={`Product: ${item.product.name}`} 
+                extra={<a href={`/product/${item.product.id}`}
+                onClick={() => {
+                    // props.history.push(`/product/${item.product.id}`)
+                }}>More</a>} 
+                style={{ 
+                    width: 300,
+                    marginBottom: 10 
+                }}
+                key={index}>
                     <h1 className="full-order-info__products__text">Category: {item.product.category}</h1>
                     <h1 className="full-order-info__products__text">Price for one: {item.product.price}$</h1>
                     <h1 className="full-order-info__products__text">Quantity: {item.quantity}x</h1>
-                </div>
+                </Card>
                 )
         })
 
@@ -49,7 +61,7 @@ export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
                 </div>
             </div>
             : null
-            }
+            } 
         </div>
         )    
 });
