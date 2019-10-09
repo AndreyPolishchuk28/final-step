@@ -72,11 +72,11 @@
 .info-header {
   display: inline-block;
   font-size: 20px;
-  padding: 10px;
+  padding: 10px 17px 4px;
   color: white;
   background: #173F5F;
   margin-top: 10px;
-  border-radius: 0 20px 20px 20px;
+  border-radius: 5px;
 }
 
 @media (min-width: 640px) {
@@ -141,11 +141,11 @@
   .info-header {
     display: inline-block;
     font-size: 30px;
-    padding: 5px;
+    padding: 10px 17px 4px;
     color: white;
     background: #173F5F;
     margin: 10px 0 20px 0;
-    border-radius: 0 20px 20px 20px;
+    border-radius: 5px;
   }
 }
 @media (min-width: 960px) {
@@ -157,11 +157,11 @@
   .info-header {
     display: inline-block;
     font-size: 35px;
-    padding: 5px;
+    padding: 10px 17px 4px;
     color: white;
     background: #173F5F;
     margin: 10px 0 20px 0;
-    border-radius: 0 20px 20px 20px;
+    border-radius: 5px;
   }
 
   .acc-navigation {

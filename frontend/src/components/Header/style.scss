@@ -244,6 +244,10 @@ a:hover{
   margin-top: 8px;
 }
 
+.container-blur:focus{
+  outline: none;
+}
+
 @media (min-width: 768px){
   .site-logo{
     margin-bottom: 20px;

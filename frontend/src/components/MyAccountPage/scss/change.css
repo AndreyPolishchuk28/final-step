@@ -58,6 +58,7 @@
   .change-input-wrapper {
     position: relative;
     margin: 10px 0;
+    width: 500px;
   }
 
   .input-change {
