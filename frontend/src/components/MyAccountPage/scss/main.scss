@@ -1,19 +1,29 @@
 $main-color:  #173F5F;
 $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
+$user-white: #f0f0f0;
 
+.no-user-div{
+    display: inline-block;
+    width: 100%;
+    background-color: $user-white;
+    padding-bottom: 100px;
+}
+
+.ant-menu-inline{
+    display: none;
+}
 
 .main-wrapper{
     display: flex;
     flex-direction: column;
-    padding: 40px 0;
 }
 
 .page-viewer{
     position: relative;
-    padding: 30px 10px;
+    padding: 30px 0;
     margin: 0 auto;
-    width: 90%;
+    width: 100%;
 }
 
 .acc-navigation{
@@ -68,6 +78,7 @@ $light-grey: rgb(191, 185, 185);
     display: flex;
     flex-direction: column;
     align-items: start;
+    padding: 0 10px;
         h2{
             font-size: 18px;
             margin-left: 10px;
@@ -85,16 +96,9 @@ $light-grey: rgb(191, 185, 185);
 }
 
 @media (min-width: 640px) {
-    
-    .main-wrapper{
-    display: flex;
-    flex-direction: row;
-    }
-
     .page-viewer{
         position: relative;
         padding: 0 20px;
-        width: 70%;
     }
 
     .acc-navigation{
@@ -158,6 +162,27 @@ $light-grey: rgb(191, 185, 185);
 }
 
 @media (min-width: 960px){
+    .main-wrapper{
+        padding: 40px 0;
+    }
+
+    .page-viewer{
+        width: 70%;
+    }
+
+    .ant-menu-inline{
+        display: block;
+    }
+
+    .ant-menu-horizontal{
+        display: none;
+    }
+
+    .main-wrapper{
+        display: flex;
+        flex-direction: row;
+    }
+
     .info-container{
         h2{
             font-size: 30px;

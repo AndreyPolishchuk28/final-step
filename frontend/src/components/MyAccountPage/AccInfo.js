@@ -1,9 +1,10 @@
 import React from 'react'
-import {Button} from 'antd'
+
 
 import {connect} from 'react-redux'
 
 import './scss/main.scss'
+import {Button} from 'antd'
 
 const mapStateToProps = (state) => {
     return {
@@ -14,7 +15,7 @@ const mapStateToProps = (state) => {
 export const AccInfo = connect(mapStateToProps) ((props) => { 
     return (
         props.auth.userInfo ?
-            <div className={"info-container"}>
+        <div className={"info-container"}>        
                 <h1 className="info-header">Main information</h1>
                 <h2 className="info-items">Name: {props.auth.userInfo.firstName}</h2>
                 <h2 className="info-items">Last name: {props.auth.userInfo.lastName}</h2>

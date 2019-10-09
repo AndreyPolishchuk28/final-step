@@ -12,9 +12,13 @@ $checkout-white: #f0f0f0;
 }
 
 .err-cust{
+    position: absolute;
+    font-size: 20px;
+    top: -10px;
+    left: 0;
     padding: 0;
     margin: 0;
-    color: black;
+    color: red;
 }
 
 .checkout-container{
@@ -147,10 +151,10 @@ $checkout-white: #f0f0f0;
     }
 }
 
-.show-close-info-btn{
+.show-info-btn{
     z-index: 1000;
     position: absolute;
-    top: calc(100% - 25px);
+    top: 100%;
     right: 10px;
     color: $light-main-color;
     font-size: 20px;
@@ -158,6 +162,24 @@ $checkout-white: #f0f0f0;
     &:hover{
         color: $main-color;
     }
+}
+
+.close-info-btn{
+    z-index: 1000;
+    position: absolute;
+    top: calc(100% - 25px);
+    right: -50px;
+    color: $light-main-color;
+    font-size: 20px;
+    transition: 0.5s;
+    &:hover{
+        color: $main-color;
+    }
+}
+
+.active-info-btn{
+    top: calc(100% - 25px);
+    right: 10px;
 }
 
 .section-header{
@@ -194,7 +216,7 @@ $checkout-white: #f0f0f0;
     transition: .2s ease-in-out;
 }
 
-.active {
+.active-input {
     top: 15px;
     font-size: 10px;
 }
@@ -213,10 +235,12 @@ $checkout-white: #f0f0f0;
     }
     &:hover {
         background-color: #999;
+        cursor: pointer;
     }
 }
 
-.payment-radio-wrap{
+.radio-wrap{
+    position: relative;
     display: flex;
     flex-direction: column;
     margin: 20px 0 20px 10px;
@@ -235,6 +259,11 @@ $checkout-white: #f0f0f0;
 }
 
 @media (min-width: 640px){
+
+    .err-cust{
+        top: 0;
+        left: -10px;
+    }
     
     .checkout-container{
         display: flex;
@@ -289,7 +318,7 @@ $checkout-white: #f0f0f0;
         transition: .2s ease-in-out;
     }
 
-    .active {
+    .active-input {
         top: 5px;
         font-size: 10px;
     }
@@ -303,7 +332,7 @@ $checkout-white: #f0f0f0;
         border-radius: 10px;
     }
 
-    .payment-radio-wrap{
+    .radio-wrap{
         display: flex;
         flex-direction: column;
         margin: 20px 0 20px 10px;
