@@ -91,7 +91,7 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
     return ( props.auth.userInfo ?
         <div className="container-change">
             <div className="close-btn">
-                <Icon type="close-circle" style={{color: "red"}} onClick={() => {props.setPageState({ page: "info"})}}></Icon>
+                <Icon type="rollback" style={{color: "blue-6"}} onClick={() => {props.setPageState({ page: "info"})}}></Icon>
             </div>
             <h1 className="info-header">Main information</h1>
             {changeInput("first_name", "First name", userChange.firstName, changeHandler, err.firstNameReq)}

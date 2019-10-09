@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {getUserInfo} from '../../redux/auth'
 
 import './scss/orders.scss'
-import {Card} from "antd"
+import {Card, Descriptions} from "antd"
 
 const mapStateToProps = (state) => {
     return {
@@ -21,7 +21,7 @@ export const Orders = connect(mapStateToProps, {getUserInfo}) ((props) => {
     if(props.auth.userInfo){
         orders = props.auth.userInfo.orders.map((item) => {
             return (
-                <Card size="small" title={"Order"} 
+                <Card size="small" title={`Order: ${item._id}`} 
                 extra={<a href="#" 
                 onClick={() => {
                     props.setPageState({ page: "fullOrder"})
@@ -29,11 +29,12 @@ export const Orders = connect(mapStateToProps, {getUserInfo}) ((props) => {
                 }}>More</a>} 
                 style={{ 
                     width: 300,
-                    marginBottom: 10 
+                    margin: 5
                 }}> 
-                    <p className="card-title">Order id: {item._id}</p>
-                    <p className="card-text">Creation date: {item.creation_date}</p>
-                    <p className="card-text">Total price: {item.order_total} {item.currency}</p>  
+                    <Descriptions column={1}>
+                        <Descriptions.Item label="Creation date">{item.creation_date}</Descriptions.Item>
+                        <Descriptions.Item label="Total price">{item.order_total} {item.currency}</Descriptions.Item>
+                    </Descriptions>
                 </Card>
             )
         })

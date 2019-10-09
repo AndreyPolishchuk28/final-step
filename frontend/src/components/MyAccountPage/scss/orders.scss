@@ -37,7 +37,6 @@ $light-grey: rgb(191, 185, 185);
             font-size: 25px;
         }
         &__address{
-            padding-left: 10px; 
             font-size: 20px;
         }
         &__delivery{
@@ -71,12 +70,19 @@ $light-grey: rgb(191, 185, 185);
 
 @media (min-width: 640px){
     .full-order-info{
+        flex-direction: row;
         &__products{
             &__items{
                 min-width: 160px;
                 max-width: 160px;
             }
         }
+    }
+
+    .orders-wrapper{
+        justify-content: start;
+        align-items: flex-start;
+        margin: 15px;
     }
 }
 
@@ -134,11 +140,7 @@ $light-grey: rgb(191, 185, 185);
         }
     }
 
-    .orders-wrapper{
-        justify-content: space-between;
-        align-items: flex-start;
-        margin: 15px;
-    }
+    
 }
 
 @media (min-width: 960px){

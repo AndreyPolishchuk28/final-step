@@ -57,8 +57,8 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     function validate() {
         let errors = {};
 
-        Object.values(radioOpt).forEach((key) =>  {
-            if(!key){
+        Object.values(radioOpt).forEach((elem) =>  {
+            if(!elem){
                 errors.empty = "true"
             }
         })
@@ -116,14 +116,13 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         let errors = validate()
 
         if (!Object.keys(errors).length && validateInfo && validateAddress){
-            alert("norm")
             props.createOrder(data)
             props.history.push("/")
             message.success('Your order succeed', 10)
         } else {
             setErr(validate())
             setValidState({status: false})
-            message.error('Not all fileds are filled', 10)
+            message.error('Not all fileds are filled', 5)
             console.log(props);
         }
     }
@@ -152,53 +151,52 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                 <CheckoutInput valid={validState} strFor="firstName" label="First name" value={userChange.firstName} changeFunc={changeHandler}/>
                 <CheckoutInput valid={validState} strFor="lastName" label="Last name" value={userChange.lastName} changeFunc={changeHandler}/>
                 <CheckoutInput valid={validState} strFor="email" label="Email" value={userChange.email} changeFunc={changeHandler}/>
-                {err.emailInvalid ? <p className='error'>{err.emailInvalid}</p> : null}
+                {!/\S+@\S+\.\S+/.test(userChange.email) && !validState.status ? <p className='error'>Email address is invalid</p> : null}
                 
                 <h1 className="section-header">Address</h1>
                 <CheckoutInput valid={validState} strFor="country" label="Country" value={addressChange.country} changeFunc={addressHandler}/>
                 <CheckoutInput valid={validState} strFor="city" label="City" value={addressChange.city} changeFunc={addressHandler}/>
                 <CheckoutInput valid={validState} strFor="address" label="Address" value={addressChange.address} changeFunc={addressHandler}/>
                 <CheckoutInput valid={validState} strFor="postal" label="Postal code" value={addressChange.postal} changeFunc={addressHandler}/>
-                {err.postalInvalid ? <p className='error'>{err.postalInvalid}</p> : null}
 
-                <div className="payment-radio-wrap">
-                    <h1 className="payment-radio-wrap__header">Choose delivery period</h1>
-                    <label className="payment-radio-wrap__label">
-                        <input type='radio' value="0" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                <div className="radio-wrap">
+                    <h1 className="radio-wrap__header">Choose delivery period</h1>
+                    <label className="radio-wrap__label">
+                        <input type='radio' value="0" id="radioButton" name="delivery" className="radio-wrap__input" onChange={radioHandler}/>
                         Standatd(7 days) FREE
                     </label>
-                    <label className="payment-radio-wrap__label">
-                        <input type='radio' value="25" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                    <label className="radio-wrap__label">
+                        <input type='radio' value="25" id="radioButton" name="delivery" className="radio-wrap__input" onChange={radioHandler}/>
                         Next day + 25$
                     </label>
-                    <label className="payment-radio-wrap__label">
-                        <input type='radio' value="15" id="radioButton" name="delivery" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                    <label className="radio-wrap__label">
+                        <input type='radio' value="15" id="radioButton" name="delivery" className="radio-wrap__input" onChange={radioHandler}/>
                         Two day + 15$
                     </label>
+                    {!radioOpt.delivery && !validState.status ? <p className='err-cust'>*</p> : null}
                 </div>
-                {!radioOpt.delivery && !validState.status ? <p className='err-cust'>Delivery is required</p> : null}
 
                 <h1 className="section-header">Payment information</h1>
-                <div className="payment-radio-wrap">
-                    <h1 className="payment-radio-wrap__header">Choose payment method</h1>
-                    <label className="payment-radio-wrap__label">
-                        <input value="Master Card" type="radio" id="radioButton" name="payment" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                <div className="radio-wrap">
+                    <h1 className="radio-wrap__header">Choose payment method</h1>
+                    <label className="radio-wrap__label">
+                        <input value="Master Card" type="radio" id="radioButton" name="payment" className="radio-wrap__input" onChange={radioHandler}/>
                         Master Card
                     </label>
-                    <label className="payment-radio-wrap__label">
-                        <input value="Visa" type="radio" id="radioButton" name="payment" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                    <label className="radio-wrap__label">
+                        <input value="Visa" type="radio" id="radioButton" name="payment" className="radio-wrap__input" onChange={radioHandler}/>
                         Visa
                     </label>
-                    <label className="payment-radio-wrap__label">
-                        <input value="PayPal" type="radio" id="radioButton" name="payment" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                    <label className="radio-wrap__label">
+                        <input value="PayPal" type="radio" id="radioButton" name="payment" className="radio-wrap__input" onChange={radioHandler}/>
                         PayPal
                     </label>
-                    <label className="payment-radio-wrap__label">
-                        <input value="onArrive" type="radio" id="radioButton" name="payment" className="payment-radio-wrap__input" onChange={radioHandler}/>
+                    <label className="radio-wrap__label">
+                        <input value="onArrive" type="radio" id="radioButton" name="payment" className="radio-wrap__input" onChange={radioHandler}/>
                         On product's arriving
                     </label>
+                    {!radioOpt.payment && !validState.status ? <p className='err-cust'>*</p> : null}
                 </div>
-                {!radioOpt.payment && !validState.status ? <p className='err-cust'>Payment is required</p> : null}
 
                 <span onClick={submitOrder} className="order-submit-btn">Place order</span>
             </form>
@@ -208,7 +206,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
                     <Cart info={props.basket.products} history={props.history}/>
                 </div>
                 <div className="checkout-container__cart__main">
-                    <div className="total-costs"><span>Total cart:</span><span>{orderTotal()}$</span></div>
+                    <div className="total-costs"><span>Total:</span><span>{orderTotal()}$</span></div>
                     <div className="total-costs"><span>Deliery:</span><span>{+radioOpt.delivery}$</span></div>
                     <div className="total-costs--fin"><span>Total:</span><span>{orderTotal() + +radioOpt.delivery}$</span></div>
                 </div>

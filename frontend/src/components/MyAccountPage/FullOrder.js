@@ -24,9 +24,9 @@ export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
             return (
                 <Card
                 size="small" title={`Product: ${item.product.name}`} 
-                extra={<a href={`/product/${item.product.id}`}
+                extra={<a href={"#"}
                 onClick={() => {
-                    // props.history.push(`/product/${item.product.id}`)
+                    props.history.push(`/product/${item.product.id}`)
                 }}>More</a>} 
                 style={{ 
                     width: 300,
