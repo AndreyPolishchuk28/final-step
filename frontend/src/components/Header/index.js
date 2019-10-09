@@ -42,7 +42,7 @@ export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBas
                 <div className='container'>
                     <div className='row'>
                         <div className='col-xl-3 col-lg-3 text-center text-left'>
-                            <Link to='/'><span className='site-logo'>MUZ-SHOP</span></Link>
+                            <Link to='/'><span className='site-logo'>MUSIC-SHOP</span></Link>
                         </div>
                         <div className='col-xl-5 col-lg-5'>
                         <Search/>

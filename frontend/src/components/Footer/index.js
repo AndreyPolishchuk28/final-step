@@ -13,7 +13,7 @@ export const Footer = () => {
         <section className="footer-section">
             <Row gutter={16}>
                 <Col xs={24} sm={24} md={12} lg={12} xl={6} >
-                    <div className="footer-logo text-center">
+                    <div className="footer-logo">
                         <Link to='/'><span className='site-logo'>MUSIC-SHOP</span></Link>
                     </div>    
                 </Col>
