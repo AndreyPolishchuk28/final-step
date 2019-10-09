@@ -5,16 +5,24 @@
 }
 
 .caption, .page-way, .caption-order-section {
-  padding: 20px;
+  padding: 35px 30px 30px;
+  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.order {
+  margin-left: 50px;
 }
 
 .order-section {
   background-color: #f0f0f0;
-  border-radius: 20px 20px 30px 30px;
+  border-radius: 20px;
   margin: 50px 0 70px;
 }
 .name-price {
   font-weight: bold;
+  margin-bottom: 30px;
 }
 .text-center {
   margin-bottom: 20px;
@@ -35,5 +43,51 @@
   padding-top: 10px;
 }
 
+.product-img {
+  margin-left: 30px;
+}
+
+.product-row {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.products-wrapper {
+  padding: 10px;
+}
+
+.product-name {
+  position: relative;
+  top: -10px;
+}
+
+.item-remove {
+  border-radius: 10px;
+  font-size: 10px;
+  padding-top: 3px;
+  padding-left: 1px;
+}
+
+.item-remove:hover {
+  background-color: firebrick;
+}
+
+.quantity-dec:hover {
+  background-color: #999999;
+}
+
+.quantity-inc:hover {
+  background-color: #999999;
+}
+
+.checkout-button:hover {
+  background-color: #999999;
+  color: white;
+}
+
+.continue-button:hover {
+  background-color: #999999;
+  color: white;
+}
 
 /*# sourceMappingURL=styles.css.map */

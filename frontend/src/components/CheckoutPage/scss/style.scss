@@ -1,6 +1,6 @@
 $main-color:  #173F5F;
-$light-main-color:  #8a2be23d;
-$submit-green: rgb(125, 193, 23);
+$light-main-color:  #173F5F;
+$submit-green: #173F5F;
 $light-grey: rgb(191, 185, 185);
 $checkout-white: #f0f0f0;
 
@@ -29,6 +29,8 @@ $checkout-white: #f0f0f0;
         width: 100%;
         background: $checkout-white;
         border-radius: 10px;
+        padding: 25px;
+
         &__products{
             display: flex;
             justify-content: center;
@@ -200,14 +202,19 @@ $checkout-white: #f0f0f0;
 }
 
 .order-submit-btn{
+    text-align: center;
     border: none;
     background: $submit-green;
     padding: 20px;
     color: white;
     font-size: 20px;
     border-radius: 10px;
-    :focus{
-        outline: 0
+    text-transform: uppercase;
+    &:focus {
+        outline: 0;
+    }
+    &:hover {
+        background-color: #999;
     }
 }
 

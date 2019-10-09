@@ -16,12 +16,12 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
 
 
     return (
-        <div>
+        <div className='products-wrapper'>
             {props.basket.products.map(({quantity, product: { name, photo, color, price, _id, id}}) => (
-                <Row  type="flex" key={id}>
-                    <Col span={8} order={1} >
-                        <img src={`static/img/${photo[0]}`} className="img" alt="photo"/>
-                        {name}
+                <Row  type="flex" key={id} className="product-row">
+                    <Col span={8} order={1} className='product-name'>
+                        <img src={`static/img/${photo[0]}`} className="img product-img" alt=""/>
+                        {name.toUpperCase()}
                     </Col>
                     <Col span={5} order={2} className="text-center">
                         <button className="quantity-dec" onClick={()=> {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import PhotoProduct from './PhotoProduct';
 import InfoProduct from './InfoProduct';
@@ -13,8 +13,8 @@ const mapStateToProps = (state) => {
 
 export const ProductDetailsPage = connect(mapStateToProps, {getProductDetails}) ((props) => {
 	let product = props.catalog.currentProductDetails;
-	console.log(product)
-	
+	let productId = props.match.params.id;
+
 	useEffect(() => {
 		props.getProductDetails(props.match.params.id);
 		window.scrollTo(0, 0);
@@ -23,7 +23,7 @@ export const ProductDetailsPage = connect(mapStateToProps, {getProductDetails}) 
 	useEffect(() => {
 		props.getProductDetails(props.match.params.id);
 		window.scrollTo(0, 0);
-	}, [props.match.params.id]);
+	}, [productId]);
 
 	return (
 		<div className="product-details__container">
