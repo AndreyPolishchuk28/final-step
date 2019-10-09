@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {changePassword, clearChangePasswordStatus} from '../../redux/auth'
 
-import {Button, Icon, Input} from "antd"
+import {Button, Icon, Input, message} from "antd"
 import './scss/change.scss'
 
 const mapStateToProps = (state) => {
@@ -64,12 +64,14 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         
         if (Object.keys(errors).length){
             setErr(validate(passChange))
+            message.error('Not all fields are correct');
         } else {
             const data = {
                 oldPassword: passChange.currentPass,
                 newPassword:  passChange.pass
             }
             props.changePassword(data)
+            message.success('Your password have changed!');
         }
     }
 

@@ -123,7 +123,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
         } else {
             setErr(validate())
             setValidState({status: false})
-            message.error('Not all ... are filled', 10)
+            message.error('Not all fileds are filled', 10)
             console.log(props);
         }
     }

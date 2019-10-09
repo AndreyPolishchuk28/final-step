@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {changeUserInfo} from '../../redux/auth'
 
 import './scss/change.scss'
-import {Button, Icon, Input} from 'antd'
+import {Button, Icon, Input, message} from 'antd'
 
 const mapStateToProps = (state) => {
     return {
@@ -66,6 +66,7 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         
         if (Object.keys(errors).length){
             setErr(validate(userChange))
+            message.error('Not all fields are correct');
         } else {
             const data = await {
                 firstName: userChange.firstName,
@@ -82,6 +83,8 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
             props.changeUserInfo(data)
 
             props.setPageState({ page: "info"})
+
+            message.success('Your personal info have changed!');
         }
     }
   
