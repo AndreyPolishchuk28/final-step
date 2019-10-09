@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
 import {changePassword, clearChangePasswordStatus} from '../../redux/auth'
 
+import {Button, Icon, Input} from "antd"
 import './scss/change.scss'
 
 const mapStateToProps = (state) => {
@@ -49,22 +50,10 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         return errors
     }
 
-
-    const inputAnimF = (event) => {
-        event.target.previousElementSibling.classList.add("change-label-active")
-    }
-
-    const inputAnimB = (event) => {
-        if(!event.target.value){
-        event.target.previousElementSibling.classList.remove("change-label-active")
-        }
-    }
-
     const changePassInput = (strFor, label, changeFunc, error) => {
         return (
             <div className="change-input-wrapper">
-                <label className="change-label" for={strFor}>{label}</label>
-                <input className="input-change" type="text" onChange={changeFunc} id={strFor} onFocus={inputAnimF} onBlur={inputAnimB}/>
+                <Input.Password placeholder={label} onChange={changeFunc} id={strFor} size="large"/>
                 {error ? <p className='error'>{error}</p> : null}
             </div>
         )
@@ -99,14 +88,16 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
   
     return (
         <div className="container-change">
-            <i className="fas fa-times close-btn" onClick={() => {props.setPageState({ page: "changeInfo"})}}></i>
+            <div className="close-btn">
+                <Icon type="close-circle" style={{color: "red"}} onClick={() => {props.setPageState({ page: "changeInfo"})}}></Icon>
+            </div>
             <h1 className="info-header">Password</h1>
             {changePassInput("currentPass", "Current password", changeHandler, err.currentPassReq)}
             {err.currPassValid ? <p className='error'>{err.currPassValid}</p> : null}
             {changePassInput("pass", "Password for change", changeHandler, err.passReq)}
             {err.passL ? <p className='error'>{err.passL}</p> : null}
             {changePassInput("repeatPass", "Reapet password for change", changeHandler, err.confirmPass)}
-            <button className="submit-btn" onClick={submitHandler}>Submit password</button>
+            <Button size="large"  type="primary" onClick={submitHandler}>Submit password</Button>
         </div>
     )
 });

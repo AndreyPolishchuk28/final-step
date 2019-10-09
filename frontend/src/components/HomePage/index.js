@@ -7,7 +7,7 @@ import SliderItem from "./SliderItem";
 import "../../App.css";
 import { Row, Col } from "antd";
 import { connect } from "react-redux";
-const mainColor =  "blueviolet";
+const mainColor =  "#173F5F";
 
 const mapStateToProps = state => {
   return {
@@ -60,7 +60,7 @@ export const HomePage = connect(
 });
 
 const SliderContainer = styled.div`
-  background: url(/static/img/49760.jpg) no-repeat center center;
+  background: url(https://hdwallpaperim.com/wp-content/uploads/2017/08/31/154405-minimalism-gradient-blurred-748x468.jpg) no-repeat center center;
   background-size: cover;
   width: 100%;
   text-align: center;
@@ -97,48 +97,55 @@ const SliderContainer = styled.div`
   }
   img {
     margin-top: 50px;
-    width: 70%;
+    width: 60%;
     object-fit: contain;
   }
   .guitar-name {
     display: inline-block;
-    font-size: 56px;
+    font-size: 40px;
     color: white;
-    text-shadow: 3px 3px 8px black;
     text-align: left;
     padding-right: 40px;
-    padding-top: 30px;
+    padding-top: 50px;
+    text-transform: uppercase;
+    margin-bottom: 0;
   }
   .guitar-price {
     display: inline-block;
-    font-size: 32px;
+    font-size: 40px;
     text-decoration: line-through;
     color: white;
-    text-shadow: 3px 3px 8px black;
+    margin-bottom: 0;
   }
   button {
     position: absolute;
-    top: 100px;
-    right: 200px;
-    width: 150px;
-    height: 150px;
-    line-height: 150px;
-    animation: shadow 1.8s infinite linear;
-    text-shadow: 3px 3px 8px black;
-    font-size: 44px;
+    top: 105px;
+    right: 160px;
+    width: 120px;
+    height: 120px;
+    line-height: 120px;
+    font-size: 34px;
     background-color: ${mainColor};
-    border: none;
+    border: 2px solid white;
     border-radius: 50%;
-    font-weight: 700;
-    box-shadow: 3px 3px 8px black;
+    color: white;
   }
   .slider {
-    height: 700px;
+    height: 580px;
   }
 
   @media screen and (max-width: 980px) {
     .slider {
       height: 500px;
+    }
+    button {
+      top: 120px;
+      right: 80px;
+      width: 80px;
+      height: 80px;
+      line-height: 80px;
+      font-size: 14px;
+      box-shadow: 3px 3px 8px black;
     }
   }
   @media screen and (max-width: 640px) {
@@ -166,7 +173,7 @@ const SliderContainer = styled.div`
   }
 `;
 const MostPopularContainer = styled.div`
-  margin: 0 auto;
+  margin: 40px auto 40px auto;
   max-width: 1200px;
   text-align: center;
   .most-popular {
@@ -176,7 +183,7 @@ const MostPopularContainer = styled.div`
   }
 
   .most-popular-wrapper {
-    border: 2px solid white;
+    border: 1px solid white;
     box-sizing: border-box;
     color: #282828;
     display: inline-block;
@@ -186,9 +193,9 @@ const MostPopularContainer = styled.div`
     transition: 0.6s;
   }
   .most-popular-wrapper:hover {
-    border: 2px solid #282828;
-    text-shadow: 1px 1px 2px #555;
-    transform: scale(1.1)
+    border: 1px solid #282828;
+    box-shadow: 0px 0px 3px #555;
+    transform: scale(1.05)
   }
   p {
     padding-top: 15px;

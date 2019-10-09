@@ -36,7 +36,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
         }
         props.getProducts(payload)
     };
-    console.log(props)
+
     props.catalog.categories.forEach(element => {
         if(element.name === props.match.params.category){
             producers = element.producers
@@ -83,7 +83,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
         sortingExpensiveHandler = false;
         checkedArr= [];
         getProductsHandler();
-
+        
     }, [props.match.params.category]);
 
     useEffect(()=>{

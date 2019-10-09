@@ -1,8 +1,21 @@
-$main-color:  blueviolet;
-$light-main-color:  #8a2be23d;
-$submit-green: rgb(125, 193, 23);
+$main-color:  #173F5F;
+$light-main-color:  #173F5F;
+$submit-green: #173F5F;
 $light-grey: rgb(191, 185, 185);
 $checkout-white: #f0f0f0;
+
+.no-basket-div{
+    display: inline-block;
+    width: 100%;
+    background-color: $checkout-white;
+    padding-bottom: 100px;
+}
+
+.err-cust{
+    padding: 0;
+    margin: 0;
+    color: black;
+}
 
 .checkout-container{
     display: flex;
@@ -23,6 +36,8 @@ $checkout-white: #f0f0f0;
         width: 100%;
         background: $checkout-white;
         border-radius: 10px;
+        padding: 25px;
+
         &__products{
             display: flex;
             justify-content: center;
@@ -32,17 +47,20 @@ $checkout-white: #f0f0f0;
             border-radius: 20px;
             padding: 20px 0;
         }
+        &__header{
+            text-align: center;
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px;
+            color: black;
+            font-size: 30px;
+            margin: 0;
+        }
         &__main{
                 width: 100%;
                 text-align: center;
                 border-radius: 10px;
                 padding: 10px;
-                // box-shadow: 10px 10px 0px 0px $checkout-yellow;
-                h1{
-                    color: black;
-                    font-size: 30px;
-                    margin: 0;
-                }
                 .total-costs{
                     display: flex;
                     justify-content: space-between;
@@ -132,26 +150,18 @@ $checkout-white: #f0f0f0;
 .show-close-info-btn{
     z-index: 1000;
     position: absolute;
-    top: calc(100% - 40px);
+    top: calc(100% - 25px);
     right: 10px;
-    width: 30px;
-    height: 30px;
-    background:  $light-main-color;
-    border: none;
+    color: $light-main-color;
     font-size: 20px;
-    font-weight: 700;
-    border-radius: 50%;
-    color: white;
     transition: 0.5s;
-    &:focus{
-        outline: 0;
-    }
     &:hover{
-        background: $main-color;
+        color: $main-color;
     }
 }
 
 .section-header{
+    font-weight: 700;
     font-size: 25px;
     border-radius: 10px;
     color: $main-color;
@@ -190,12 +200,20 @@ $checkout-white: #f0f0f0;
 }
 
 .order-submit-btn{
+    text-align: center;
     border: none;
     background: $submit-green;
     padding: 20px;
     color: white;
     font-size: 20px;
     border-radius: 10px;
+    text-transform: uppercase;
+    &:focus {
+        outline: 0;
+    }
+    &:hover {
+        background-color: #999;
+    }
 }
 
 .payment-radio-wrap{
@@ -253,9 +271,10 @@ $checkout-white: #f0f0f0;
     .checkout-input{
         border: 1px solid $light-grey;
         padding-left: 20px;
+        padding-top: 10px;
         width: 100%;
-        height: 50px;   
-        border-radius: 10px;
+        height: 45px;   
+        border-radius: 5px;
         margin: 0;
         &:focus{
             outline: none;

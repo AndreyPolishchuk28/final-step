@@ -1,8 +1,9 @@
 .info-product__button {
-	background-color: blueviolet;
+	background-color: #173F5F;
 	border-radius: 6px;
-	width: 120px;
+	width: 130px;
 	height: 40px;
+	padding-top: 5px;
 	font-size: 18px;
 	color: aliceblue;
 	border: 0;
@@ -10,9 +11,9 @@
 }
 
 .info-product__button:hover {
-	color: blueviolet;
+	color: #173F5F;
 	background: #ffffff;
-	border: 2px solid blueviolet;
+	border: 2px solid #173F5F;
 	border-radius: 6px;
 	display: inline-block;
 	outline: none;
@@ -20,15 +21,6 @@
 
 .info-product__tabs {
 	height: 200px;
-}
-
-.info-product__video,
-.info-product__music {
-	margin: 0 2px;
-	font-size: 26px;
-	&:hover {
-		color: blueviolet;
-	}
 }
 
 .info-product__qty {
@@ -62,7 +54,7 @@
 .info-product__addQty {
 	width: 30px;
 	height: 30px;
-	background-color: blueviolet;
+	background-color: #173F5F;
 	color: white;
 	border-radius: 50%;
 	border: 0;
@@ -71,9 +63,9 @@
 	font-size: 19px;
 	outline: none;
 	&:hover {
-		color: blueviolet;
+		color: #173F5F;
 		background: #ffffff;
-		border: 2px solid blueviolet;
+		border: 2px solid #173F5F;
 		border-radius: 50%;
 		display: inline-block;
 		font-size: 17px;
@@ -84,29 +76,33 @@
 .ant-tabs-nav-wrap {
 	.ant-tabs-nav {
 		.ant-tabs-tab-active {
-			color: blueviolet;
+			color: #173F5F;
 		}
 	}
 }
 
 .ant-tabs-top .ant-tabs-ink-bar-animated {
-	background-color: blueviolet;
+	background-color: #173F5F;
 	&:hover {
-		background-color: blueviolet;
+		background-color: #173F5F;
 	}
 }
 
 .ant-tabs-nav .ant-tabs-tab {
 	&:hover {
-		color: blueviolet;
+		color: #173F5F;
 	}
+}
+
+
+.ant-tabs-nav .ant-tabs-tab {
+	font-size: 18px;
 }
 
 @media screen and (max-width: 640px) {
 	.info-product {
 		.info-product__button {
-			width: 85px;
-			height: 35px;
+			padding: 10px 10px 6px 10px;
 			font-size: 12px;
 		}
 		.qty-text {

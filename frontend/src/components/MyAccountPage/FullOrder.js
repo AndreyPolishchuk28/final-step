@@ -40,7 +40,7 @@ export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
                     <p className="full-order-info__items__address">City: {data.billing_address.city}</p>       
                     <p className="full-order-info__items__address">Address: {data.billing_address.address}</p>       
                     <p className="full-order-info__items__address">Postal code: {data.billing_address.postal}</p>                     
-                    <p className="full-order-info__items__delivery">Delivery type: {data.billing_address.delivery}</p>    
+                    <p className="full-order-info__items__delivery">Delivery cost: {data.billing_address.delivery} $</p>    
                     <p className="full-order-info__items__email">Used email address: {data.customer_info.email}</p>  
                     <p className="full-order-info__items__date">Creation date: {data.creation_date}</p>
                 </div>

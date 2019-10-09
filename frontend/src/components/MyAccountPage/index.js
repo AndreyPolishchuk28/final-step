@@ -10,6 +10,7 @@ import {ChangePassword} from './ChangePassword'
 import {AccInfo} from './AccInfo'
 
 import './scss/main.scss'
+import {Button, ButtonGroup} from "antd"
 
 const mapStateToProps = (state) => {
     return {
@@ -45,13 +46,11 @@ export const MyAccountPage = connect(mapStateToProps, {getUserInfo})((props) => 
 
     return (
             <section className="main-wrapper">
-                <nav className="acc-navigation">    
-                    <button className={"navigation-btn navigation-btn-top"} onClick={() => {setPageState({ page: "info"})}}><i className="far fa-id-card"></i><span>Account info</span></button>
-                    <button className={"navigation-btn navigation-btn-bot"} onClick={() => {setPageState({ page: "orders"})}}><i className="fas fa-clipboard-list"></i><span>Order history</span></button>
-                </nav>
+                <Button.Group>
+                    <Button size="large" onClick={() => {setPageState({ page: "info"})}}>Account info</Button>
+                    <Button size="large" className={"navigation-btn navigation-btn-bot"} onClick={() => {setPageState({ page: "orders"})}}>Order history</Button>
+                </Button.Group>
                 <div className="page-viewer">
-                    <div className="top-l-corner"></div>
-                    <div className="bot-r-corner"></div>
                     {returnPage()}
                 </div>
             </section>

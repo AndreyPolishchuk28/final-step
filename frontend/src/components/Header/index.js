@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import './style.css'
 import {Link, withRouter} from "react-router-dom";
 import {Search} from "./Search";
@@ -15,9 +15,8 @@ const mapStateToProps = state =>{
 };
 
 export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBasket, logout, getLoginStatus})(props => {
-
     useEffect(()=> {
-        props.getLoginStatus()
+        props.getLoginStatus();
         props.getMainInfo();
         props.getBasket();
     },[]);
@@ -42,7 +41,7 @@ export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBas
                 <div className='container'>
                     <div className='row'>
                         <div className='col-xl-3 col-lg-3 text-center text-left'>
-                            <Link to='/'><span className='site-logo'>MUSIC-SHOP</span></Link>
+                            <Link to='/'><span className='site-logo'>MUZ-SHOP</span></Link>
                         </div>
                         <div className='col-xl-5 col-lg-5'>
                         <Search/>
