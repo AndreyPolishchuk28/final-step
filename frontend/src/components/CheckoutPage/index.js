@@ -7,6 +7,7 @@ import {CheckoutInput} from './Input'
 import {Cart} from './Cart'
 
 import './scss/style.scss'
+import {message, Empty, Button} from 'antd'
 
 const mapStateToProps = (state) => {
     return {
@@ -112,21 +113,18 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
 
         validateAddress = Object.values(data.billing_address).every((elem) => elem )
 
-        if(validateInfo && validateAddress){
-            console.log("som");
-        } else {
-            console.log("smol");
-        }
-
         let errors = validate()
 
         if (!Object.keys(errors).length && validateInfo && validateAddress){
             alert("norm")
             props.createOrder(data)
             props.history.push("/")
+            message.success('Your order succeed', 10)
         } else {
             setErr(validate())
             setValidState({status: false})
+            message.error('Not all ... are filled', 10)
+            console.log(props);
         }
     }
 
@@ -145,6 +143,7 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
     }, [props.auth.userInfo])
 
     return (
+        props.basket.products.length ?
         props.auth.userInfo ?
         <div  className="checkout-container">
             <form className="checkout-container__inputs" onSubmit={(event) => {event.preventDefault()}}>
@@ -216,5 +215,19 @@ export const CheckoutPage = connect(mapStateToProps, {getUserInfo, createOrder})
             </div>
         </div>
         : null
+        : 
+        <div class="no-basket-div">
+        <Empty
+                imageStyle={{
+                height: 300,
+                width: 100+"%"
+                }}
+                description={
+                <span> There are no products in your cart</span>
+                }
+            >
+                <Button type="primary" onClick={() => {props.history.push('/')}}>Go shopping</Button>
+            </Empty>
+        </div>
     )
 });
