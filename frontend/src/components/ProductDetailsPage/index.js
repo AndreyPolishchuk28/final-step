@@ -11,6 +11,7 @@ const mapStateToProps = (state) => {
 };
 
 export const ProductDetailsPage = connect(mapStateToProps, { getProductDetails })((props) => {
+	console.log(4343)
 	let product = props.catalog.currentProductDetails;
 	let productId = props.match.params.id;
 
