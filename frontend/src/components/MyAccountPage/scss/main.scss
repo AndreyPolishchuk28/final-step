@@ -3,6 +3,11 @@ $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
 $user-white: #f0f0f0;
 
+.ant-menu-horizontal > .ant-menu-item:hover, .ant-menu-horizontal > .ant-menu-submenu:hover, .ant-menu-horizontal > .ant-menu-item-active, .ant-menu-horizontal > .ant-menu-submenu-active, .ant-menu-horizontal > .ant-menu-item-open, .ant-menu-horizontal > .ant-menu-submenu-open, .ant-menu-horizontal > .ant-menu-item-selected, .ant-menu-horizontal > .ant-menu-submenu-selected {
+    color: $main-color;
+    border-bottom: 3px solid $main-color
+}
+
 .ant-menu-item-selected, .ant-menu-item-selected:hover{
     color: white;
 }
