@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {getUserInfo} from '../../redux/auth'
 
 import './scss/orders.scss'
-import {Card, Descriptions} from "antd"
+import {Card, Descriptions, Empty, Button} from "antd"
 
 const mapStateToProps = (state) => {
     return {
@@ -41,8 +41,23 @@ export const Orders = connect(mapStateToProps, {getUserInfo}) ((props) => {
     }
 
     return (
+        props.auth.userInfo.orders.length ?
         <div className="orders-wrapper">
                 {orders}
+        </div>
+        :
+        <div class="no-user-div">
+        <Empty
+                imageStyle={{
+                height: 300,
+                width: 100+"%"
+                }}
+                description={
+                <span> There are no orders  on this account</span>
+                }
+            >
+                <Button type="primary" onClick={() => {props.history.push('/')}}>Make your first order</Button>
+            </Empty>
         </div>
     )
 });

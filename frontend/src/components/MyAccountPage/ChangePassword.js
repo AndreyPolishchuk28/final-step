@@ -33,13 +33,13 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         let errors = {};
 
         if(!passChange.currentPass){
-            errors.currentPassReq = 'Current password is required'
+            errors.currentPassReq = '*'
         }
         if(!passChange.pass){
-            errors.passReq = 'New password is required'
+            errors.passReq = '*'
         }
         if (passChange.pass !== passChange.repeatPass){
-            errors.confirmPass = "Passwords aren't the same";
+            errors.confirmPass = "*";
         }
         if (passChange.pass && passChange.pass.length < 6) {
             errors.passL = "Password should contain more than 6 characters";
@@ -54,7 +54,7 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         return (
             <div className="change-input-wrapper">
                 <Input.Password placeholder={label} onChange={changeFunc} id={strFor} size="large"/>
-                {error ? <p className='error'>{error}</p> : null}
+                {error ? <p className='err-change'>{error}</p> : null}
             </div>
         )
     }
@@ -64,7 +64,7 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
         
         if (Object.keys(errors).length){
             setErr(validate(passChange))
-            message.error('Not all fields are correct');
+            message.error('Not all fields are correct', 5);
         } else {
             const data = {
                 oldPassword: passChange.currentPass,
@@ -90,16 +90,16 @@ export const ChangePassword = connect(mapStateToProps, { changePassword, clearCh
   
     return (
         <div className="container-change">
-            <div className="close-btn">
-                <Icon type="close-circle" style={{color: "red"}} onClick={() => {props.setPageState({ page: "changeInfo"})}}></Icon>
-            </div>
-            <h1 className="info-header">Password</h1>
+            <h1 className="change-header">Password</h1>
             {changePassInput("currentPass", "Current password", changeHandler, err.currentPassReq)}
             {err.currPassValid ? <p className='error'>{err.currPassValid}</p> : null}
             {changePassInput("pass", "Password for change", changeHandler, err.passReq)}
             {err.passL ? <p className='error'>{err.passL}</p> : null}
             {changePassInput("repeatPass", "Reapet password for change", changeHandler, err.confirmPass)}
-            <Button size="large"  type="primary" onClick={submitHandler}>Submit password</Button>
+            <div class="basic-btn-change-wrap">
+                <button onClick={submitHandler} className="basic-btn-change">Submit</button>
+                <button onClick={() => {props.setPageState({ page: "changeInfo"})}} className="basic-btn-change">Go back</button>
+            </div>
         </div>
     )
 });
