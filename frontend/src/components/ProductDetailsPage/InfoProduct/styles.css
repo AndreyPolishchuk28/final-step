@@ -1,26 +1,33 @@
 .info-product__button {
-  background-color: #173F5F;
+  background-color: blueviolet;
   border-radius: 6px;
-  width: 130px;
+  width: 120px;
   height: 40px;
-  padding-top: 5px;
   font-size: 18px;
   color: aliceblue;
   border: 0;
-  outline: none;
 }
 
 .info-product__button:hover {
-  color: #173F5F;
+  color: blueviolet;
   background: #ffffff;
-  border: 2px solid #173F5F;
+  border: 2px solid blueviolet;
   border-radius: 6px;
   display: inline-block;
-  outline: none;
 }
 
 .info-product__tabs {
   height: 200px;
+}
+
+.info-product__video,
+.info-product__music {
+  margin: 0 2px;
+  font-size: 26px;
+}
+.info-product__video:hover,
+.info-product__music:hover {
+  color: blueviolet;
 }
 
 .info-product__qty {
@@ -54,60 +61,36 @@
 .info-product__addQty {
   width: 30px;
   height: 30px;
-  background-color: #173F5F;
+  background-color: blueviolet;
   color: white;
   border-radius: 50%;
   border: 0;
   margin: 0 5px;
   outline: none;
-  font-size: 19px;
-  outline: none;
+  font-size: 20px;
 }
 .info-product__addQty:hover {
-  color: #173F5F;
+  color: blueviolet;
   background: #ffffff;
-  border: 2px solid #173F5F;
+  border: 2px solid blueviolet;
   border-radius: 50%;
   display: inline-block;
-  font-size: 17px;
-  outline: none;
-}
-
-.ant-tabs-nav-wrap .ant-tabs-nav .ant-tabs-tab-active {
-  color: #173F5F;
-}
-
-.ant-tabs-top .ant-tabs-ink-bar-animated {
-  background-color: #173F5F;
-}
-.ant-tabs-top .ant-tabs-ink-bar-animated:hover {
-  background-color: #173F5F;
-}
-
-.ant-tabs-nav .ant-tabs-tab:hover {
-  color: #173F5F;
-}
-
-.ant-tabs-nav .ant-tabs-tab {
   font-size: 18px;
 }
 
-@media screen and (max-width: 640px) {
-  .info-product .info-product__button {
-    padding: 10px 10px 6px 10px;
-    font-size: 12px;
-  }
-  .info-product .qty-text {
-    font-size: 24px;
-    vertical-align: middle;
-    font-weight: bold;
-    margin-left: 10px;
-    text-transform: uppercase;
-  }
-  .info-product .info-product__qty {
-    width: 35px;
-    height: 35px;
-  }
+.ant-tabs-nav-wrap .ant-tabs-nav .ant-tabs-tab-active {
+  color: blueviolet;
+}
+
+.ant-tabs-top .ant-tabs-ink-bar-animated {
+  background-color: blueviolet;
+}
+.ant-tabs-top .ant-tabs-ink-bar-animated:hover {
+  background-color: blueviolet;
+}
+
+.ant-tabs-nav .ant-tabs-tab:hover {
+  color: blueviolet;
 }
 
 /*# sourceMappingURL=styles.css.map */
