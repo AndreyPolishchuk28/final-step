@@ -75,7 +75,7 @@
 }
 
 .user-panel .up-item:first-child {
-  margin-right: 45px;
+  margin: 0 20px;
 }
 
 .user-panel .up-item {
@@ -177,7 +177,7 @@ a:hover {
 }
 
 .account {
-  margin: 0 2px;
+  margin: 0 5px;
   color: #282828;
   cursor: pointer;
 }

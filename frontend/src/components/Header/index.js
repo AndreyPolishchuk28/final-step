@@ -40,13 +40,13 @@ export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBas
             <div className='header-top'>
                 <div className='container'>
                     <div className='row'>
-                        <div className='col-xl-3 col-lg-3 text-center text-left pl-0'>
+                        <div className='col-xl-3 col-lg-3 text-center text-left p-0'>
                             <Link to='/'><span className='site-logo'>MUZ-SHOP</span></Link>
                         </div>
-                        <div className='col-xl-5 col-lg-5 pl-0'>
+                        <div className='col-xl-5 col-lg-5 p-0'>
                         <Search/>
                         </div>
-                        <div className='col-xl-4 col-lg-4 text-center pl-0'>
+                        <div className='col-xl-4 col-lg-4 text-center p-0'>
                             <div className='user-panel'>
                                 <div className='up-item'>
                                     {props.auth.loginStatus ?
