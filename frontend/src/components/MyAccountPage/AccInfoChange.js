@@ -42,10 +42,10 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         let errors = {};
 
         if(userChange.first_name === ""){
-            errors.firstNameReq = 'First name is required'
+            errors.firstNameReq = '*'
         }
         if(userChange.last_name === ""){
-            errors.lastNameReq = 'Last name is required'
+            errors.lastNameReq = '*'
         }
 
         return errors
@@ -55,7 +55,7 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         return (
             <div className="change-input-wrapper">
                 <Input size="large" placeholder={label} onChange={changeFunc} id={strFor} defaultValue={def}/>
-                {error ? <p className='error'>{error}</p> : null}
+                {error ? <p className='err-change'>{error}</p> : null}
             </div>
         )
     }
@@ -66,7 +66,7 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         
         if (Object.keys(errors).length){
             setErr(validate(userChange))
-            message.error('Not all fields are correct');
+            message.error('Not all fields are correct', 5);
         } else {
             const data = await {
                 firstName: userChange.firstName,
@@ -90,22 +90,20 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
   
     return ( props.auth.userInfo ?
         <div className="container-change">
-            <div className="close-btn">
-                <Icon type="rollback" style={{color: "blue-6"}} onClick={() => {props.setPageState({ page: "info"})}}></Icon>
-            </div>
-            <h1 className="info-header">Main information</h1>
+            <h1 className="change-header">Main information</h1>
             {changeInput("first_name", "First name", userChange.firstName, changeHandler, err.firstNameReq)}
             {changeInput("last_name", "Last name", userChange.lastName, changeHandler, err.lastNameReq)}
-
-            <Button style={{width: "150px", display: "block"}} type="Deafault" onClick={() => {props.setPageState({ page: "changePassword"})}}>change password</Button>
-
-            <h1 className="info-header">Additional information</h1>
+            <div class="basic-btn-change-wrap">
+                <button  onClick={() => {props.setPageState({ page: "changePassword"})}} className="basic-btn-change">change password</button>
+            </div>
+            <h1 className="change-header">Additional information</h1>
             {changeInput("country", "Country", addChange.country, changeAdditionalHandler)}
             {changeInput("city", "City", addChange.city, changeAdditionalHandler)}
             {changeInput("address", "Address", addChange.address, changeAdditionalHandler)}
             {changeInput("postal", "Postal code", addChange.postal, changeAdditionalHandler)}
-            <div style={{width : "500px"}}>
-                <Button block size="large" type="primary" onClick={submitHandler}>Submit</Button>
+            <div class="basic-btn-change-wrap">
+                <button onClick={submitHandler} className="basic-btn-change">Submit</button>
+                <button onClick={() => {props.setPageState({ page: "info"})}} className="basic-btn-change">Go back</button>
             </div>
         </div>
         : null 

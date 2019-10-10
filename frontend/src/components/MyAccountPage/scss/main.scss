@@ -3,6 +3,22 @@ $submit-green: rgb(125, 193, 23);
 $light-grey: rgb(191, 185, 185);
 $user-white: #f0f0f0;
 
+.ant-menu-item-selected, .ant-menu-item-selected:hover{
+    color: white;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    background-color: $main-color;
+}
+
+.ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after, .ant-menu-inline .ant-menu-item::after{
+    border-right: 3px solid white;
+}
+
+.ant-menu-item:not(.ant-menu-item-selected):hover{
+    color: $main-color
+}
+
 .no-user-div{
     display: inline-block;
     width: 100%;
@@ -21,128 +37,59 @@ $user-white: #f0f0f0;
 
 .page-viewer{
     position: relative;
-    padding: 30px 0;
     margin: 0 auto;
     width: 100%;
-}
-
-.acc-navigation{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin:30px 10px 20px 10px;
-    .navigation-btn{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: none;
-        border-radius: 5px;
-        align-self: flex-end;
-        color: $main-color;
-        border: 1px solid $main-color;
-        min-width: 50px;
-        min-height: 50px;
-        max-width: 50px;
-        max-height: 50px;
-        i{
-            font-size: 30px;
-        }
-        &:focus{
-            outline: none;
-        }
-        span{
-            display: none;
-        }
-    } 
-    .navigation-btn-bot{
-        border-radius: 5px;
-        color: $main-color;
-        border: 1px solid $main-color;
-        min-width: 50px;
-        min-height: 50px;
-        max-width: 50px;
-        max-height: 50px;
-    } 
-    .navigation-btn-top{
-        border-radius: 5px;
-        color: $main-color;
-        border: 1px solid $main-color;
-        min-width: 50px;
-        min-height: 50px;
-        max-width: 50px;
-        max-height: 50px;
-    } 
 }
 
 .info-container{
     display: flex;
     flex-direction: column;
     align-items: start;
-    padding: 0 10px;
+    margin: 20px 10px;
         h2{
-            font-size: 18px;
-            margin-left: 10px;
+            color: #595959;
+            font-size: 20px;
         }
 } 
 
 .info-header{
     display: inline-block;
-    font-size: 20px;
-    padding: 10px 17px 4px;
-    color: white;
-    background: $main-color;
+    font-size: 25px;
+    // padding: 10px 17px 4px;
     margin-top: 10px;
     border-radius: 5px;
+}
+
+.basic-btn{
+    background-color: $main-color;
+    border-radius: 6px;
+    width: 130px;
+    height: 40px;
+    padding-top: 5px;
+    margin-top: 40px;
+    font-size: 18px;
+    color: aliceblue;
+    border: 0;
+    outline: none;
+}
+
+.basic-btn:hover{
+    background-color: white;
+    color: $main-color;
+    border: 2px solid $main-color;
+}
+
+.basic-btn:focus{
+    outline: 0
 }
 
 @media (min-width: 640px) {
     .page-viewer{
         position: relative;
-        padding: 0 20px;
-    }
-
-    .acc-navigation{
-        flex-direction: column;
-        justify-content: start;
-        margin: 0 10px 20px 10px;
-        .navigation-btn{
-            position: relative;
-            border-radius: 5px;
-            padding: 15px;
-            padding-left: 40px;
-            align-self: flex-end;
-            min-width: 175px;
-            min-height: none;
-            max-width: 200px;
-            max-height: none;
-            i{
-                position: absolute;
-                font-size: 30px;
-                left: 10px;
-                top: 10px;
-            }
-            span{
-                display: inline-block;
-            }
-        } 
-        .navigation-btn-bot{
-            border-radius: 5px;
-            color: $main-color;
-            border: 1px solid $main-color;
-            border-radius: 0 0 10px 10px
-        } 
-        .navigation-btn-top{
-            border-radius: 5px;
-            color: $main-color;
-            border: 1px solid $main-color;
-            border-radius: 10px 10px 0 0;
-        } 
-    }
-
+        }
     
-
     .info-container{
-        margin: 15px;
+        margin: 15px 0 45px 45px;
         justify-content: space-between;
         align-items: start;
             h2{
@@ -151,12 +98,9 @@ $user-white: #f0f0f0;
     }
 
     .info-header{
-        display: inline-block;
         font-size: 30px;
-        padding: 10px 17px 4px;
-        color: white;
-        background: $main-color;
-        margin: 10px 0 20px 0;
+        // padding: 10px 17px 4px;
+        margin: 30px 0 10px 0;
         border-radius: 5px;
     }
 }
@@ -167,7 +111,7 @@ $user-white: #f0f0f0;
     }
 
     .page-viewer{
-        width: 70%;
+        margin: 0;
     }
 
     .ant-menu-inline{
@@ -184,37 +128,17 @@ $user-white: #f0f0f0;
     }
 
     .info-container{
+        margin-left: 45px;
         h2{
             font-size: 30px;
-            margin-left: 10px;
         }
     } 
 
     .info-header{
-        display: inline-block;
         font-size: 35px;
-        padding: 10px 17px 4px;
-        color: white;
-        background: $main-color;
-        margin: 10px 0 20px 0;
+        // padding: 10px 17px 4px;
+        margin: 30px 0 10px 0;
         border-radius:  5px;
-    }
-
-    .acc-navigation{
-        margin: 0 10px 20px 30px;
-        .navigation-btn{
-            color: black;
-            border: 1px solid $light-grey;
-            transition: 1s ease;
-                &:hover{
-                color: $main-color;
-                border: 1px solid $main-color;
-                } 
-                &:active{
-                    color: $main-color;
-                    border: 1px solid $main-color;
-                }   
-    }
     }
 }
     
