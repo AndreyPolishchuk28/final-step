@@ -4,3 +4,7 @@ body {
   font-family: 'Josefin Sans', sans-serif;
   /* background-color: rgb(235, 230, 230); */
 }
+
+button:focus {
+  outline: none;
+}

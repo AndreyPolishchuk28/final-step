@@ -11,7 +11,7 @@ let sortingCheapHandler = false;
 let sortingExpensiveHandler = false;
 let products;
 let skip = 0;
-let limit= 9;
+let limit= 8;
 let clearOld = true;
 let checkedArr = [];
 let producers=[];
@@ -47,6 +47,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
         let checked = e.target.name;
         let index = checkedArr.indexOf(e.target.name)
         if (e.target.checked === true){
+            skip = 0;
             checkedArr.push(checked)
         } else {
             checkedArr.splice(index, 1)
