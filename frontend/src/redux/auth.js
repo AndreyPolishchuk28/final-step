@@ -249,9 +249,9 @@ export function authReducer(state = startState, action) {
         case SET_REGISTRATION_ERRORS:
             return { ...state, loginStatus: false, registrationErrorMessage: payload.registrationErrorMessage};
         case CLEAR_LOGIN_ERRORS:
-            return { ...state, loginStatus: false, loginErrorMessage: ''};
+            return { ...state, loginErrorMessage: ''};
         case CLEAR_REGISTRATION_ERRORS:
-            return { ...state, loginStatus: false, registrationErrorMessage: ''};
+            return { ...state, registrationErrorMessage: ''};
         case SET_CHANGE_PASSWORD_STATUS:
             return { ...state, changePasswordStatus: payload.changePasswordStatus};
         case CLEAR_CHANGE_PASSWORD_STATUS:
