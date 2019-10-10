@@ -133,14 +133,6 @@ a:hover {
   color: #fff;
 }
 
-.slicknav-menutxt {
-  padding: 4px;
-}
-
-.bars-icon {
-  padding: 4px;
-}
-
 .main-menu-height {
   height: 0;
   opacity: 0;
@@ -169,14 +161,6 @@ a:hover {
   display: none;
 }
 
-#sidebar .toggle-btn:hover {
-  background: #282828;
-}
-
-#sidebar .toggle-btn:hover span {
-  background: #fafafa;
-}
-
 #sidebar .toggle-btn span {
   display: block;
   width: 25px;
@@ -190,7 +174,7 @@ a:hover {
 }
 
 .account {
-  margin: 0 5px;
+  margin: 0 2px;
   color: #282828;
   cursor: pointer;
 }
@@ -249,7 +233,7 @@ a:hover {
   }
 
   .main-menu a:hover .category-item {
-    color: #999;
+    color: #173F5F;
   }
 }
 @media (max-width: 767px) {
@@ -261,18 +245,22 @@ a:hover {
     display: block;
   }
 
+  .main-navbar {
+    padding: 10px 0;
+  }
+
+  .main-menu a {
+    padding: 15px;
+  }
+
   .toggle-btn {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
   }
 
-  ul a:hover {
-    background: #F5F5DC;
-  }
-
   .main-menu a:hover .category-item {
-    color: black;
+    color: #173F5F;
   }
 
   .hide {

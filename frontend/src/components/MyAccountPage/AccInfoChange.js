@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {changeUserInfo} from '../../redux/auth'
 
 import './scss/change.scss'
-import {Button, Icon, Input} from 'antd'
+import {Button, Icon, Input, message} from 'antd'
 
 const mapStateToProps = (state) => {
     return {
@@ -66,6 +66,7 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         
         if (Object.keys(errors).length){
             setErr(validate(userChange))
+            message.error('Not all fields are correct');
         } else {
             const data = await {
                 firstName: userChange.firstName,
@@ -82,13 +83,15 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
             props.changeUserInfo(data)
 
             props.setPageState({ page: "info"})
+
+            message.success('Your personal info have changed!');
         }
     }
   
     return ( props.auth.userInfo ?
         <div className="container-change">
             <div className="close-btn">
-                <Icon type="close-circle" style={{color: "red"}} onClick={() => {props.setPageState({ page: "info"})}}></Icon>
+                <Icon type="rollback" style={{color: "blue-6"}} onClick={() => {props.setPageState({ page: "info"})}}></Icon>
             </div>
             <h1 className="info-header">Main information</h1>
             {changeInput("first_name", "First name", userChange.firstName, changeHandler, err.firstNameReq)}

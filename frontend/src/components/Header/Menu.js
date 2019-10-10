@@ -20,15 +20,15 @@ export const Menu = withRouter((props) =>{
     };
 
     const blurHandler = (event) =>{
-        console.log(event.target.className);
         if(event.target.className !== 'container container-blur'){
+            console.log('hi');
             setOpen(false)
         }
     };
 
     useEffect(() =>{
         setOpen(false)
-    },[props.location.pathname])
+    },[props.location.pathname]);
 
     return(
         <nav className='main-navbar'>
