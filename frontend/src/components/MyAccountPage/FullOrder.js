@@ -40,13 +40,10 @@ export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
                 )
         })
 
-    return (
-        <div>
-        {
-            props.auth.userInfo ?
+    return (props.auth.userInfo ?
             <div className="full-order-info">
                 <div className="full-order-info__items">
-                    <h1 className="full-order-info__items__total">Total price: {data.order_total} {data.currency}</h1> 
+                    
                     <h1 className="full-order-info__items__address-main">Billing address :</h1>
                     <p className="full-order-info__items__address">Country: {data.billing_address.country}</p>       
                     <p className="full-order-info__items__address">City: {data.billing_address.city}</p>       
@@ -57,11 +54,10 @@ export const FullOrder = connect(mapStateToProps, {getUserInfo})((props) => {
                     <p className="full-order-info__items__date">Creation date: {data.creation_date}</p>
                 </div>
                 <div className="full-order-info__products">
+                    <h1 className="full-order-info__items__total">Total price: {data.order_total} {data.currency}</h1> 
                     {allProducts}
                 </div>
             </div>
             : null
-            } 
-        </div>
         )    
 });

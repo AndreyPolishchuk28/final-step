@@ -58,7 +58,7 @@ export const MyAccountPage = connect(mapStateToProps, {getUserInfo})((props) => 
                 </Menu>
                 
                 <Menu
-                style={{ width: 256 }}
+                style={{ width: 200 }}
                 defaultSelectedKeys={['1']}
                 mode="inline"
                 >

@@ -4,7 +4,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { removeProduct, changeQuantity, getBasket} from "../../../redux/basket";
 import { Row, Col } from "antd";
-import "./styles.css"
+import "./styles.scss"
 
 
 const mapStateToProps = (state) => {
@@ -19,11 +19,11 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
         <div className='products-wrapper'>
             {props.basket.products.map(({quantity, product: { name, photo, color, price, _id, id}}) => (
                 <Row  type="flex" key={id} className="product-row">
-                    <Col span={8} order={1} className='product-name'>
-                        <img src={`static/img/${photo[0]}`} className="img product-img" alt=""/>
+                    <Col span={7} order={1} className='product-name'>
+                        <img src={`static/img/${photo[0]}`} className="img" alt="product photo"/>
                         {name.toUpperCase()}
                     </Col>
-                    <Col span={5} order={2} className="text-center">
+                    <Col span={6} order={2} className="text-center">
                         <button className="quantity-dec" onClick={()=> {
                             if(quantity > 1) {props.changeQuantity({id: _id, quantity: quantity - 1})}}}>-</button>
                         <button className="quantity">{quantity}</button>
@@ -36,9 +36,9 @@ export const BasketContainer = connect(mapStateToProps, { getBasket, removeProdu
                         $ {price}
                     </Col>
                     <Col span={3} order={5} className="text-center">
-                    <button className="item-remove" onClick={() => props.removeProduct(_id)}>
-                        X
-                    </button>
+                        <button className="item-remove" onClick={() => props.removeProduct(_id)}>
+                            X
+                        </button>
                     </Col>
                 </Row>
             ))}

@@ -25,7 +25,7 @@ export const AccInfo = connect(mapStateToProps) ((props) => {
                 <h2 className="info-items">City: {props.auth.userInfo.def_address.city}</h2>
                 <h2 className="info-items">Address: {props.auth.userInfo.def_address.address}</h2>
                 <h2 className="info-items">Postal code: {props.auth.userInfo.def_address.postal}</h2>
-                <Button type="default" onClick={() => {props.setPageState({ page: "changeInfo"})}}>Change profile info</Button>
+                <button onClick={() => {props.setPageState({ page: "changeInfo"})}} className="basic-btn">Change info</button>
             </div>
             : null
     )
