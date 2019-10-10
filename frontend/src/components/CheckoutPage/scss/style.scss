@@ -201,7 +201,7 @@ $checkout-white: #f0f0f0;
     font-size: 10px;
 }
 
-.order-submit-btn{
+.order-submit-btn {
     text-align: center;
     border: none;
     background: $submit-green;
@@ -209,14 +209,14 @@ $checkout-white: #f0f0f0;
     color: white;
     font-size: 20px;
     border-radius: 10px;
-<<<<<<< HEAD
-    &:focus{
-        outline: 0
-=======
+//<<<<<<< HEAD
+    &:focus {
+        outline: 0;
+    }
     text-transform: uppercase;
     &:hover {
         background-color: #999;
->>>>>>> bdf44a91459953ff525d65aac029353c7fb8844b
+//>>>>>>> bdf44a91459953ff525d65aac029353c7fb8844b
     }
 }
 

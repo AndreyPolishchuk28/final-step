@@ -1,45 +1,5 @@
 
 
-.img {
-    object-fit: contain;
-    width: 50px;
-    height: 50px;
-    padding: 5px;
-}
-.quantity, .quantity-dec, .quantity-inc {
-    border: 0;
-    font-weight: bold;
-    background-color: #173F5F;
-    color: white;
-}
-.quantity {
-    border-top: 2px solid #f0f0f0;
-    border-bottom: 2px solid #f0f0f0;
-}
-.quantity-dec {
-border-bottom: 2px solid #f0f0f0;
-border-top: 2px solid #f0f0f0;
-border-left: 2px solid #f0f0f0;
-border-top-left-radius: 10px;
-border-bottom-left-radius: 10px;
-}
-.quantity-inc {
-border-bottom: 2px solid #f0f0f0;
-border-top: 2px solid #f0f0f0;
-border-right: 2px solid #f0f0f0;
-border-top-right-radius: 10px;
-border-bottom-right-radius: 10px;
-}
-.item-remove {
-font-weight: bolder;
-height: 20px;
-width: 20px;
-text-align: center;
-padding: 0;
-border-width: revert;
-color: white;
-background-color: #173F5F;
-}
 
 
 
