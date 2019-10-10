@@ -6,12 +6,12 @@ import './styles.scss';
 import { Row, Col } from 'antd';
 import { getProductDetails } from '../../redux/catalog';
 
-
 const mapStateToProps = (state) => {
 	return { ...state };
 };
 
-export const ProductDetailsPage = connect(mapStateToProps, {getProductDetails}) ((props) => {
+export const ProductDetailsPage = connect(mapStateToProps, { getProductDetails })((props) => {
+	console.log(4343)
 	let product = props.catalog.currentProductDetails;
 	let productId = props.match.params.id;
 
@@ -20,10 +20,13 @@ export const ProductDetailsPage = connect(mapStateToProps, {getProductDetails}) 
 		window.scrollTo(0, 0);
 	}, []);
 
-	useEffect(() => {
-		props.getProductDetails(props.match.params.id);
-		window.scrollTo(0, 0);
-	}, [productId]);
+	useEffect(
+		() => {
+			props.getProductDetails(props.match.params.id);
+			window.scrollTo(0, 0);
+		},
+		[ productId ]
+	);
 
 	return (
 		<div className="product-details__container">

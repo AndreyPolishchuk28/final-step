@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import './styles.scss';
-import { Tabs, message } from 'antd';
+import { Tabs, message, Icon } from 'antd';
 import { addToBasket } from '../../../redux/basket';
+import { notification } from 'antd';
 
 const { TabPane } = Tabs;
 
@@ -18,12 +19,18 @@ const InfoProduct = connect(mapStateToProps, { addToBasket })((props) => {
 
 	const [ count, setCount ] = useState(1);
 
+	const openNotificationWithIcon = (type) => {
+		notification[type]({
+			message: 'Product has been added!'
+		});
+	};
+
 	const addToBasketRes = async () => {
 		props.addToBasket({
 			id: productId,
 			quantity: count
 		});
-		success();
+		openNotificationWithIcon('success');
 	};
 
 	let increment = () => {
@@ -32,10 +39,6 @@ const InfoProduct = connect(mapStateToProps, { addToBasket })((props) => {
 
 	let decrement = () => {
 		if (count > 1) setCount(count - 1);
-	};
-
-	const success = () => {
-		message.success('Product was added to basket!');
 	};
 
 	let tabsInfo = {};
@@ -61,35 +64,32 @@ const InfoProduct = connect(mapStateToProps, { addToBasket })((props) => {
 		);
 	}
 
-	tabs.reverse()
+	tabs.reverse();
 
 	return (
 		<div>
 			<div>
-				<h2>{product.name}</h2>
+				<h2 className="info-product__title">{product.name}</h2>
 			</div>
 			<div>
-				<h3>{product.producer}</h3>
+				<h3 className="info-product__producer">{product.producer}</h3>
 			</div>
 			<div>
-				<h2>$ {product.price}</h2>
+				<h2 className="info-product__price">$ {product.price}</h2>
 			</div>
 			<Tabs className="info-product__tabs" defaultActiveKey="1" onChange={callback}>
 				{tabs}
 			</Tabs>
 			<div className="info-product">
 				<div>
-					<button onClick={addToBasketRes} className="info-product__button">
-						Add product
-					</button>
 					<span className="qty-text">QTY</span>
-					<button onClick={decrement} className="info-product__addQty">
-						-
-					</button>
+					<Icon type="minus-circle" className="plus-circle" onClick={decrement} />
 					<input value={count} type="text" className="info-product__qty" readOnly />
 
-					<button onClick={increment} className="info-product__addQty">
-						+
+					<Icon type="plus-circle" className="plus-circle" onClick={increment} />
+
+					<button onClick={addToBasketRes} className="info-product__button">
+						Add to basket
 					</button>
 				</div>
 			</div>

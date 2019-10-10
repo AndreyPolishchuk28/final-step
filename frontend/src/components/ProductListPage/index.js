@@ -11,7 +11,7 @@ let sortingCheapHandler = false;
 let sortingExpensiveHandler = false;
 let products;
 let skip = 0;
-let limit= 9;
+let limit= 8;
 let clearOld = true;
 let checkedArr = [];
 let producers=[];
@@ -47,6 +47,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
         let checked = e.target.name;
         let index = checkedArr.indexOf(e.target.name)
         if (e.target.checked === true){
+            skip = 0;
             checkedArr.push(checked)
         } else {
             checkedArr.splice(index, 1)
@@ -110,7 +111,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
                 </Row>
             </div>
             <div className="pagelist-content">
-                <Row gutter={24}>
+                <Row>
                     <Col xs={{span:24}} sm={{span:24}} md={{span:24}} lg={{span:21, push:3}}>
                         {(products.length) ?
                             products.map( item =>
@@ -118,7 +119,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
                                     <ProductListItem product={item}></ProductListItem>
                                 </Col>
                             )
-                            : <h2 class="empty-text">There is no products</h2>}
+                            : <h2 className="empty-text">There is no products</h2>}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="pagelist-bottom">
 
                             {

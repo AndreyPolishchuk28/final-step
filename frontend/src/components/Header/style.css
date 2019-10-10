@@ -21,8 +21,23 @@
 
 .site-logo {
   display: inline-block;
-  font-size: 33px;
+  font-size: 30px;
   color: black;
+  margin-bottom: 19px;
+  margin-top: -15px;
+}
+
+.site-logo:before {
+  position: relative;
+  top: 3px;
+  right: 10px;
+  display: inline-block;
+  background-image: url("http://www.freepngclipart.com/download/guitar/85442-guitar-vector-creative-free-transparent-image-hd.png") ;
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  content: " ";
+
 }
 
 .header-search-form {
@@ -60,7 +75,7 @@
 }
 
 .user-panel .up-item:first-child {
-  margin-right: 45px;
+  margin: 0 20px;
 }
 
 .user-panel .up-item {
@@ -129,8 +144,11 @@ a:hover {
 }
 
 .main-navbar {
-  background: #282828;
+  background: #282828ee;
   padding: 16px 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .sub-menu-over {
@@ -159,7 +177,7 @@ a:hover {
 }
 
 .account {
-  margin: 0 2px;
+  margin: 0 5px;
   color: #282828;
   cursor: pointer;
 }
@@ -202,10 +220,11 @@ a:hover {
   outline: none;
 }
 
+.main-menu a:hover .category-item {
+  color: rgb(110, 167, 182);
+}
+
 @media (min-width: 768px) {
-  .site-logo {
-    margin-bottom: 20px;
-  }
 
   .header-search-form {
     margin-bottom: 15px;
@@ -220,9 +239,6 @@ a:hover {
     display: none;
   }
 
-  .main-menu a:hover .category-item {
-    color: #173F5F;
-  }
 }
 @media (max-width: 767px) {
   .header-search-form {
@@ -247,13 +263,11 @@ a:hover {
     align-items: flex-end;
   }
 
-  .main-menu a:hover .category-item {
-    color: #173F5F;
-  }
-
   .hide {
     display: none;
   }
+
+
 }
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   .main-menu {

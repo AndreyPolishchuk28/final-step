@@ -5,7 +5,7 @@ import {BasketContainer} from './BasketContainer';
 import {BasketButton} from './BasketButtons';
 import {CardHeader} from './CardHeader';
 import {Row, Col} from "antd";
-import "./styles.css"
+import "./styles.scss"
 
 
 const mapStateToProps = (state) => {
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 
 export const CardPage = connect(mapStateToProps)(props => {
 
-    let totalPrice = 0;
+        let totalPrice = 0;
 
         props.products.forEach(item => {
             totalPrice += item.quantity * item.product.price

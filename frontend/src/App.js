@@ -16,6 +16,7 @@ import {
 } from "./components";
 
 import './App.css';
+import {Menu} from "./components/Header/Menu";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Router>
                 <div className="App">
                     <Header/>
+                    <Menu/>
                     <Switch>
                         <Route path='/' exact component={HomePage}/>
                         <Route path='/card' component={CardPage}/>
