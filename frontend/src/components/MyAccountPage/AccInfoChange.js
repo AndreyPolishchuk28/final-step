@@ -4,7 +4,7 @@ import {connect} from 'react-redux'
 import {changeUserInfo} from '../../redux/auth'
 
 import './scss/change.scss'
-import {Button, Icon} from 'antd'
+import {Button, Icon, Input, message} from 'antd'
 
 const mapStateToProps = (state) => {
     return {
@@ -51,22 +51,10 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         return errors
     }
 
-
-    const inputAnimF = (event) => {
-        event.target.previousElementSibling.classList.add("change-label-active")
-    }
-
-    const inputAnimB = (event) => {
-        if(!event.target.value){
-        event.target.previousElementSibling.classList.remove("change-label-active")
-        }
-    }
-
     const changeInput = (strFor, label, def, changeFunc, error) => {
         return (
             <div className="change-input-wrapper">
-                <label className={def ? "change-label change-label-active" : "change-label"} for={strFor}>{label}</label>
-                <input className="input-change" type="text" onChange={changeFunc} id={strFor} defaultValue={def} onFocus={inputAnimF} onBlur={inputAnimB}/>
+                <Input size="large" placeholder={label} onChange={changeFunc} id={strFor} defaultValue={def}/>
                 {error ? <p className='error'>{error}</p> : null}
             </div>
         )
@@ -78,6 +66,7 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
         
         if (Object.keys(errors).length){
             setErr(validate(userChange))
+            message.error('Not all fields are correct');
         } else {
             const data = await {
                 firstName: userChange.firstName,
@@ -94,13 +83,15 @@ export const AccInfoChange = connect(mapStateToProps, {changeUserInfo}) ((props)
             props.changeUserInfo(data)
 
             props.setPageState({ page: "info"})
+
+            message.success('Your personal info have changed!');
         }
     }
   
     return ( props.auth.userInfo ?
         <div className="container-change">
             <div className="close-btn">
-                <Icon type="close-circle" style={{color: "red"}} onClick={() => {props.setPageState({ page: "info"})}}></Icon>
+                <Icon type="rollback" style={{color: "blue-6"}} onClick={() => {props.setPageState({ page: "info"})}}></Icon>
             </div>
             <h1 className="info-header">Main information</h1>
             {changeInput("first_name", "First name", userChange.firstName, changeHandler, err.firstNameReq)}

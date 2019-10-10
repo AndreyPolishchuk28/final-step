@@ -183,7 +183,7 @@ const MostPopularContainer = styled.div`
   }
 
   .most-popular-wrapper {
-    border: 2px solid white;
+    border: 1px solid white;
     box-sizing: border-box;
     color: #282828;
     display: inline-block;

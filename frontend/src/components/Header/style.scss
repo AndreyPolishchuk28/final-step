@@ -24,6 +24,19 @@
   color: black;
 }
 
+.site-logo:before {
+  position: relative;
+  top: 3px;
+  right: 10px;
+  display: inline-block;
+  background-image: url("http://www.freepngclipart.com/download/guitar/85442-guitar-vector-creative-free-transparent-image-hd.png") ;
+  background-size: 50px 50px;
+  width: 50px;
+  height: 50px;
+  content: " ";
+
+}
+
 .header-search-form{
   width: 100%;
   position: relative;
@@ -113,24 +126,8 @@ a:hover{
   color: #fff;
 }
 
-.menu-btn{
-  display: none;
-  color: #fff;
-  margin: 5px 5px 6px;
-  background-color: #565656;
-  border-radius: 4px;
-}
-
 .menu-btn:hover{
   color: #fff;
-}
-
-.slicknav-menutxt{
-  padding: 4px;
-}
-
-.bars-icon{
-  padding: 4px;
 }
 
 .main-menu-height{
@@ -141,21 +138,11 @@ a:hover{
 .main-menu{
   margin-bottom: 0;
   font-size: 17px;
-  position: relative;
 }
 
-.sub-menu{
-  position: absolute;
-  list-style: none;
-  width: 220px;
-  left: 44px;
-  top: -12px;
-  padding: 20px 0;
-  visibility: hidden;
-  opacity: 0;
-  margin-top: 50px;
-  background: #fff;
-  z-index: 99;
+.main-navbar{
+  background: #282828;
+  padding: 16px 0;
 }
 
 .sub-menu-over{
@@ -167,32 +154,15 @@ a:hover{
  padding: 20px;
 }
 
-#sidebar.active{
-  left: 0;
-}
-
-#sidebar ul li{
-  width: 90%;
-  margin-left: 10%;
-  color: white;
-  list-style: none;
-  padding: 25px 10px 10px 10px;
-}
-
-
-#sidebar .toggle-btn:hover{
-  background: #282828;
-}
-
-#sidebar .toggle-btn:hover span{
-  background: #fafafa;
+.active{
+  display: none;
 }
 
 #sidebar .toggle-btn span{
   display: block;
   width: 25px;
   height: 4px;
-  background-color: #666;
+  background-color: #fff;
   margin: 4px 0;
 }
 
@@ -201,7 +171,7 @@ a:hover{
 }
 
 .account{
-  margin: 0 5px;
+  margin: 0 2px;
   color: #282828;
   cursor: pointer;
 }
@@ -240,6 +210,10 @@ a:hover{
   margin-top: 8px;
 }
 
+.container-blur:focus{
+  outline: none;
+}
+
 @media (min-width: 768px){
   .site-logo{
     margin-bottom: 20px;
@@ -254,19 +228,13 @@ a:hover{
     opacity: 1;
   }
 
-  .main-navbar{
-    background: #282828;
-    padding: 16px 0;
-  }
-
   .toggle-btn{
     display: none;
   }
 
   .main-menu a:hover .category-item{
-    color: #999;
+    color: #173F5F;
   }
-
 }
 
 @media (max-width: 767px) {
@@ -274,50 +242,33 @@ a:hover{
     margin-bottom: 15px;
   }
 
-  .container{
-    padding-left: 0;
-    padding-right: 0;
-  }
-
   ul a{
     display: block;
   }
 
-  .menu-btn{
-    display: inline-block;
+  .main-navbar{
+    padding: 10px 0;
   }
 
-  #sidebar{
-    position: fixed;
-    width: 250px;
-    background: #282828;
-    z-index: 1;
-    left: -250px;
-    transition: 600ms;
-    border-radius: 5px;
+  .main-menu a{
+    padding: 15px;
   }
 
-  #sidebar .toggle-btn{
-    position: absolute;
-    left: 270px;
-    top: 20px;
-    background: #E0E5EA;
-    padding: 10px;
-    border-radius: 12px;
-    cursor: pointer;
-  }
-
-  ul a:hover{
-    background: #F5F5DC;
+  .toggle-btn{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
   }
 
   .main-menu a:hover .category-item{
-    color: black;
+    color: #173F5F;
+  }
+
+  .hide{
+    display: none;
   }
 
 }
-
-
 
 @media only screen and (max-width: 991px) and (min-width: 768px){
   .main-menu {

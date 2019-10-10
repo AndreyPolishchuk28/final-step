@@ -1,6 +1,6 @@
 .page-top-info {
   background-color: #f8f7f7;
-  padding: 70px 0 70px;
+  padding: 30px 20px 15px;
 }
 .page-top-info h4 {
   text-transform: uppercase;
@@ -10,6 +10,11 @@
 
 .page-top-text {
   padding-left: 30px;
+}
+
+.filters-wrapper {
+  margin: 10%;
+  margin: 10%;
 }
 
 .category-header, .price-sorting {
@@ -41,6 +46,9 @@
   display: block;
 }
 .pi-picture img {
+  width: 500px;
+  height: 500px;
+  object-fit: contain;
   max-width: 100%;
 }
 
@@ -70,19 +78,19 @@
   width: 100%;
   display: block;
   position: absolute;
-  bottom: 100px;
+  bottom: 120px;
   box-sizing: border-box;
   padding: 10px 35px;
   text-align: right;
 }
 
 .add-card {
-  border: 2px solid blueviolet;
+  border: 2px solid #173F5F;
 }
 
 .pi-links .add-card {
   color: white;
-  background-color: blueviolet;
+  background-color: #173F5F;
   width: 39px;
   height: 38px;
   border-radius: 50px;
@@ -135,11 +143,11 @@
 }
 
 .ant-checkbox-wrapper:hover .ant-checkbox-inner {
-  border-color: blueviolet;
+  border-color: #173F5F;
 }
 
 .ant-checkbox-input:focus + .ant-checkbox-inner {
-  border-color: blueviolet;
+  border-color: #173F5F;
 }
 
 .ant-checkbox-inner {
@@ -147,8 +155,16 @@
 }
 
 .ant-checkbox-checked .ant-checkbox-inner {
-  background-color: blueviolet;
-  border-color: blueviolet;
+  background-color: #173F5F;
+  border-color: #173F5F;
+}
+
+.ant-checkbox-wrapper {
+  width: 200px;
+}
+
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+  margin-left: 0px;
 }
 
 @media only screen and (min-width: 320px) and (max-width: 480px) {
