@@ -119,7 +119,7 @@ export const ProductListPage =  connect (mapStateToProps, {getProducts}) ( (prop
                                     <ProductListItem product={item}></ProductListItem>
                                 </Col>
                             )
-                            : <h2 class="empty-text">There is no products</h2>}
+                            : <h2 className="empty-text">There is no products</h2>}
                         <Col xs={24} sm={24} md={24} lg={24} xl={24} className="pagelist-bottom">
 
                             {
