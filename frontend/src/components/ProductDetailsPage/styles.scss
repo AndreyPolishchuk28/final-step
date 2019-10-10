@@ -1,6 +1,7 @@
 .product-details__container {
 	width: 100%;
-	margin: 40px 0;
+	max-height: 75vh;
+	margin: 40px 0 40px 0;
 }
 
 .product-details__container--photo {
@@ -10,4 +11,109 @@
 
 .product-details__container--info {
 	margin: 0 20px;
+}
+
+.slick-dots-bottom {
+	top: 400px !important;
+}
+
+@media screen and (max-width: 1200px) {
+	.product-details__container {
+		min-height: 45vh;
+	}
+}
+
+@media screen and (max-width: 992px) {
+	.slick-dots-bottom {
+		top: 320px !important;
+	}
+}
+@media screen and (max-width: 768px) {
+	.product-details__container {
+		max-height: 60vh;
+		max-height: 130vh;
+	}
+
+	.carusel-wrapp img {
+		height: 80%;
+	}
+	.slick-dots-bottom {
+		top: 250px !important;
+	}
+}
+@media screen and (max-width: 576px) {
+	.product-details__container {
+		margin-top: 10px;
+		max-height: 117vh;
+	}
+	.info-product__button {
+		padding: 10px 10px 6px 10px;
+		font-size: 12px;
+	}
+	.qty-text {
+		font-size: 24px;
+		vertical-align: middle;
+		font-weight: bold;
+		margin-left: 10px;
+		text-transform: uppercase;
+	}
+	.info-product__qty {
+		width: 35px;
+		height: 35px;
+	}
+	.info-product__title {
+		font-size: 30px;
+		font-weight: 500;
+	}
+	.info-product__producer {
+		font-size: 25px;
+		font-weight: lighter;
+	}
+	.info-product__price {
+		font-weight: 700;
+		font-size: 30px;
+	}
+	.ant-tabs .ant-tabs-top-content > .ant-tabs-tabpane h3 {
+		font-size: 28px;
+	}
+	.ant-tabs-nav .ant-tabs-tab {
+		font-size: 17px;
+		font-weight: normal;
+		margin: 0 4px 0 4px;
+	}
+}
+
+@media screen and (max-width: 370px) {
+	.product-details__container {
+		max-height: 120vh;
+		margin-top: 10px;
+	}
+
+	.carusel-wrapp img {
+		height: 80%;
+	}
+
+	.product-details__container--photo .ant-carousel .slick-dots .slick-active button {
+		width: 20px;
+		height: 20px;
+		border-radius: 30px;
+		background-color: black;
+	}
+	.product-details__container--photo .ant-carousel .slick-dots button {
+		width: 20px;
+		height: 20px;
+		border-radius: 30px;
+		background-color: black;
+	}
+	.info-product .info-product__button {
+		width: 95px;
+		height: 35px;
+		font-size: 11px;
+	}
+	.plus-circle:hover {
+		font-size: 30px;
+	}
+	.plus-circle {
+		font-size: 30px;
+	}
 }
