@@ -74,7 +74,6 @@ export const Header = withRouter (connect (mapStateToProps, {getMainInfo, getBas
                     </div>
                 </div>
             </div>
-            <Menu/>
         </div>
     )
 }));

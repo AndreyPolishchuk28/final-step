@@ -20,10 +20,7 @@ export const Menu = withRouter((props) =>{
     };
 
     const blurHandler = (event) =>{
-        if(event.target.className !== 'container container-blur'){
-            console.log('hi');
-            setOpen(false)
-        }
+        setTimeout(()=>{setOpen(false)}, 100);
     };
 
     useEffect(() =>{
