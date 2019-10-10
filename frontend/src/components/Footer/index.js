@@ -11,10 +11,10 @@ export const Footer = () => {
 
     return (
         <section className="footer-section">
-            <Row gutter={16}>
+            <Row>
                 <Col xs={24} sm={24} md={12} lg={12} xl={6} >
                     <div className="footer-logo text-center">
-                        <Link to='/'><span className='site-logo'>MUSIC-SHOP</span></Link>
+                        <Link to='/'><span className='site-logo'>MUZ-SHOP</span></Link>
                     </div>
                 </Col>
                 <Col xs={24} sm={24} md={12} lg={12} xl={6} >
